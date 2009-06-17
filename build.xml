@@ -1,0 +1,5 @@
+<project name="calculus" default="build" basedir=".">
+   <target name="build">
+      <javac srcdir="." destdir="." debug="true" />
+   </target>
+</project>
