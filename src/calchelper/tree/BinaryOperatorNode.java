@@ -10,6 +10,8 @@
  * Based on code used for CS416 Programming Assignment #9
  */
 
+package calchelper.tree;
+
 import java.util.ArrayList;
 
 public abstract class BinaryOperatorNode extends OperatorNode
@@ -60,6 +62,14 @@ public abstract class BinaryOperatorNode extends OperatorNode
    public AbstractNode getRight()
    {
       return _children.get( 1 );
+   }
+
+   /**
+    * Returns the node count.
+    */
+   public int nodeCount()
+   {
+      return 2;
    }
 
    /**

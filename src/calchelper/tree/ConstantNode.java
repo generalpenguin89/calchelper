@@ -8,6 +8,8 @@
  * Based on code written for CS416 Programming Assignment #9
  */
 
+package calchelper.tree;
+
 public class ConstantNode extends OperandNode
 {
    double _value;

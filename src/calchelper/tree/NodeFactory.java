@@ -6,6 +6,9 @@
  * The class provides static methods to create operator nodes of different
  * types.
  */
+
+package calchelper.tree;
+
 public class NodeFactory
 {
    /**

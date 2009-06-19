@@ -7,6 +7,8 @@
  * @author Patrick MacArthur, for CS416 Programming Assignment #9
  */
 
+package calchelper.tree;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;

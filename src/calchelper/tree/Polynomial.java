@@ -1,3 +1,4 @@
+package calchelper.tree;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -84,5 +85,10 @@ class Polynomial
    {
       unitTest( "5 * x ^ 2" );
       unitTest( "( 5 * x ^ 3 ) ^ 2" );
+      unitTest( "x + 2 * x" );
+      unitTest( "3 * x + 2 * x" );
+      unitTest( "x * x" );
+      unitTest( "x * 2 * x" );
+      unitTest( "x + 2 * x ^ 2" );
    }
 }

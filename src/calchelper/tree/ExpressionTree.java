@@ -6,6 +6,7 @@
  * @author Patrick MacArthur, for CS416 Programming Assignment #9
  */
 
+package calchelper.tree;
 
 public class ExpressionTree
 {

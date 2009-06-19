@@ -6,6 +6,7 @@
  * @author Patrick MacArthur, for Programming Assignment #9
  */
 
+package calchelper.tree;
 
 public class ExpressionException extends java.lang.Exception
 {

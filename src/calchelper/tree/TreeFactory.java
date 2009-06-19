@@ -10,6 +10,8 @@
  * Based on code written for CS416 Programming Assignment #9
  */
 
+package calchelper.tree;
+
 import java.util.Scanner;
 import java.util.Stack;
 

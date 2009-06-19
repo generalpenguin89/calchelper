@@ -11,6 +11,8 @@
  * Based on code used for CS416 Programming Assignment #9
  */
 
+package calchelper.tree;
+
 import java.util.ArrayList;
 
 public class NaryOperatorNode extends OperatorNode
