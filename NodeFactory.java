@@ -18,7 +18,7 @@ public class NodeFactory
     * @return The AbstractNode, or null if the operator is invalid.
     */
 
-   public static OperatorNode createBinaryOperatorNode( String op, 
+   public static BinaryOperatorNode createBinaryOperatorNode( String op, 
                                                         AbstractNode left,
                                                         AbstractNode right )
    {
