@@ -10,7 +10,7 @@
 public class ExpressionTree
 {
    // instance variables
-   private AbstractNode _root;
+   /*private*/ AbstractNode _root;
 
    // Constructor
    public ExpressionTree( AbstractNode root )
