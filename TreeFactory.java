@@ -15,7 +15,7 @@ import java.util.Stack;
 
 public class TreeFactory
 {
-   private static final String OPERATORS = "()+-*/%";
+   private static final String OPERATORS = "()+-*/%^";
 
    private String _infix;
 
@@ -166,6 +166,8 @@ public class TreeFactory
          case '/': // fall-through
          case '%':
             return 2;
+         case '^':
+            return 3;
          default:
             return -1;
       }
