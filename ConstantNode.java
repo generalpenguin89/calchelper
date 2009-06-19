@@ -43,4 +43,36 @@ public class ConstantNode extends OperandNode
    {
       return Double.valueOf( _value ).toString();
    }
+
+   /**
+    * Indicates whether some other object is "equal to" this one. 
+    */
+   public boolean equals( Object obj )
+   {
+      if ( obj == null )
+      {
+         return false;
+      }
+      else if ( ! ( obj instanceof ConstantNode ) )
+      {
+         return false;
+      }
+      else
+      {
+         ConstantNode node = ( ConstantNode ) obj;
+         if ( node._value == this._value )
+         {
+            return true;
+         }
+         else
+         {
+            return false;
+         }
+      }
+   }
+
+   public int hashCode()
+   {
+      return ( int ) _value;
+   }
 }
