@@ -38,4 +38,26 @@ public class ExpressionTree
    {
       return _root.toString();
    }
+
+   /**
+    * differentiate()
+    *
+    * Returns the derivative tree of the tree.
+    */
+   public ExpressionTree differentiate()
+   {
+      //FIXME: this is a stub
+      return null;
+   }
+
+   /**
+    * integrate()
+    *
+    * Returns the integral tree of the tree.
+    */
+   public ExpressionTree integrate()
+   {
+      //FIXME: this is a stub
+      return null;
+   }
 }
