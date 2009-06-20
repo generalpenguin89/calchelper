@@ -1,3 +1,4 @@
+
 package calchelper.tree;
 
 class Monomial
@@ -88,7 +89,8 @@ class Monomial
          valid = false;
       }
 
-      System.out.println( coefficient + " x " + power + " valid: " + valid );
+      ////Want really verbose meaningless output?  Uncomment this line
+      //System.out.println( coefficient + " x " + power + " valid: " + valid );
    }
 
    public BinaryOperatorNode getTreeNode()
