@@ -8,7 +8,9 @@
 
 package calchelper.tree;
 
-abstract class AbstractNode
+import java.util.Iterator;
+
+abstract class AbstractNode implements Iterable<AbstractNode>
 {
    /**
     * Returns a string representing the node of the tree.  Assumes 0 depth.
@@ -52,11 +54,79 @@ abstract class AbstractNode
    }
 
    /**
-    * Returns the vale of the node.
+    * Returns the value of the node.
     */
    public double getValue()
    {
       return 0;
+   }
+
+   /**
+    * An iterator that iterates only over the current node.
+    *
+    * We need AbstractNode to implement Iterable though so that we can iterate
+    * over any AbstractNode that we find.  Subclasses of AbstractNode that can
+    * have children will need to return an Iterator that runs through its
+    * children.
+    */
+   protected class BasicIterator implements Iterator<AbstractNode>
+   {
+      private boolean _hasDoneSelf; // have we returned the current node?
+      private AbstractNode _node;   // the node that we're iterating over
+
+      /**
+       * Default constructor.
+       */
+      public BasicIterator( AbstractNode node )
+      {
+         _hasDoneSelf = false;
+         _node = node;
+      }
+
+      /**
+       * Determines whether or not there is a node following the last-selected
+       * node.
+       *
+       * @returns True if we haven't returned ourself yet; otherwise, false.
+       */
+      public boolean hasNext()
+      {
+         return ( ! _hasDoneSelf );
+      }
+
+      /**
+       * Returns the next node in the sequence.
+       *
+       * @returns The current object if we haven't returned it yet.  Otherwise,
+       * null.
+       */
+      public AbstractNode next()
+      {
+         if ( _hasDoneSelf )
+         {
+            return null;
+         }
+         else
+         {
+            _hasDoneSelf = true;
+            return _node;
+         }
+      }
+
+      /**
+       * Not supported.
+       */
+      public void remove()
+      {
+      }
+   }
+
+   /**
+    * Returns an empty iterator.
+    */
+   public Iterator<AbstractNode> iterator()
+   {
+      return new BasicIterator( this );
    }
 }
 
