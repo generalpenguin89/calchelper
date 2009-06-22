@@ -4,6 +4,7 @@
  * 
  */
 
+package calchelper.gui;
 import javax.swing.*;
 
 public class GUIProcessor

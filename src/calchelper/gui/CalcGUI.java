@@ -5,6 +5,8 @@
  * 
  * 
  */
+package calchelper.gui;
+import calchelper.tree.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.border.*;

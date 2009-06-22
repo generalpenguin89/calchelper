@@ -8,6 +8,7 @@
  * by Ben Decato
  * University of New Hampshire CS Student
  */
+package calchelper.gui; 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
