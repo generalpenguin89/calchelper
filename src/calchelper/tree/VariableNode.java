@@ -13,12 +13,12 @@ package calchelper.tree;
 public class VariableNode extends OperandNode
 {
    String _name;
-
+   
    public VariableNode( String name )
    {
       _name = name;
    }
-
+   
    /**
     * Returns a string representation of the value.
     */
@@ -26,7 +26,7 @@ public class VariableNode extends OperandNode
    {
       return getName();
    }
-
+   
    /**
     * Returns the name of the variable.
     */
@@ -34,7 +34,7 @@ public class VariableNode extends OperandNode
    {
       return _name;
    }
-
+   
    /**
     * Indicates whether some other object is "equal to" this one. 
     */
@@ -61,9 +61,29 @@ public class VariableNode extends OperandNode
          }
       }
    }
-
+   
    public int hashCode()
    {
       return _name.hashCode();
    }
+   
+   
+   //-----------------------------------------
+   /** Integrate - Should only be called if there is a Variable alone
+     * By Jake Schwartz
+     */
+   public void integrate( )
+   {
+      //Make constant node to represent exponent
+      ConstantNode exp = new ConstantNode( 1 );
+      
+      //Make power operator
+      BinaryOperatorNode.Power pow = new BinaryOperatorNode.Power( this, exp );
+      
+      pow.integrate();
+      
+      //rorateLeft( "*" )
+      //rotateRight( "^" )
+   }
+   //-----------------------------------------
 }

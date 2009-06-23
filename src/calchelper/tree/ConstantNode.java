@@ -37,7 +37,7 @@ public class ConstantNode extends OperandNode
    {
       return _value;
    }
-
+   
    /**
     * Returns a string representation of the value.
     */
@@ -77,4 +77,20 @@ public class ConstantNode extends OperandNode
    {
       return ( int ) _value;
    }
+   
+   //-----------------------------------------
+   /** Integrate - This should only be called if there is a constant by itself
+     * By Jake Schwartz
+     */
+   public void integrate( )
+   {
+      //Make variable node
+      VariableNode var = new VariableNode( "x" );
+      
+      //Make constant node
+      BinaryOperatorNode.Multiplication mult = new BinaryOperatorNode.Multiplication( this, var );
+      
+      //rotateLeft();
+   }
+   //-----------------------------------------
 }

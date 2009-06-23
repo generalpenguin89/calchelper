@@ -128,5 +128,13 @@ abstract class AbstractNode implements Iterable<AbstractNode>
    {
       return new BasicIterator( this );
    }
+   
+   /**
+    * Empty method to be overriden by subclasses
+    */
+   public void integrate( )
+   {
+      
+   }
 }
 
