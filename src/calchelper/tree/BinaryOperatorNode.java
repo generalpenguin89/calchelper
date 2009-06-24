@@ -155,6 +155,20 @@ public abstract class BinaryOperatorNode extends OperatorNode
          this.getRight().integrate();
       }
       //---------------------------------------
+      
+      //---------------------- derive( ) ---------------------------------------
+      /**
+       * finds the derivative of this node
+       * by William Rideout
+       */
+      public void derive( )
+      {
+        //derive left side
+        this.getLeft( ).derive( );
+        
+        //derive right side
+        this.getRight( ).derive( );
+      }
    }
    
    public static class Multiplication extends BinaryOperatorNode
@@ -247,6 +261,20 @@ public abstract class BinaryOperatorNode extends OperatorNode
             getRight().integrate();
       }
       //-------------------------------------
+      
+      //---------------------- derive( ) ---------------------------------------
+      /**
+       * finds the derivative of this node
+       * by William Rideout
+       */
+      public void derive( )
+      {
+        //derive left side
+        this.getLeft( ).derive( );
+        
+        //derive right side
+        this.getRight( ).derive( );
+      }
    }
    
    public static class Subtraction extends BinaryOperatorNode
@@ -282,6 +310,20 @@ public abstract class BinaryOperatorNode extends OperatorNode
          this.getRight().integrate();
       }
       //----------------------------------------
+      
+      //---------------------- derive( ) ---------------------------------------
+      /**
+       * finds the derivative of this node
+       * by William Rideout
+       */
+      public void derive( )
+      {
+        //derive left side
+        this.getLeft( ).derive( );
+        
+        //derive right side
+        this.getRight( ).derive( );
+      }
    }
    
    public static class Division extends BinaryOperatorNode
@@ -302,6 +344,20 @@ public abstract class BinaryOperatorNode extends OperatorNode
       public void simplify()
       {
          super.simplify();
+      }
+      
+      //---------------------- derive( ) ---------------------------------------
+      /**
+       * finds the derivative of this node
+       * by William Rideout
+       */
+      public void derive( )
+      {
+        //derive left side
+        this.getLeft( ).derive( );
+        
+        //derive right side
+        this.getRight( ).derive( );
       }
    }
    
@@ -334,6 +390,20 @@ public abstract class BinaryOperatorNode extends OperatorNode
          //TO BE CONTINUED
       }
       //-----------------------------------------
+      
+      //---------------------- derive( ) ---------------------------------------
+      /**
+       * finds the derivative of this node
+       * by William Rideout
+       */
+      public void derive( )
+      {
+        //derive left side
+        this.getLeft( ).derive( );
+        
+        //derive right side
+        this.getRight( ).derive( );
+      }
    }
    
    public static class Power extends BinaryOperatorNode
@@ -378,5 +448,19 @@ public abstract class BinaryOperatorNode extends OperatorNode
          //********************************************
       }
       //-----------------------------------------------
+      
+      //---------------------- derive( ) ---------------------------------------
+      /**
+       * finds the derivative of this node
+       * by William Rideout
+       */
+      public void derive( )
+      {
+        //derive left side
+        this.getLeft( ).derive( );
+        
+        //derive right side
+        this.getRight( ).derive( );
+      }
    }
 }

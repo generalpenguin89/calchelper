@@ -136,5 +136,13 @@ abstract class AbstractNode implements Iterable<AbstractNode>
    {
       
    }
+   
+   /**
+    * Another empty method to be overridden
+    */
+   public void derive( )
+   {
+     
+   }
 }
 
