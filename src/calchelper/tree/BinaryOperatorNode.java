@@ -457,12 +457,15 @@ public abstract class BinaryOperatorNode extends OperatorNode
         if( getLeft( ) instanceof VariableNode && getRight( ) instanceof ConstantNode )
         {
           //save the value of the power... minus 1
-          double pow = getRight( ).getValue( ) - 1;
+          ConstantNode pow = new ConstantNode( getRight( ).getValue( ) - 1 );
           
           //create a new constant node.. this is the new coefficient that will be out front
           ConstantNode val = new ConstantNode( getRight( ).getValue( ) );
           
-          //NODE NEEDS TO BE PUT TOGETHER
+          //put the node together
+          Multiplication times = new Multiplication( getLeft( ), val );
+          setLeft( times );
+          setRight( pow );
         }
       }
    }

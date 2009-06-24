@@ -86,4 +86,18 @@ public class VariableNode extends OperandNode
       //rotateRight( "^" )
    }
    //-----------------------------------------
+   
+   //------------------------- derive( ) ---------------------------------------
+   /**
+    * creates a new ConstantNode with a valule of 1, since that is the derivative 
+    * for lone variables.
+    * by William Rideout
+    */
+   public void /*ConstantNode*/ derive( )
+   {
+     ConstantNode node = new ConstantNode( 1 );
+     
+     //might want to return this later
+     //return node;
+   }
 }
