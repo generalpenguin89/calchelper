@@ -1,13 +1,29 @@
+/*
+ * Monomial
+ */
 
 package calchelper.tree;
 
+/**
+ * Represents a Monomial with a given coefficient, variable, and power.
+ *
+ * In reality, this is a power function since we currently don't support
+ * multidimensional calculus.
+ *
+ * @author Patrick MacArthur
+ */
+
 class Monomial
 {
-   private boolean valid;
-   double coefficient;
-   String variable;
-   double power;
+   private boolean valid; // is the monomial valid?
+   double coefficient;    // the constant factor
+   String variable;       // the variable factor
+   double power;          // power that the variable factor is raised to
 
+   /**
+    * Builds a monomial from a node that is assumed to contain only
+    * multiplication, constants, variables, and power.
+    */
    public Monomial( AbstractNode node )
    {
       // Set some defaults
@@ -93,6 +109,9 @@ class Monomial
       //System.out.println( coefficient + " x " + power + " valid: " + valid );
    }
 
+   /**
+    * Returns the tree node associated with this monomial.
+    */
    public BinaryOperatorNode getTreeNode()
    {
       return NodeFactory.createBinaryOperatorNode( "*",
@@ -102,6 +121,10 @@ class Monomial
                    new ConstantNode( power ) ) );
    }
 
+   /**
+    * Returns an indication of whether or not this monomial is a valid monomial
+    * (e.g., the node it was generated from is valid).
+    */
    public boolean isValid()
    {
       return valid;

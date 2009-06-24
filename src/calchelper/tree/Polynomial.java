@@ -1,15 +1,35 @@
+/*
+ * Polynomial
+ */
+
 package calchelper.tree;
 
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Represents a polynomial part of an expression.
+ *
+ * @author Patrick MacArthur
+ */
+
 class Polynomial
 {
+   /** This maps coefficients to powers.
+    *
+    * For example, the expression 2x^3 would be represented by the map {3:2}.
+    */
    HashMap<Double, Double> // toil and trouble
                            map; 
    
+   /**
+    * Constructs a polynomial from the given node.
+    *
+    * @param node The node to convert to a polynomial.
+    */
    public Polynomial( AbstractNode node )
    {
+      // TODO: Add proper error-checking
       Monomial mon;
 
       map = new HashMap<Double, Double>();
@@ -81,6 +101,13 @@ class Polynomial
       }
    }
 
+   /**
+    * Merges a polynomial with this one by multiplying coefficients.
+    *
+    * @param poly The polynomial to merge.
+    * @param constant A constant to multiply by.  This is used so that addition
+    * and subtraction can be handled with a single method.
+    */
    private void merge( Polynomial poly, double constant )
    {
       for ( Map.Entry<Double, Double> entry : poly.map.entrySet() )
@@ -97,6 +124,12 @@ class Polynomial
       }
    }
 
+   /**
+    * Returns the appropriate constant based on whether the node is addition or
+    * subtraction.
+    *
+    * @return 1 for addition, -1 for subtraction, 0 if not an additive node
+    */
    private double getMultiplicationConstant( AbstractNode node )
    {
       if ( node instanceof BinaryOperatorNode.Addition )
@@ -113,6 +146,14 @@ class Polynomial
       }
    }
 
+   /**
+    * Distributes a monomial over an additive node.
+    *
+    * @param node The node to distribute over.  Assumed that this is an
+    * addition node.
+    * @param mon The monomial factor that is multiplied to each argument of the
+    * addition/subtraction node.
+    */
    private void distribute( AbstractNode node, Monomial mon )
    {
       double constant = getMultiplicationConstant( node );
@@ -126,6 +167,9 @@ class Polynomial
       mergeMultiplication( binOpNode.getRight(), mon.getTreeNode(), constant );
    }
 
+   /**
+    * Does distribution of two addition nodes.
+    */
    private void distribute( AbstractNode left, AbstractNode right )
    {
       double lC = getMultiplicationConstant( left  );
@@ -147,6 +191,9 @@ class Polynomial
       mergeMultiplication( binLeft.getRight(), binRight.getRight(), lC * rC );
    }
 
+   /**
+    * Merges the result of multiplying the two nodes given as arguments.
+    */
    private void mergeMultiplication( AbstractNode first,
                                      AbstractNode second,
                                      double constant )
