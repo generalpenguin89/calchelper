@@ -15,7 +15,7 @@ public class CalcDerivative
   //========================== Class Variables ================================= 
   
   //========================== Instance Variables ==============================
-  String ex;  //the expression, result of user input
+  String ex;  //the expressionreturn, result of user input
   ExpressionTree tree; //this tree will be created using ex
   TreeFactory tFact; //the builder of the tree
   
@@ -63,7 +63,7 @@ public class CalcDerivative
    */
   public void derive( )
   {
-    if( 
+    //does nothing as of yet 
   }
 
   //========================== Main Method =====================================
