@@ -93,4 +93,14 @@ public class ConstantNode extends OperandNode
       //rotateLeft();
    }
    //-----------------------------------------
+   
+   //------------------------- derive( ) ---------------------------------------
+   /**
+    * sets the value to zero, since that is the rule of derivation for constants
+    * by William Rideout
+    */
+   public void derive( )
+   {
+     _value = 0;
+   }
 }

@@ -262,18 +262,22 @@ public abstract class BinaryOperatorNode extends OperatorNode
       }
       //-------------------------------------
       
-      //---------------------- derive( ) ---------------------------------------
+      //---------------------- derive() ---------------------------------------
       /**
        * finds the derivative of this node
        * by William Rideout
        */
-      public void derive( )
+      public void derive()
       {
-        //derive left side
-        this.getLeft( ).derive( );
+        //example: 2x^2
+        if( getLeft() instanceof ConstantNode && getRight() instanceof 
+             BinaryOperatorNode.Power )
+        {
+          getRight( ).derive( );
+          simplify( );
+        }
         
-        //derive right side
-        this.getRight( ).derive( );
+        //product rule will go here
       }
    }
    
@@ -353,11 +357,8 @@ public abstract class BinaryOperatorNode extends OperatorNode
        */
       public void derive( )
       {
-        //derive left side
-        this.getLeft( ).derive( );
-        
-        //derive right side
-        this.getRight( ).derive( );
+        //UNIMPLEMENTED
+        //quotient rule will go here
       }
    }
    
@@ -398,11 +399,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
        */
       public void derive( )
       {
-        //derive left side
-        this.getLeft( ).derive( );
-        
-        //derive right side
-        this.getRight( ).derive( );
+        //UNIMPLEMENTED
       }
    }
    
@@ -456,11 +453,17 @@ public abstract class BinaryOperatorNode extends OperatorNode
        */
       public void derive( )
       {
-        //derive left side
-        this.getLeft( ).derive( );
-        
-        //derive right side
-        this.getRight( ).derive( );
+        //case: x^n ==> nx^(n-1)
+        if( getLeft( ) instanceof VariableNode && getRight( ) instanceof ConstantNode )
+        {
+          //save the value of the power... minus 1
+          double pow = getRight( ).getValue( ) - 1;
+          
+          //create a new constant node.. this is the new coefficient that will be out front
+          ConstantNode val = new ConstantNode( getRight( ).getValue( ) );
+          
+          //NODE NEEDS TO BE PUT TOGETHER
+        }
       }
    }
 }
