@@ -142,7 +142,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
          }
       }
       
-      //---------------------------------------
+      //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       /** Integrate - 
         * By Jake Schwartz
         */
@@ -154,7 +154,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
          //Integreate Right side
          this.getRight().integrate();
       }
-      //---------------------------------------
+      //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       
       //---------------------- derive( ) ---------------------------------------
       /**
@@ -250,7 +250,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
           }*/
       }
       
-      //---------------------------------------
+      //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       /** Integrate - 
         * By Jake Schwartz
         */
@@ -259,8 +259,10 @@ public abstract class BinaryOperatorNode extends OperatorNode
          //If there is a coefficient, integrate the right node
          if( getLeft() instanceof ConstantNode )
             getRight().integrate();
+         
+         simplify();
       }
-      //-------------------------------------
+      //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       
       //---------------------- derive() ---------------------------------------
       /**
@@ -301,7 +303,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
          super.simplify();
       }
       
-      //---------------------------------------
+      //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       /** Integrate - 
         * By Jake Schwartz
         */
@@ -313,7 +315,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
          //Integreate Right side
          this.getRight().integrate();
       }
-      //----------------------------------------
+      //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       
       //---------------------- derive( ) ---------------------------------------
       /**
@@ -350,6 +352,16 @@ public abstract class BinaryOperatorNode extends OperatorNode
          super.simplify();
       }
       
+      //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      /** Integrate - 
+        * By Jake Schwartz
+        */
+      public void integrate( )
+      {
+         //TO BE CONTINUED
+      }
+      //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      
       //---------------------- derive( ) ---------------------------------------
       /**
        * finds the derivative of this node
@@ -382,7 +394,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
          super.simplify();
       }
       
-      //-----------------------------------------
+      //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       /** Integrate - 
         * By Jake Schwartz
         */
@@ -390,7 +402,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
       {
          //TO BE CONTINUED
       }
-      //-----------------------------------------
+      //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       
       //---------------------- derive( ) ---------------------------------------
       /**
@@ -423,7 +435,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
          super.simplify();
       }
         
-      //------------------------------------------------
+      //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       /** Integrate - 
         * By Jake Schwartz
         */
@@ -438,13 +450,11 @@ public abstract class BinaryOperatorNode extends OperatorNode
             //Make coeffiecient nodes
             ConstantNode coef = new ConstantNode( (double)(1) / getRight().getValue() );
             Multiplication mult = new Multiplication( coef, getLeft() );
-            setLeft( mult );
-            super.rotateRight( "*" );
-            simplify();
+            this.setLeft( mult );
          }
          //********************************************
       }
-      //-----------------------------------------------
+      //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       
       //---------------------- derive( ) ---------------------------------------
       /**
