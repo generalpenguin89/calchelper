@@ -86,6 +86,14 @@ abstract class OperatorNode extends AbstractNode
          {
             _children.set( x, new ConstantNode( _children.get( x ).getValue() ) );
          }
+         else
+         {
+            Polynomial poly = new Polynomial( _children.get( x ) );
+            if ( poly.isValid() )
+            {
+               _children.set( x, poly );
+            }
+         }
       }
    }
 
