@@ -220,6 +220,22 @@ class Polynomial extends OperandNode
       return _isValid;
    }
 
+   /**
+    * Gets a string representation.
+    */
+   public String getStringValue()
+   {
+      return map.toString();
+   }
+
+   /**
+    * Gets a string representation designed to fit into the tree.
+    */
+   public String toString()
+   {
+      return this.getStringValue();
+   }
+
    public static void unitTest( String infix ) throws ExpressionException
    {
       TreeFactory factory;
