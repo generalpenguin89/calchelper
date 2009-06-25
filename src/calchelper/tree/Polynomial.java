@@ -13,14 +13,15 @@ import java.util.Map;
  * @author Patrick MacArthur
  */
 
-class Polynomial
+class Polynomial extends OperandNode
 {
-   /** This maps coefficients to powers.
+   /* This maps coefficients to powers.
     *
     * For example, the expression 2x^3 would be represented by the map {3:2}.
     */
    HashMap<Double, Double> // toil and trouble
                            map; 
+   private boolean _isValid;
    
    /**
     * Constructs a polynomial from the given node.
@@ -33,6 +34,7 @@ class Polynomial
       Monomial mon;
 
       map = new HashMap<Double, Double>();
+      _isValid = true;
 
       if ( node.hasValue() || node instanceof VariableNode )
       {
@@ -40,6 +42,7 @@ class Polynomial
          if ( ! mon.isValid() )
          {
             //throw new ExpressionException( "Invalid monomial.", "" );
+            _isValid = false;
             return;
          }
          map.put( mon.power, mon.coefficient );
@@ -95,9 +98,15 @@ class Polynomial
          if ( ! mon.isValid() )
          {
             //throw new ExpressionException( "Invalid monomial.", "" );
+            _isValid = false;
             return;
          }
          map.put( mon.power, mon.coefficient );
+      }
+
+      if ( ! _isValid )
+      {
+         System.err.println( "WARNING: Invalid Polynomial." );
       }
    }
 
@@ -115,7 +124,7 @@ class Polynomial
          if ( map.containsKey( entry.getKey() ) )
          {
             map.put( entry.getKey(),
-                  map.get( entry.getKey() ) * entry.getValue() * constant );
+                  ( map.get( entry.getKey() ) + entry.getValue() ) * constant );
          }
          else
          {
@@ -201,6 +210,14 @@ class Polynomial
       merge( new Polynomial( NodeFactory.createBinaryOperatorNode( "*", first,
                                                                    second ) ),
              constant );
+   }
+
+   /**
+    * Returns true if this polynomial is valid.
+    */
+   public boolean isValid()
+   {
+      return _isValid;
    }
 
    public static void unitTest( String infix ) throws ExpressionException
