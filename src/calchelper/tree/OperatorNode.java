@@ -81,7 +81,6 @@ abstract class OperatorNode extends AbstractNode
       // Recurse to each child node
       for ( int x = 0; x < _children.size(); ++x )
       {
-         _children.get( x ).simplify();
          if ( _children.get( x ).hasValue() )
          {
             _children.set( x, new ConstantNode( _children.get( x ).getValue() ) );
@@ -92,6 +91,10 @@ abstract class OperatorNode extends AbstractNode
             if ( poly.isValid() )
             {
                _children.set( x, poly );
+            }
+            else
+            {
+               _children.get( x ).simplify();
             }
          }
       }
