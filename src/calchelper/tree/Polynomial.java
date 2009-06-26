@@ -20,7 +20,7 @@ class Polynomial extends OperandNode
     * For example, the expression 2x^3 would be represented by the map {3:2}.
     */
    HashMap<Double, Double> // toil and trouble
-                           map; 
+      map; 
    private boolean _isValid;
    
    /**
@@ -32,10 +32,10 @@ class Polynomial extends OperandNode
    {
       // TODO: Add proper error-checking
       Monomial mon;
-
+      
       map = new HashMap<Double, Double>();
       _isValid = true;
-
+      
       if ( node.hasValue() || node instanceof VariableNode )
       {
          mon = new Monomial( node );
@@ -50,7 +50,7 @@ class Polynomial extends OperandNode
       else if ( node instanceof BinaryOperatorNode.Addition )
       {
          BinaryOperatorNode.Addition addNode = 
-               ( BinaryOperatorNode.Addition ) node;
+            ( BinaryOperatorNode.Addition ) node;
          for ( int x = 0; x < addNode.nodeCount(); ++x )
          {
             merge( new Polynomial( addNode.getNode( x ) ), 1 );
@@ -59,7 +59,7 @@ class Polynomial extends OperandNode
       else if ( node instanceof BinaryOperatorNode.Subtraction )
       {
          BinaryOperatorNode.Subtraction sNode = 
-               ( BinaryOperatorNode.Subtraction ) node;
+            ( BinaryOperatorNode.Subtraction ) node;
          merge( new Polynomial( sNode.getLeft()  ),  1 );
          merge( new Polynomial( sNode.getRight() ), -1 );
       }
@@ -76,7 +76,7 @@ class Polynomial extends OperandNode
                ( BinaryOperatorNode.Multiplication ) node;
             Monomial leftMon = new Monomial( mNode.getLeft() );
             Monomial rightMon = new Monomial( mNode.getRight() );
-
+            
             // We need to distribute a node over a monomial
             if ( leftMon.isValid() && ! rightMon.isValid() )
             {
@@ -103,13 +103,13 @@ class Polynomial extends OperandNode
          }
          map.put( mon.power, mon.coefficient );
       }
-
+      
       if ( ! _isValid )
       {
          System.err.println( "WARNING: Invalid Polynomial." );
       }
    }
-
+   
    /**
     * Merges a polynomial with this one by multiplying coefficients.
     *
@@ -124,7 +124,7 @@ class Polynomial extends OperandNode
          if ( map.containsKey( entry.getKey() ) )
          {
             map.put( entry.getKey(),
-                  ( map.get( entry.getKey() ) + entry.getValue() ) * constant );
+                    ( map.get( entry.getKey() ) + entry.getValue() ) * constant );
          }
          else
          {
@@ -132,7 +132,7 @@ class Polynomial extends OperandNode
          }
       }
    }
-
+   
    /**
     * Returns the appropriate constant based on whether the node is addition or
     * subtraction.
@@ -154,7 +154,7 @@ class Polynomial extends OperandNode
          return 0;
       }
    }
-
+   
    /**
     * Distributes a monomial over an additive node.
     *
@@ -168,14 +168,14 @@ class Polynomial extends OperandNode
       double constant = getMultiplicationConstant( node );
       
       if ( constant == 0 ) return;
-
+      
       BinaryOperatorNode binOpNode = ( BinaryOperatorNode ) node;
-
+      
       // constant only applies to right node
       mergeMultiplication( binOpNode.getLeft(), mon.getTreeNode(), 1 );
       mergeMultiplication( binOpNode.getRight(), mon.getTreeNode(), constant );
    }
-
+   
    /**
     * Does distribution of two addition nodes.
     */
@@ -186,10 +186,10 @@ class Polynomial extends OperandNode
       
       // if either constant is 0, can't distribute
       if ( lC * rC == 0 ) return;
-
+      
       BinaryOperatorNode binLeft  = ( BinaryOperatorNode ) left;
       BinaryOperatorNode binRight = ( BinaryOperatorNode ) right;
-
+      
       //First
       mergeMultiplication( binLeft.getLeft(),  binRight.getLeft(),  1 );
       //Outer
@@ -199,19 +199,19 @@ class Polynomial extends OperandNode
       //Last
       mergeMultiplication( binLeft.getRight(), binRight.getRight(), lC * rC );
    }
-
+   
    /**
     * Merges the result of multiplying the two nodes given as arguments.
     */
    private void mergeMultiplication( AbstractNode first,
-                                     AbstractNode second,
-                                     double constant )
+                                    AbstractNode second,
+                                    double constant )
    {
       merge( new Polynomial( NodeFactory.createBinaryOperatorNode( "*", first,
-                                                                   second ) ),
-             constant );
+                                                                  second ) ),
+            constant );
    }
-
+   
    /**
     * Returns true if this polynomial is valid.
     */
@@ -219,7 +219,7 @@ class Polynomial extends OperandNode
    {
       return _isValid;
    }
-
+   
    /**
     * Gets a string representation.
     */
@@ -227,7 +227,7 @@ class Polynomial extends OperandNode
    {
       return map.toString();
    }
-
+   
    /**
     * Gets a string representation designed to fit into the tree.
     */
@@ -235,14 +235,14 @@ class Polynomial extends OperandNode
    {
       return this.getStringValue();
    }
-
+   
    public static void unitTest( String infix ) throws ExpressionException
    {
       TreeFactory factory;
       ExpressionTree tree;
       AbstractNode treeRoot;
       Polynomial poly;
-
+      
       System.out.println( "Unit test with expression: " + infix );
       factory = new TreeFactory( infix );
       tree = factory.buildTree();
@@ -251,7 +251,7 @@ class Polynomial extends OperandNode
       System.out.println( "Polynomial map: " + poly.map );
       System.out.println();
    }
-
+   
    public static void main( String[] args ) throws ExpressionException
    {
       // Basic unit tests
@@ -263,21 +263,21 @@ class Polynomial extends OperandNode
       unitTest( "x * x" );
       unitTest( "x * 2 * x" );
       unitTest( "x + 2 * x ^ 2" );
-
+      
       // Single distribution unit tests
       System.out.println( "------ Group 2: Single distribution tests -----" );
       unitTest( "4 * ( x + 3 )" );
       unitTest( "( x + 3 ) * 4" );
       unitTest( "x * ( x + 3 )" );
       unitTest( "( x + 3 ) * x" );
-
+      
       // Sign tests
       System.out.println( "------ Group 3: Sign tests -----" );
       unitTest( "4 * ( x + 3 )" );
       unitTest( "4 * ( x - 3 )" );
       unitTest( "( x + 3 ) * x" );
       unitTest( "( x - 3 ) * x" );
-
+      
       // Foil tests
       System.out.println( "------ Group 4: FOIL tests -----" );
       unitTest( "( 4 + x ^ 2 ) * ( x + 3 )" );
@@ -286,4 +286,19 @@ class Polynomial extends OperandNode
       unitTest( "( 3 + x ) * ( 4 - x ^ 2 )" );
       unitTest( "( 3 - x ) * ( 4 - x ^ 2 )" );
    }
+   
+   //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   /** Integrate - 
+     * By Jake Schwartz
+     */
+   public void integrate( )
+   {
+      for( Map.Entry<Double, Double> entry : this.map.entrySet() )
+      {
+         entry.setValue( entry.getValue() + 1d );
+         //entry.setKey( entry.getKey() * (1d / entry.getValue() ) ); 
+      }
+   }
+   //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   
 }
