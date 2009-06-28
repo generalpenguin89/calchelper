@@ -40,11 +40,64 @@ public class UnaryOperatorNode extends OperatorNode
       return _children.get( 0 );
    }
 
-   /*
+   /**
     * Checks the validity of the operator inside the node.
     */
    protected boolean isValid()
    {
       return true;
+   }
+
+   abstract static class TrigFunction extends UnaryOperatorNode
+   {
+      /**
+       * Constructs a TrigFunction.
+       */
+      public TrigFunction( String op, AbstractNode child )
+      {
+         super( op, child );
+      }
+   }
+
+   /**
+    * Sine
+    */
+   static class SinNode extends TrigFunction
+   {
+      /**
+       * Constructs a SinNode.
+       */
+      public SinNode( AbstractNode child )
+      {
+         super( "sin", child );
+      }
+   }
+
+   /**
+    * Cosine
+    */
+   static class CosNode extends TrigFunction
+   {
+      public CosNode( AbstractNode child )
+      {
+      /**
+       * Constructs a CosNode.
+       */
+         super( "cos", child );
+      }
+   }
+
+   /**
+    * Tangent
+    */
+   static class TanNode extends TrigFunction
+   {
+      /**
+       * Constructs a TanNode.
+       */
+      public TanNode( AbstractNode child )
+      {
+         super( "tan", child );
+      }
    }
 }
