@@ -12,17 +12,15 @@
 
 package calchelper.tree;
 
-import java.text.*;
 
-import java.util.regex.Pattern;
-import java.util.regex.MatchResult;
+import java.text.NumberFormat;
+import java.text.ParsePosition;
 import java.util.Scanner;
 import java.util.Stack;
 
 public class TreeFactory
 {
    private static final String OPERATORS = "()+-*/%^\\";
-   private static final Pattern expressionPattern = Pattern.compile( "([0-9]*)([A-Za-z]?)(\\[A-Za-z]+)?" );
 
    private Stack<String> _opStack;
    private Stack<AbstractNode> _randStack;
@@ -180,14 +178,14 @@ public class TreeFactory
       return tree;
    }
 
-   /*
+   /**
     * buildOpNode()
     *
     * Builds the operator node from an operator and the top two items off of
     * the operand stack.
     *
-    * op: The operator.
-    * stack: The operand stack.
+    * @param op The operator.
+    * @param stack The operand stack.
     *
     * Throws ExpressionException if the expression is invalid.
     */
