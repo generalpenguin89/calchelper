@@ -12,12 +12,20 @@
 
 package calchelper.tree;
 
+import java.text.*;
+
+import java.util.regex.Pattern;
+import java.util.regex.MatchResult;
 import java.util.Scanner;
 import java.util.Stack;
 
 public class TreeFactory
 {
-   private static final String OPERATORS = "()+-*/%^";
+   private static final String OPERATORS = "()+-*/%^\\";
+   private static final Pattern expressionPattern = Pattern.compile( "([0-9]*)([A-Za-z]?)(\\[A-Za-z]+)?" );
+
+   private Stack<String> _opStack;
+   private Stack<AbstractNode> _randStack;
 
    private String _infix;
 
@@ -29,6 +37,74 @@ public class TreeFactory
       _infix = infix;
    }
 
+   private void pushDouble( double num )
+   {
+      System.err.println( "Pushed double: " + num );
+      _randStack.push( new ConstantNode( num ) );
+   }
+
+   private void pushVariable( String var )
+   {
+      System.err.println( "Pushed variable: " + var );
+      _randStack.push( new VariableNode( var ) );
+   }
+
+   private char opposite( char ch )
+   {
+      switch ( ch )
+      {
+         case ')': return '(';
+         case '}': return '{';
+         case ']': return '[';
+         case '(': return ')';
+         case '{': return '}';
+         case '[': return ']';
+         default: return ch;
+      }
+   }
+
+   private void parseOperator( String token, ParsePosition pos )
+      throws ExpressionException
+   {
+      char ch = token.charAt( pos.getIndex() );
+      
+      // We have an operator
+      if ( ch == '\\' )
+      {
+         System.err.println( "Found LaTeX operator.  Not yet implemented." );
+      }
+      else if ( ch == '(' || ch == '{' || ch == '[' )
+      {
+         _opStack.push( String.valueOf( ch ) );
+      }
+      else if ( ch == ')' || ch == '}' || ch == ']' )
+      {
+         while( ! ( _opStack.isEmpty() ||
+               _opStack.peek().equals( String.valueOf( opposite( ch ) ) ) ) )
+         {
+            _randStack.push( buildOpNode( _opStack.pop(), _randStack ) );
+         }
+
+         if ( _opStack.isEmpty() )
+         {
+            throw new ExpressionException( "Missing operator.", _infix );
+         }
+
+         _opStack.pop(); // throw away the left parenthesis
+      }
+      else
+      {
+         String op = String.valueOf( ch );
+         System.err.println( "operator found in " + token );
+         while ( ! _opStack.isEmpty() &&
+               precedence( _opStack.peek() ) >= precedence( op ) )
+         {
+            _randStack.push( buildOpNode( _opStack.pop(), _randStack ) );
+         }
+         _opStack.push( op );
+      }
+   }
+
    /**
     * buildTree()
     *
@@ -38,66 +114,69 @@ public class TreeFactory
     */
    public ExpressionTree buildTree() throws ExpressionException
    {
-      Stack<String> opStack = new Stack<String>();
-      Stack<AbstractNode> randStack = new Stack<AbstractNode>();
+      _opStack = new Stack<String>();
+      _randStack = new Stack<AbstractNode>();
 
       Scanner scanner = new Scanner( _infix );
       while ( scanner.hasNext() )
       {
          String token = scanner.next();
 
-         if ( ! OPERATORS.contains( token ) )
+         ParsePosition pos = new ParsePosition( 0 );
+
+         boolean needsMultiply = false;
+         while ( pos.getIndex() < token.length() )
          {
-            try
+            // First try to find a number
+            Number num = NumberFormat.getNumberInstance().parse( token, pos );
+            if ( num != null )
             {
-               randStack.push( new ConstantNode( Double.parseDouble( token ) ) );
-            }
-            catch ( NumberFormatException e )
-            {
-               randStack.push( new VariableNode( token ) );
-            }
-         }
-         else if ( token.equals( "(" ) )
-         {
-            opStack.push( token );
-         }
-         else if ( token.equals( ")" ) )
-         {
-            while( ! ( opStack.isEmpty() || opStack.peek().equals( "(" ) ) )
-            {
-               randStack.push( buildOpNode( opStack.pop(), randStack ) );
+               System.err.println( "Next index: " + pos.getIndex() );
+               System.err.println( "Token len: " + token.length() );
+               pushDouble( num.doubleValue() );
+               needsMultiply = true;
+               continue;
             }
 
-            if ( opStack.isEmpty() )
-            {
-               throw new ExpressionException( "Missing operator.", _infix );
-            }
+            // Subtoken
+            char ch = token.charAt( pos.getIndex() );
+            String st = String.valueOf( ch );
 
-            opStack.pop(); // throw away the left parenthesis
-         }
-         else
-         {
-            while ( ! opStack.isEmpty() &&
-                  precedence( opStack.peek() ) >= precedence( token ) )
+            if ( ! OPERATORS.contains( st ) )
             {
-               randStack.push( buildOpNode( opStack.pop(), randStack ) );
+               pushVariable( st );
+               if ( needsMultiply )
+               {
+                  _randStack.push( buildOpNode( "*", _randStack ) );
+               }
+               else
+               {
+                  needsMultiply = true;
+               }
+               pos.setIndex( pos.getIndex() + 1 );
             }
-            opStack.push( token );
+            else
+            {
+               needsMultiply = false;
+               parseOperator( token, pos );
+               pos.setIndex( pos.getIndex() + 1 );
+            }
          }
       }
-      while ( ! opStack.isEmpty() )
+
+      while ( ! _opStack.isEmpty() )
       {
-         randStack.push( buildOpNode( opStack.pop(), randStack ) );
+         _randStack.push( buildOpNode( _opStack.pop(), _randStack ) );
       }
 
-      if ( randStack.size() != 1 )
+      if ( _randStack.size() != 1 )
       {
          throw new ExpressionException(
             "Invalid expression; too many operands or too few operators.",
             _infix );
       }
 
-      ExpressionTree tree = new ExpressionTree( randStack.pop() );
+      ExpressionTree tree = new ExpressionTree( _randStack.pop() );
       return tree;
    }
 
@@ -136,6 +215,8 @@ public class TreeFactory
 
       OperatorNode newNode = NodeFactory.createBinaryOperatorNode( 
             op, leftNode, rightNode );
+
+      System.err.println( "Created opnode: " + newNode );
 
       if ( newNode != null )
       {
@@ -183,6 +264,7 @@ public class TreeFactory
       TreeFactory builder = new TreeFactory ( expr );
       ExpressionTree tree = builder.buildTree();
       tree.simplify();
+      System.out.println( expr );
       System.out.println( tree );
    }
 
@@ -197,5 +279,10 @@ public class TreeFactory
       unitTest( "2 + ( 4 * 5 )" );
       unitTest( "( 2 + 4 ) * 5" );
       unitTest( "( 4 / ( 5 + 5 ) )" );
+      unitTest( "4+5" );
+      unitTest( "4+a" );
+      unitTest( "4a+5a" );
+      unitTest( "4a*5a" );
+      unitTest( "(4a*5a)" );
    }
 }
