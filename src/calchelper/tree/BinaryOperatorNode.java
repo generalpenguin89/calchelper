@@ -200,7 +200,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
           * easier to deal with.
           */
          
-         // FIXME: Add distributive property
+         // XXX: This should be unnecessary now
          
          System.out.println( "Simplifying multiplication . . . " );
          
