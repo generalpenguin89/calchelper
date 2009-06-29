@@ -24,6 +24,12 @@ public class ExpressionTree
     */
    public void simplify()
    {
+      Polynomial poly = new Polynomial( _root );
+      if ( poly.isValid() )
+      {
+         _root = poly;
+      }
+      
       _root.simplify();
    }
 
