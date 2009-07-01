@@ -11,7 +11,7 @@ package calchelper.tree;
 public class ExpressionTree
 {
    // instance variables
-   /*private*/ AbstractNode _root;
+   private AbstractNode _root;
 
    // Constructor
    public ExpressionTree( AbstractNode root )
@@ -31,6 +31,14 @@ public class ExpressionTree
       }
       
       _root.simplify();
+   }
+   
+   /**
+    * Returns the root node of the tree.
+    */
+   AbstractNode getRoot()
+   {
+   	return _root;
    }
 
    /**
@@ -66,4 +74,21 @@ public class ExpressionTree
       //FIXME: this is a stub
       return null;
    }
+   
+   /**
+    * equals()
+    * 
+    * Returns true if the object represents the same tree as this one.
+    */
+   public boolean equals( Object obj )
+   {
+   	if ( ! ( obj instanceof ExpressionTree ) )
+   	{
+   		return false;
+   	}
+   	ExpressionTree tree = ( ExpressionTree ) obj;
+   	
+   	return this._root.equals( tree._root );
+   }
+   
 }

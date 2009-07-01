@@ -191,5 +191,38 @@ abstract class OperatorNode extends AbstractNode
    {
       return new TreeIterator( this );
    }
+   
+   /**
+    * Returns true if the object represents the same subtree as this object.
+    */
+   public boolean equals( Object obj )
+   {
+   	if ( ! ( obj instanceof OperatorNode ) )
+   	{
+   		System.err.println( "not opnode" );
+   		return false;
+   	}
+   	OperatorNode opNode = ( OperatorNode ) obj;
+   	
+   	if ( this.nodeCount() != opNode.nodeCount() )
+   	{
+   		System.err.println( "nodecount not same" );
+   		return false;
+   	}
+   	
+   	for ( int x = 0; x < this.nodeCount(); ++x )
+   	{
+   		if ( ! this._children.get( x ).equals( opNode._children.get( x ) ) )
+   		{
+   			System.err.print( "operand " + x + " not equal: " );
+   			System.err.println( this._children.get( x ) + 
+   					" " + opNode._children.get( x ) );
+   			return false;
+   		}
+   	}
+   	
+   	// Must be equal
+   	return true;
+   }
 }
 

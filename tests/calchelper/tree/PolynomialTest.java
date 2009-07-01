@@ -4,10 +4,12 @@
 
 package calchelper.tree;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.HashMap;
-import java.util.Map;
-import org.junit.*;
-import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * JUnit-based test harness for Polynomial.
@@ -31,7 +33,7 @@ public class PolynomialTest
 
       factory = new TreeFactory( infix );
       tree = factory.buildTree();
-      treeRoot = tree._root;
+      treeRoot = tree.getRoot();
       poly = new Polynomial( treeRoot );
       return poly;
    }

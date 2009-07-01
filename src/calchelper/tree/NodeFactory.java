@@ -54,4 +54,13 @@ public class NodeFactory
          return null;
       }
    }
+   
+   public static BinaryOperatorNode createBinaryOperatorNode( String op,
+   																			  double left,
+   																			  double right )
+   {
+   	return createBinaryOperatorNode( op,
+   												new ConstantNode( left ),
+   												new ConstantNode( right ) );
+   }
 }

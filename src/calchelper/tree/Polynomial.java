@@ -246,7 +246,7 @@ class Polynomial extends OperandNode
       System.out.println( "Unit test with expression: " + infix );
       factory = new TreeFactory( infix );
       tree = factory.buildTree();
-      treeRoot = tree._root;
+      treeRoot = tree.getRoot();
       poly = new Polynomial( treeRoot );
       System.out.println( "Polynomial map: " + poly.map );
       System.out.println();
