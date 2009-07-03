@@ -105,7 +105,7 @@ class Monomial
       }
 
       //Want really verbose meaningless output?  Uncomment this line
-      if ( variable != null )
+      /*if ( variable != null )
       {
          System.out.println( coefficient + " " + variable.getStringValue() +
                              "^" + power + " valid: " + valid );
@@ -113,7 +113,7 @@ class Monomial
       else
       {
          System.out.println( coefficient + " ?^" + power + " valid: " + valid );
-      }
+      }*/
    }
 
    public boolean isVariableSame( Monomial mon )

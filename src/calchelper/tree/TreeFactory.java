@@ -37,13 +37,13 @@ public class TreeFactory
 
    private void pushDouble( double num )
    {
-      System.err.println( "Pushed double: " + num );
+      //System.err.println( "Pushed double: " + num );
       _randStack.push( new ConstantNode( num ) );
    }
 
    private void pushVariable( String var )
    {
-      System.err.println( "Pushed variable: " + var );
+      //System.err.println( "Pushed variable: " + var );
       _randStack.push( new VariableNode( var ) );
    }
 
@@ -93,7 +93,7 @@ public class TreeFactory
       else
       {
          String op = String.valueOf( ch );
-         System.err.println( "operator found in " + token );
+         //System.err.println( "operator found in " + token );
          while ( ! _opStack.isEmpty() &&
                precedence( _opStack.peek() ) >= precedence( op ) )
          {
@@ -129,8 +129,8 @@ public class TreeFactory
             Number num = NumberFormat.getNumberInstance().parse( token, pos );
             if ( num != null )
             {
-               System.err.println( "Next index: " + pos.getIndex() );
-               System.err.println( "Token len: " + token.length() );
+               //System.err.println( "Next index: " + pos.getIndex() );
+               //System.err.println( "Token len: " + token.length() );
                pushDouble( num.doubleValue() );
                needsMultiply = true;
                continue;
@@ -214,7 +214,7 @@ public class TreeFactory
       OperatorNode newNode = NodeFactory.createBinaryOperatorNode( 
             op, leftNode, rightNode );
 
-      System.err.println( "Created opnode: " + newNode );
+      //System.err.println( "Created opnode: " + newNode );
 
       if ( newNode != null )
       {
@@ -252,35 +252,5 @@ public class TreeFactory
          default:
             return -1;
       }
-   }
-
-   /**
-    * Unit test.
-    */
-   public static void unitTest( String expr ) throws ExpressionException
-   {
-      TreeFactory builder = new TreeFactory ( expr );
-      ExpressionTree tree = builder.buildTree();
-      tree.simplify();
-      System.out.println( expr );
-      System.out.println( tree );
-   }
-
-   /**
-    * Unit test for TreeFactory.
-    */
-   public static void main( String[] argrs ) throws ExpressionException
-   {
-      unitTest( "4 + 5" );
-      unitTest( "( 4 + 5 )" );
-      unitTest( "( 2 + 4 * 5 )" );
-      unitTest( "2 + ( 4 * 5 )" );
-      unitTest( "( 2 + 4 ) * 5" );
-      unitTest( "( 4 / ( 5 + 5 ) )" );
-      unitTest( "4+5" );
-      unitTest( "4+a" );
-      unitTest( "4a+5a" );
-      unitTest( "4a*5a" );
-      unitTest( "(4a*5a)" );
    }
 }

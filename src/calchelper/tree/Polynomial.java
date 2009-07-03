@@ -19,8 +19,9 @@ class Polynomial extends OperandNode
     *
     * For example, the expression 2x^3 would be represented by the map {3:2}.
     */
-   HashMap<Double, Double> // toil and trouble
-      map; 
+   HashMap<Double, Double> /* toil and trouble */ map;
+   
+   // Is this polynomial valid?
    private boolean _isValid;
    
    /**
@@ -236,22 +237,6 @@ class Polynomial extends OperandNode
       return this.getStringValue();
    }
    
-   public static void unitTest( String infix ) throws ExpressionException
-   {
-      TreeFactory factory;
-      ExpressionTree tree;
-      AbstractNode treeRoot;
-      Polynomial poly;
-      
-      System.out.println( "Unit test with expression: " + infix );
-      factory = new TreeFactory( infix );
-      tree = factory.buildTree();
-      treeRoot = tree.getRoot();
-      poly = new Polynomial( treeRoot );
-      System.out.println( "Polynomial map: " + poly.map );
-      System.out.println();
-   }
-   
    public static void intTest( String infix ) throws ExpressionException
    {
       TreeFactory factory;
@@ -270,40 +255,8 @@ class Polynomial extends OperandNode
    }
    
    public static void main( String[] args ) throws ExpressionException
-   {      
-      // Basic unit tests
-      System.out.println( "------ Group 1: Basic tests -----" );
-      unitTest( "5 * x ^ 2" );
-      unitTest( "( 5 * x ^ 3 ) ^ 2" );
-      unitTest( "x + 2 * x" );
-      unitTest( "3 * x + 2 * x" );
-      unitTest( "x * x" );
-      unitTest( "x * 2 * x" );
-      unitTest( "x + 2 * x ^ 2" );
-      
-      // Single distribution unit tests
-      System.out.println( "------ Group 2: Single distribution tests -----" );
-      unitTest( "4 * ( x + 3 )" );
-      unitTest( "( x + 3 ) * 4" );
-      unitTest( "x * ( x + 3 )" );
-      unitTest( "( x + 3 ) * x" );
-      
-      // Sign tests
-      System.out.println( "------ Group 3: Sign tests -----" );
-      unitTest( "4 * ( x + 3 )" );
-      unitTest( "4 * ( x - 3 )" );
-      unitTest( "( x + 3 ) * x" );
-      unitTest( "( x - 3 ) * x" );
-      
-      // Foil tests
-      System.out.println( "------ Group 4: FOIL tests -----" );
-      unitTest( "( 4 + x ^ 2 ) * ( x + 3 )" );
-      unitTest( "( 4 - x ^ 2 ) * ( x + 3 )" );
-      unitTest( "( 3 + x ) * ( 4 + x ^ 2 )" );
-      unitTest( "( 3 + x ) * ( 4 - x ^ 2 )" );
-      unitTest( "( 3 - x ) * ( 4 - x ^ 2 )" );
-      
-       // Integration tests
+   {
+      // Integration tests
       System.out.println( "------ Group 5: Integration tests -----" );
       intTest( "( 2 * x )" );
    }
