@@ -252,8 +252,25 @@ class Polynomial extends OperandNode
       System.out.println();
    }
    
-   public static void main( String[] args ) throws ExpressionException
+   public static void intTest( String infix ) throws ExpressionException
    {
+      TreeFactory factory;
+      ExpressionTree tree;
+      AbstractNode treeRoot;
+      Polynomial poly;
+      
+      System.out.println( "Int test with expression: " + infix );
+      factory = new TreeFactory( infix );
+      tree = factory.buildTree();
+      treeRoot = tree.getRoot();
+      poly = new Polynomial( treeRoot );
+      poly.integrate();
+      System.out.println( "Polynomial map: " + poly.map );
+      System.out.println();
+   }
+   
+   public static void main( String[] args ) throws ExpressionException
+   {      
       // Basic unit tests
       System.out.println( "------ Group 1: Basic tests -----" );
       unitTest( "5 * x ^ 2" );
@@ -285,6 +302,10 @@ class Polynomial extends OperandNode
       unitTest( "( 3 + x ) * ( 4 + x ^ 2 )" );
       unitTest( "( 3 + x ) * ( 4 - x ^ 2 )" );
       unitTest( "( 3 - x ) * ( 4 - x ^ 2 )" );
+      
+       // Integration tests
+      System.out.println( "------ Group 5: Integration tests -----" );
+      intTest( "( 2 * x )" );
    }
    
    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -293,11 +314,21 @@ class Polynomial extends OperandNode
      */
    public void integrate( )
    {
-      for( Map.Entry<Double, Double> entry : this.map.entrySet() )
+      //Copy the hashtable
+      HashMap<Double, Double> copy = map;
+      
+      //For each entry in the copy
+      for( Map.Entry<Double, Double> entry : map.entrySet() )
       {
-         entry.setValue( entry.getValue() + 1d );
-         //entry.setKey( entry.getKey() * (1d / entry.getValue() ) ); 
+         //Delete the corresponding entry in this Hashtable
+         copy.remove( entry.getKey() );
+         
+         //Put a new entry in (this represents each monomial being integrated)
+         copy.put( entry.getKey() + 1d, entry.getValue() * (1d / (entry.getKey() + 1 ) ) );
       }
+      
+      //Replace map with copy
+      map = copy;
    }
    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
    
