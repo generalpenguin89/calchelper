@@ -315,14 +315,11 @@ class Polynomial extends OperandNode
    public void integrate( )
    {
       //Copy the hashtable
-      HashMap<Double, Double> copy = map;
+	   HashMap<Double, Double> copy = new HashMap<Double, Double>();
       
       //For each entry in the copy
       for( Map.Entry<Double, Double> entry : map.entrySet() )
-      {
-         //Delete the corresponding entry in this Hashtable
-         copy.remove( entry.getKey() );
-         
+      {         
          //Put a new entry in (this represents each monomial being integrated)
          copy.put( entry.getKey() + 1d, entry.getValue() * (1d / (entry.getKey() + 1 ) ) );
       }
