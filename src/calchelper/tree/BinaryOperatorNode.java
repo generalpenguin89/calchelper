@@ -24,7 +24,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
     */
    
    
-   private void init( String op, AbstractNode left, AbstractNode right )
+   protected void init( String op, AbstractNode left, AbstractNode right )
    {
       _type = op;
       _children = new ArrayList<AbstractNode>();
@@ -75,7 +75,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
    /**
     * Rotates the operation ( c op x ) op y to c op ( x op y )
     */
-   private void rotateRight( String op )
+   protected void rotateRight( String op )
    {
       BinaryOperatorNode leftChild = ( BinaryOperatorNode ) getLeft();
       if ( leftChild.getLeft().hasValue() )
@@ -90,7 +90,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
    /**
     * Rotates the operation x op ( c op y ) to c op ( x op y )
     */
-   private void rotateLeft( String op )
+   protected void rotateLeft( String op )
    {
       BinaryOperatorNode rightChild = ( BinaryOperatorNode ) getRight();
       if ( rightChild.getLeft().hasValue() )
@@ -103,13 +103,6 @@ public abstract class BinaryOperatorNode extends OperatorNode
       }
    }
    
-   /**
-    * Useless, deprecated method.
-    */
-   private void isolateConstant( String type )
-   {
-   }
-   
    public static class Addition extends BinaryOperatorNode
    {
       /**
@@ -117,7 +110,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
        */
       public Addition( AbstractNode left, AbstractNode right )
       {
-         super.init( "+", left, right );
+         init( "+", left, right );
       }
       
       public double getValue()
@@ -132,13 +125,13 @@ public abstract class BinaryOperatorNode extends OperatorNode
          // Deals with ( c * x ) * y
          if ( getLeft() instanceof Addition )
          {
-            super.rotateRight( "+" );
+            rotateRight( "+" );
          }
          
          // Deals with x * ( c * y )
          if ( getRight() instanceof Addition )
          {
-            super.rotateLeft( "+" );
+            rotateLeft( "+" );
          }
       }
       
@@ -178,7 +171,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
        */
       public Multiplication( AbstractNode left, AbstractNode right )
       {
-         super.init( "*", left, right );
+         init( "*", left, right );
       }
       
       /**
@@ -207,13 +200,13 @@ public abstract class BinaryOperatorNode extends OperatorNode
          // Deals with ( c * x ) * y
          if ( getLeft() instanceof Multiplication )
          {
-            super.rotateRight( "*" );
+            rotateRight( "*" );
          }
          
          // Deals with x * ( c * y )
          if ( getRight() instanceof Multiplication )
          {
-            super.rotateLeft( "*" );
+            rotateLeft( "*" );
          }
          
          // Deals with x * a, where a is constant
@@ -290,7 +283,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
        */
       public Subtraction( AbstractNode left, AbstractNode right )
       {
-         super.init( "-", left, right );
+         init( "-", left, right );
       }
       
       public double getValue()
@@ -339,7 +332,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
        */
       public Division( AbstractNode left, AbstractNode right )
       {
-         super.init( "/", left, right );
+         init( "/", left, right );
       }
       
       public double getValue()
@@ -381,7 +374,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
        */
       public Modulus( AbstractNode left, AbstractNode right )
       {
-         super.init( "%", left, right );
+         init( "%", left, right );
       }
       
       public double getValue()
@@ -422,7 +415,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
        */
       public Power( AbstractNode left, AbstractNode right )
       {
-         super.init( "^", left, right );
+         init( "^", left, right );
       }
       
       public double getValue()
