@@ -48,7 +48,7 @@ public class CalcGUI extends JPanel
 		
 		JPanel center = new JPanel( new BorderLayout() );
 		JLabel enter = new JLabel( "                    "
-				+ "           Enter an equation: " );
+					+ "           Enter an equation: " );
 		center.add( enter, BorderLayout.NORTH );
 		JPanel centerOfCenter = new JPanel( new FlowLayout() );
 		center.add( centerOfCenter, BorderLayout.CENTER );
@@ -150,13 +150,15 @@ public class CalcGUI extends JPanel
 						toDerive = _textField.getText();
 						_treeFactory = new TreeFactory( toDerive );
 						_tree = _treeFactory.buildTree();
-					} catch ( ExpressionException e )
+					}
+					catch ( ExpressionException e )
 					{
 					}
 					try
 					{
 						_tree.differentiate();
-					} catch ( NullPointerException e )
+					}
+					catch ( NullPointerException e )
 					{
 						System.err.println( "Invalid entry." );
 					}
@@ -168,15 +170,18 @@ public class CalcGUI extends JPanel
 						toIntegrate = _textField.getText();
 						_treeFactory = new TreeFactory( toIntegrate );
 						_tree = _treeFactory.buildTree();
-					} catch ( NullPointerException e )
+					}
+					catch ( NullPointerException e )
 					{
-					} catch ( ExpressionException e )
+					}
+					catch ( ExpressionException e )
 					{
 					}
 					try
 					{
 						_tree.integrate();
-					} catch ( NullPointerException e )
+					}
+					catch ( NullPointerException e )
 					{
 						System.err.println( "Invalid entry." );
 					}

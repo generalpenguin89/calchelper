@@ -20,11 +20,11 @@ public class GUIProcessor
 	
 	public void quit()
 	{
-		int response = JOptionPane.showConfirmDialog(_theGUI,
-				"Are you sure you want to exit?");
-		if (response == 0)
+		int response = JOptionPane.showConfirmDialog( _theGUI,
+					"Are you sure you want to exit?" );
+		if ( response == 0 )
 		{
-			System.exit(0);
+			System.exit( 0 );
 		}
 	}
 	
