@@ -248,12 +248,24 @@ public abstract class BinaryOperatorNode extends OperatorNode
         * By Jake Schwartz
         */
       public void integrate( )
-      {
-         //If there is a coefficient, integrate the right node
-         if( getLeft() instanceof ConstantNode )
-            getRight().integrate();
-         
-         simplify();
+      {	
+      	/*Case 1: Function in the form INTEGRAL[ a * unary( b ) dx ]
+      	 * where a is the derivative of b sans all coefficients
+      	 * 
+      	 * Use u-substitution
+      	 */
+      	
+      	
+      	//-------- Case 2: When it is not case 1 ---------------
+      	/*Subcase 1: Function in the form INTEGRAL[ trig * trig ]
+      	 * 
+      	 * Use trig substitution
+      	 */
+      	
+      	/* Subcase 2: Function is the production of any two functions
+      	 * 
+      	 * Use Integration by parts
+      	 */
       }
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       
