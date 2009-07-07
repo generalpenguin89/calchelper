@@ -282,4 +282,21 @@ class Polynomial extends OperandNode
    }
    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
    
+      public void derive()
+      {
+      	// copy hash table
+      	HashMap<Double, Double> copy = new HashMap<Double, Double>();
+      	
+         //For each entry in the copy
+         for( Map.Entry<Double, Double> entry : map.entrySet() )
+         {         
+            //Put a new entry in (this represents each monomial being integrated)
+         	double exp = entry.getKey();
+         	double co = entry.getValue();
+            copy.put( exp - 1d, co * exp );
+         }
+         
+         //Replace map with copy
+         map = copy;
+      }
 }
