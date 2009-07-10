@@ -60,7 +60,17 @@ public class NodeFactory
    																			  double right )
    {
    	return createBinaryOperatorNode( op,
-   												new ConstantNode( left ),
-   												new ConstantNode( right ) );
+   												createConstantNode( left ),
+   												createConstantNode( right ) );
+   }
+   
+   public static AbstractNode createConstantNode( double constant )
+   {
+   	return new ConstantNode( constant );
+   }
+   
+   public static AbstractNode createVariableNode( String variable )
+   {
+   	return new VariableNode( variable );
    }
 }
