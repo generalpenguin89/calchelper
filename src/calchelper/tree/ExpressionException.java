@@ -10,7 +10,9 @@ package calchelper.tree;
 
 public class ExpressionException extends java.lang.Exception
 {
-   private String _infix; // the infix expression
+	private static final long serialVersionUID = 1L;
+	
+	private String _infix; // the infix expression
 
    /**
     * Creates a new exception object.
