@@ -112,6 +112,24 @@ class Polynomial extends OperandNode
    }
    
    /**
+    * Builds a polynomial from the given constant.
+    */
+   public Polynomial( double constant )
+   {
+   	map = new HashMap<Double,Double>();
+   	map.put( 0.0, constant );
+   }
+   
+   /**
+    * Builds a polynomial from the given variable.
+    */
+   public Polynomial( String variable )
+   {
+   	map = new HashMap<Double,Double>();
+   	map.put( 1.0, 1.0 );
+   }
+   
+   /**
     * Merges a polynomial with this one by multiplying coefficients.
     *
     * @param poly The polynomial to merge.
@@ -299,4 +317,22 @@ class Polynomial extends OperandNode
          //Replace map with copy
          map = copy;
       }
+      
+   public boolean equals( Object obj )
+   {
+   	if ( ! ( obj instanceof Polynomial ) )
+   	{
+   		return false;
+   	}
+   	else
+   	{
+   		Polynomial poly = ( Polynomial ) obj;
+   		return map.equals( poly.map );
+   	}
+   }
+   
+   public int hashCode()
+   {
+   	return map.hashCode();
+   }
 }
