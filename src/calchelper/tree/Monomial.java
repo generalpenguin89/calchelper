@@ -139,14 +139,14 @@ class Monomial
       if ( variable != null )
       {
          return NodeFactory.createBinaryOperatorNode( "*",
-                new ConstantNode( coefficient ),
-                NodeFactory.createBinaryOperatorNode( "^",
-                   variable,
-                   new ConstantNode( power ) ) );
+         			NodeFactory.createConstantNode( coefficient ), 
+         			NodeFactory.createBinaryOperatorNode( "^", 
+         						variable,
+         						NodeFactory.createConstantNode( power ) ) );
       }
       else
       {
-         return new ConstantNode( coefficient );
+         return NodeFactory.createConstantNode( coefficient );
       }
    }
 

@@ -75,7 +75,7 @@ public class VariableNode extends OperandNode
    public void integrate( )
    {
       //Make constant node to represent exponent
-      ConstantNode exp = new ConstantNode( 1 );
+      AbstractNode exp = NodeFactory.createConstantNode( 1 );
       
       //Make power operator
       BinaryOperatorNode.Power pow = new BinaryOperatorNode.Power( this, exp );
@@ -95,7 +95,7 @@ public class VariableNode extends OperandNode
     */
    public void /*ConstantNode*/ derive( )
    {
-     ConstantNode node = new ConstantNode( 1 );
+     AbstractNode node = NodeFactory.createConstantNode( 1 );
      
      //might want to return this later
      //return node;

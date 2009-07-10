@@ -83,7 +83,8 @@ abstract class OperatorNode extends AbstractNode
       {
          if ( _children.get( x ).hasValue() )
          {
-            _children.set( x, new ConstantNode( _children.get( x ).getValue() ) );
+            _children.set( x, NodeFactory.createConstantNode( 
+            			_children.get( x ).getValue() ) );
          }
          else
          {

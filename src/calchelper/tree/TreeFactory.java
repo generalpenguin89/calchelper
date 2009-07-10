@@ -38,13 +38,13 @@ public class TreeFactory
    private void pushDouble( double num )
    {
       //System.err.println( "Pushed double: " + num );
-      _randStack.push( new ConstantNode( num ) );
+      _randStack.push( NodeFactory.createConstantNode( num ) );
    }
 
    private void pushVariable( String var )
    {
       //System.err.println( "Pushed variable: " + var );
-      _randStack.push( new VariableNode( var ) );
+      _randStack.push( NodeFactory.createVariableNode( var ) );
    }
 
    private char opposite( char ch )

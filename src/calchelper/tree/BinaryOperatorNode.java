@@ -225,7 +225,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
             if ( getLeft().hasValue() && rightChild.getLeft().hasValue() )
             {
                setLeft( 
-                       new ConstantNode(
+                       NodeFactory.createConstantNode(
                                         getLeft().getValue() * rightChild.getLeft().getValue() ) );
                setRight( rightChild.getRight() );
             }
@@ -450,10 +450,10 @@ public abstract class BinaryOperatorNode extends OperatorNode
          if( getLeft() instanceof VariableNode && getRight() instanceof ConstantNode )
          {
             //Make the exponent one higher
-            this.setLeft( new ConstantNode( getRight().getValue() + 1 ) );
+            this.setLeft( NodeFactory.createConstantNode( getRight().getValue() + 1 ) );
             
             //Make coeffiecient nodes
-            ConstantNode coef = new ConstantNode( (double)(1) / getRight().getValue() );
+            AbstractNode coef = NodeFactory.createConstantNode( (double)(1) / getRight().getValue() );
             Multiplication mult = new Multiplication( coef, getLeft() );
             this.setLeft( mult );
          }
@@ -472,10 +472,10 @@ public abstract class BinaryOperatorNode extends OperatorNode
         if( getLeft( ) instanceof VariableNode && getRight( ) instanceof ConstantNode )
         {
           //save the value of the power... minus 1
-          ConstantNode pow = new ConstantNode( getRight( ).getValue( ) - 1 );
+          AbstractNode pow = NodeFactory.createConstantNode( getRight( ).getValue( ) - 1 );
           
           //create a new constant node.. this is the new coefficient that will be out front
-          ConstantNode val = new ConstantNode( getRight( ).getValue( ) );
+          AbstractNode val = NodeFactory.createConstantNode( getRight( ).getValue( ) );
           
           //put the node together
           Multiplication times = new Multiplication( getLeft( ), val );

@@ -48,7 +48,7 @@ public class TreeFactoryTest {
    	ExpressionTree expected = new ExpressionTree(
    			NodeFactory.createBinaryOperatorNode("*", 
    					NodeFactory.createBinaryOperatorNode( "+", 2, 4 ),
-   					new ConstantNode( 5 ) ) );
+   					NodeFactory.createConstantNode( 5 ) ) );
    	
    	ExpressionTree result = unitTest( "( 2 + 4 ) * 5" );
    	
@@ -59,7 +59,7 @@ public class TreeFactoryTest {
    {
    	ExpressionTree expected = new ExpressionTree(
    			NodeFactory.createBinaryOperatorNode("/",
-   					new ConstantNode( 4 ),
+   					NodeFactory.createConstantNode( 4 ),
    					NodeFactory.createBinaryOperatorNode( "+", 5, 5 ) ) );
    	
    	ExpressionTree result = unitTest( "( 4 / ( 5 + 5 ) )" );

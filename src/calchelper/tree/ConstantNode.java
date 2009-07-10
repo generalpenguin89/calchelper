@@ -85,7 +85,7 @@ public class ConstantNode extends OperandNode
    public void integrate( )
    {
       //Make variable node
-      VariableNode var = new VariableNode( "x" );
+      AbstractNode var = NodeFactory.createVariableNode( "x" );
       
       //Make constant node
       BinaryOperatorNode.Multiplication mult = new BinaryOperatorNode.Multiplication( this, var );
