@@ -35,11 +35,11 @@ class Polynomial extends OperandNode
    public Polynomial( AbstractNode node )
    {
       // TODO: Add proper error-checking
-      Monomial mon;
       
       if ( node instanceof Polynomial )
       {
          map = ( ( Polynomial ) node ).map;
+         _variable = ( ( Polynomial ) node )._variable;
          _isValid = ( ( Polynomial ) node )._isValid;
       }
       else
@@ -58,58 +58,105 @@ class Polynomial extends OperandNode
             map.put( 1.0, 1.0 );
             _variable = node.toString();
          }
-         else if ( node instanceof BinaryOperatorNode.Addition )
+         else if ( node instanceof BinaryOperatorNode )
          {
-            BinaryOperatorNode.Addition addNode = ( BinaryOperatorNode.Addition ) node;
-            for ( int x = 0; x < addNode.nodeCount(); ++x )
+            BinaryOperatorNode binNode = ( BinaryOperatorNode ) node;
+            
+            if ( node instanceof BinaryOperatorNode.Addition )
             {
-               merge( new Polynomial( addNode.getNode( x ) ), 1 );
+               for ( int x = 0; x < binNode.nodeCount(); ++x )
+               {
+                  merge( new Polynomial( binNode.getNode( x ) ), 1 );
+               }
             }
-         }
-         else if ( node instanceof BinaryOperatorNode.Subtraction )
-         {
-            BinaryOperatorNode.Subtraction sNode = ( BinaryOperatorNode.Subtraction ) node;
-            merge( new Polynomial( sNode.getLeft() ), 1 );
-            merge( new Polynomial( sNode.getRight() ), -1 );
-         }
-         else if ( node instanceof BinaryOperatorNode.Multiplication )
-         {
-            mon = new Monomial( node );
-            if ( mon.isValid() )
+            else if ( node instanceof BinaryOperatorNode.Subtraction )
             {
-               map.put( mon.power, mon.coefficient );
+               merge( new Polynomial( binNode.getLeft() ), 1 );
+               merge( new Polynomial( binNode.getRight() ), -1 );
+            }
+            else if ( node instanceof BinaryOperatorNode.Multiplication )
+            {
+               Polynomial left = new Polynomial( binNode.getLeft() );
+               Polynomial right = new Polynomial( binNode.getRight() );
+               
+               // Give up if they're not both valid or the variables don't
+               // match
+               if ( left.isValid() && right.isValid() &&
+                        this.isSameVariable( left ) &&
+                        left.isSameVariable( right ) )
+               {
+                  for ( Map.Entry<Double, Double> entry : left.map.entrySet() )
+                  {
+                     for ( Map.Entry<Double, Double> other : 
+                              right.map.entrySet() )
+                     {
+                        merge( entry.getKey() + other.getKey(), 
+                                 entry.getValue() * other.getValue() );
+                     }
+                  }
+               }
+               else
+               {
+                  _isValid = false;
+               }
+            }
+            else if ( node instanceof BinaryOperatorNode.Division )
+            {
+               Polynomial left = new Polynomial( binNode.getLeft() );
+               Polynomial right = new Polynomial( binNode.getRight() );
+               
+               // Give up if they're not both valid or the variables don't
+               // match.  Also, denominator must have only 1 term.
+               if ( left.isValid() && right.isValid() &&
+                        this.isSameVariable( left ) &&
+                        left.isSameVariable( right ) && 
+                        right.termCount() == 1 )
+               {
+                  for ( Map.Entry<Double, Double> entry : left.map.entrySet() )
+                  {
+                     for ( Map.Entry<Double, Double> other :
+                              right.map.entrySet() )
+                     {
+                        merge( entry.getKey() - other.getKey(), 
+                                 entry.getValue() / other.getValue() );
+                     }
+                  }
+               }
+               else
+               {
+                  _isValid = false;
+               }
+            }
+            else if ( node instanceof BinaryOperatorNode.Power )
+            {
+               Polynomial left = new Polynomial( binNode.getLeft() );
+                              
+               // Give up if they're not both valid or the variables don't
+               // match.  Also, right side must be a constant.
+               if ( left.isValid() && this.isSameVariable( left ) && 
+                        binNode.getRight().hasValue() )
+               {
+                  double right = binNode.getRight().getValue();
+                  
+                  for ( Map.Entry<Double, Double> entry : left.map.entrySet() )
+                  {
+                      merge( entry.getKey() * right,
+                             Math.pow( entry.getValue(), right ) );
+                  }
+               }
+               else
+               {
+                  _isValid = false;
+               }
             }
             else
             {
-               BinaryOperatorNode mNode = ( BinaryOperatorNode ) node;
-               Monomial leftMon = new Monomial( mNode.getLeft() );
-               Monomial rightMon = new Monomial( mNode.getRight() );
-               
-               // We need to distribute a node over a monomial
-               if ( leftMon.isValid() && !rightMon.isValid() )
-               {
-                  distribute( mNode.getRight(), leftMon );
-               }
-               else if ( !leftMon.isValid() && rightMon.isValid() )
-               {
-                  distribute( mNode.getLeft(), rightMon );
-               }
-               else // none are valid
-               {
-                  distribute( mNode.getLeft(), mNode.getRight() );
-               }
+               _isValid = false;
             }
          }
          else
          {
-            mon = new Monomial( node );
-            if ( !mon.isValid() )
-            {
-               // throw new ExpressionException( "Invalid monomial.", "" );
-               _isValid = false;
-               return;
-            }
-            map.put( mon.power, mon.coefficient );
+            _isValid = false;
          }
          
          if ( ! _isValid )
@@ -118,7 +165,7 @@ class Polynomial extends OperandNode
          }
       }
    }
-   
+
    /**
     * Builds a polynomial from the given constant.
     */
@@ -139,6 +186,26 @@ class Polynomial extends OperandNode
       _variable = variable;
    }
    
+   
+   /**
+    * Merges specified term into the existing polynomial.
+    * 
+    * @param power The power of the term to merge into the polynomial.
+    * @param coefficient The coefficient of the term to merge into the polynomial.
+    * @param variable The variable of the term to merge into the coefficient.
+    */
+   private void merge( double power, double coefficient )
+   {
+      if ( map.containsKey( power ) )
+      {
+         map.put( power, ( map.get( power ) ) + coefficient );
+      }
+      else
+      {
+         map.put( power, coefficient );
+      }
+   }
+   
    /**
     * Merges a polynomial with this one by multiplying coefficients.
     * 
@@ -152,98 +219,8 @@ class Polynomial extends OperandNode
    {
       for ( Map.Entry<Double, Double> entry : poly.map.entrySet() )
       {
-         if ( map.containsKey( entry.getKey() ) )
-         {
-            map.put( entry.getKey(), ( map.get( entry.getKey() ) + entry
-                     .getValue() )
-                     * constant );
-         }
-         else
-         {
-            map.put( entry.getKey(), entry.getValue() * constant );
-         }
+         merge( entry.getKey(), entry.getValue() * constant );
       }
-   }
-   
-   /**
-    * Returns the appropriate constant based on whether the node is addition or
-    * subtraction.
-    * 
-    * @return 1 for addition, -1 for subtraction, 0 if not an additive node
-    */
-   private double getMultiplicationConstant( AbstractNode node )
-   {
-      if ( node instanceof BinaryOperatorNode.Addition )
-      {
-         return 1;
-      }
-      else if ( node instanceof BinaryOperatorNode.Subtraction )
-      {
-         return -1;
-      }
-      else
-      {
-         return 0;
-      }
-   }
-   
-   /**
-    * Distributes a monomial over an additive node.
-    * 
-    * @param node
-    *           The node to distribute over. Assumed that this is an addition
-    *           node.
-    * @param mon
-    *           The monomial factor that is multiplied to each argument of the
-    *           addition/subtraction node.
-    */
-   private void distribute( AbstractNode node, Monomial mon )
-   {
-      double constant = getMultiplicationConstant( node );
-      
-      if ( constant == 0 )
-         return;
-      
-      BinaryOperatorNode binOpNode = ( BinaryOperatorNode ) node;
-      
-      // constant only applies to right node
-      mergeMultiplication( binOpNode.getLeft(), mon.getTreeNode(), 1 );
-      mergeMultiplication( binOpNode.getRight(), mon.getTreeNode(), constant );
-   }
-   
-   /**
-    * Does distribution of two addition nodes.
-    */
-   private void distribute( AbstractNode left, AbstractNode right )
-   {
-      double lC = getMultiplicationConstant( left );
-      double rC = getMultiplicationConstant( right );
-      
-      // if either constant is 0, can't distribute
-      if ( lC * rC == 0 )
-         return;
-      
-      BinaryOperatorNode binLeft = ( BinaryOperatorNode ) left;
-      BinaryOperatorNode binRight = ( BinaryOperatorNode ) right;
-      
-      // First
-      mergeMultiplication( binLeft.getLeft(), binRight.getLeft(), 1 );
-      // Outer
-      mergeMultiplication( binLeft.getLeft(), binRight.getRight(), rC );
-      // Inner
-      mergeMultiplication( binLeft.getRight(), binRight.getLeft(), lC );
-      // Last
-      mergeMultiplication( binLeft.getRight(), binRight.getRight(), lC * rC );
-   }
-   
-   /**
-    * Merges the result of multiplying the two nodes given as arguments.
-    */
-   private void mergeMultiplication( AbstractNode first, AbstractNode second,
-            double constant )
-   {
-      merge( new Polynomial( NodeFactory.createBinaryOperatorNode( "*", first,
-               second ) ), constant );
    }
    
    /**
@@ -342,6 +319,11 @@ class Polynomial extends OperandNode
       map = copy;
    }
    
+   /**
+    * Indicates whether some other object is "equal to" this Polynomial.
+    * 
+    * @return true if this object is the same as the obj argument, false otherwise
+    */
    public boolean equals( Object obj )
    {
       if ( !( obj instanceof Polynomial ) )
@@ -351,13 +333,52 @@ class Polynomial extends OperandNode
       else
       {
          Polynomial poly = ( Polynomial ) obj;
-         return map.equals( poly.map );
+         
+         // If both are invalid, then they're equal as far as I'm concerned
+         if ( ! isValid() && ! poly.isValid() )
+         {
+            return true;
+         }
+         
+         if ( isSameVariable( poly ) )
+         {
+            return map.equals( poly.map );
+         }
+         else
+         {
+            return false;
+         }
       }
    }
    
+   /**
+    * Returns a hash code value for the polynomial.
+    * 
+    * The hash code of all invalid polynomials is 0, which ensures that two
+    * invalid polynomials will have the same hash code. For all valid
+    * polynomials, the hash code is determined by multiplying the hash codes of
+    * the polynomial map and the variable name.
+    * 
+    * @return a hash code value for this object
+    */
    public int hashCode()
    {
-      return map.hashCode();
+      if ( ! isValid() )
+      {
+         return 0;
+      }
+      else
+      {
+         // Very crude way of determining the hashCode
+         if ( _variable != null )
+         {
+            return map.hashCode() * _variable.hashCode();
+         }
+         else
+         {
+            return map.hashCode();
+         }
+      }
    }
 
    /**
@@ -384,4 +405,44 @@ class Polynomial extends OperandNode
          return 0;
       }
    }
+   
+   /**
+    * Returns true if the variable is the same.
+    * 
+    */
+   public boolean isSameVariable( Polynomial other )
+   {
+      return this.getVariable() == null || other.getVariable() == null ||
+             this.getVariable().equals( other.getVariable() );
+   }
+   
+   /**
+    * Determines whether or not the polynomial has a value.
+    */
+   public boolean hasValue()
+   {
+      if ( termCount() > 1 )
+      {
+         return false;
+      }
+      else
+      {
+         return map.containsKey( 0.0 );
+      }
+   }
+   
+   /**
+    * Returns the polynomial's value if any.
+    */
+  public double getValue()
+  {
+     if ( termCount() > 1 )
+     {
+        return 0.0;
+     }
+     else
+     {
+        return map.get( 0.0 );
+     }
+  }
 }
