@@ -4,7 +4,7 @@
 
 package calchelper.tree;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.HashMap;
 
@@ -35,6 +35,7 @@ public class PolynomialTest
       tree = factory.buildTree();
       treeRoot = tree.getRoot();
       poly = new Polynomial( treeRoot );
+      assertTrue( poly.isValid() );
       return poly;
    }
 
@@ -211,6 +212,21 @@ public class PolynomialTest
 
       // Get results
       Polynomial result = unitTest( "( 3 - x ) * ( 4 - x ^ 2 )" );
+
+      // Assertion
+      assertEquals( expected, result.map );
+   }
+   
+   @Test public void test5_1() throws ExpressionException
+   {
+      // Declare expected results
+      expected.put( 3.0,  11.0 );
+      expected.put( 2.0,  38.0 );
+      expected.put( 1.0,  92.0 );
+      expected.put( 0.0,  35.0 );
+
+      // Get results
+      Polynomial result = unitTest( "( x ^ 2 + 3 * x + 7 ) * ( 11 * x + 5 )" );
 
       // Assertion
       assertEquals( expected, result.map );
