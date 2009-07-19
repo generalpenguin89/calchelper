@@ -10,6 +10,7 @@
 
 package calchelper.tree;
 
+@Deprecated
 public class ConstantNode extends OperandNode
 {
    double _value;

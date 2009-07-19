@@ -10,6 +10,7 @@
 
 package calchelper.tree;
 
+@Deprecated
 public class VariableNode extends OperandNode
 {
    String _name;

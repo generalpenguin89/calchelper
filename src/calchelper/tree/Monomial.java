@@ -13,6 +13,7 @@ package calchelper.tree;
  * @author Patrick MacArthur
  */
 
+@Deprecated
 class Monomial
 {
    private boolean valid; // is the monomial valid?
