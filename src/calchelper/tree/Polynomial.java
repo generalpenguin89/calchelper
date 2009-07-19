@@ -173,6 +173,7 @@ class Polynomial extends OperandNode
    {
       map = new HashMap<Double, Double>();
       map.put( 0.0, constant );
+      _isValid = true;
    }
    
    /**
@@ -182,7 +183,7 @@ class Polynomial extends OperandNode
    {
       map = new HashMap<Double, Double>();
       map.put( 1.0, 1.0 );
-      
+      _isValid = true;
       _variable = variable;
    }
    
@@ -326,29 +327,22 @@ class Polynomial extends OperandNode
     */
    public boolean equals( Object obj )
    {
-      if ( !( obj instanceof Polynomial ) )
+      if ( obj instanceof Polynomial )
       {
-         return false;
-      }
-      else
-      {
-         Polynomial poly = ( Polynomial ) obj;
+         Polynomial poly = new Polynomial( ( AbstractNode ) obj );
          
          // If both are invalid, then they're equal as far as I'm concerned
          if ( ! isValid() && ! poly.isValid() )
          {
             return true;
-         }
-         
-         if ( isSameVariable( poly ) )
+         } 
+         else if ( isSameVariable( poly ) )
          {
             return map.equals( poly.map );
          }
-         else
-         {
-            return false;
-         }
       }
+      
+      return false;
    }
    
    /**

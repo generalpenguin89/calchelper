@@ -211,7 +211,7 @@ public class TreeFactory
          throw new ExpressionException( "Not enough operands.", _infix );
       }
 
-      AbstractNode newNode = NodeFactory.createBinaryOperatorNode( op, leftNode, rightNode );
+      AbstractNode newNode = NodeFactory.createNode( op, leftNode, rightNode );
 
       //System.err.println( "Created opnode: " + newNode );
 

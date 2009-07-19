@@ -55,13 +55,11 @@ public class NodeFactory
       }
    }
    
-   public static BinaryOperatorNode createBinaryOperatorNode( String op,
-   																			  double left,
-   																			  double right )
+   public static AbstractNode createNode( String op, double left, 
+                                          double right )
    {
-   	return createBinaryOperatorNode( op,
-   												createConstantNode( left ),
-   												createConstantNode( right ) );
+   	return createNode( op, createConstantNode( left ),
+   								  createConstantNode( right ) );
    }
    
    public static AbstractNode createNode( String op, AbstractNode left, AbstractNode right )
@@ -80,11 +78,11 @@ public class NodeFactory
    
    public static AbstractNode createConstantNode( double constant )
    {
-   	return new ConstantNode( constant );
+   	return new Polynomial( constant );
    }
    
    public static AbstractNode createVariableNode( String variable )
    {
-   	return new VariableNode( variable );
+   	return new Polynomial( variable );
    }
 }
