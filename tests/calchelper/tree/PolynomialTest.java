@@ -231,4 +231,16 @@ public class PolynomialTest
       // Assertion
       assertEquals( expected, result.map );
    }
+   
+   @Test public void copyTest() throws ExpressionException
+   {
+      // Declare expected results
+      Polynomial original = new Polynomial( "x" );
+      
+      // Get results
+      Polynomial copy = new Polynomial( original );
+      
+      // Assertion
+      assertEquals( original, copy );
+   }
 }

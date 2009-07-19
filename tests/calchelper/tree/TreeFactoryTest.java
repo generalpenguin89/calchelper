@@ -17,7 +17,7 @@ public class TreeFactoryTest {
    @Test public void test1_1() throws Exception
    {
    	ExpressionTree expected = new ExpressionTree( 
-   			NodeFactory.createBinaryOperatorNode("+", 4, 5) );
+   			NodeFactory.createNode("+", 4, 5) );
    	
    	ExpressionTree result = unitTest( "4 + 5 ");
    	
@@ -27,7 +27,7 @@ public class TreeFactoryTest {
    @Test public void test1_2() throws Exception
    {
    	ExpressionTree expected = new ExpressionTree( 
-   			NodeFactory.createBinaryOperatorNode("+", 4, 5) );
+   			NodeFactory.createNode("+", 4, 5) );
    	
    	ExpressionTree result = unitTest( "( 4 + 5 )" );
    	
@@ -46,8 +46,8 @@ public class TreeFactoryTest {
    @Test public void test1_4() throws Exception
    {
    	ExpressionTree expected = new ExpressionTree(
-   			NodeFactory.createBinaryOperatorNode("*", 
-   					NodeFactory.createBinaryOperatorNode( "+", 2, 4 ),
+   			NodeFactory.createNode("*", 
+   					NodeFactory.createNode( "+", 2, 4 ),
    					NodeFactory.createConstantNode( 5 ) ) );
    	
    	ExpressionTree result = unitTest( "( 2 + 4 ) * 5" );
@@ -58,9 +58,9 @@ public class TreeFactoryTest {
    @Test public void test1_5() throws Exception
    {
    	ExpressionTree expected = new ExpressionTree(
-   			NodeFactory.createBinaryOperatorNode("/",
+   			NodeFactory.createNode("/",
    					NodeFactory.createConstantNode( 4 ),
-   					NodeFactory.createBinaryOperatorNode( "+", 5, 5 ) ) );
+   					NodeFactory.createNode( "+", 5, 5 ) ) );
    	
    	ExpressionTree result = unitTest( "( 4 / ( 5 + 5 ) )" );
    	
@@ -110,6 +110,24 @@ public class TreeFactoryTest {
    	ExpressionTree result = unitTest( "(4a*5a)" );
    	
    	assertEquals( expected, result );
+   }
+   
+   @Test public void precedenceTest1() throws Exception
+   {
+      ExpressionTree expected = unitTest( "4 + ( 5 * a )" );
+      
+      ExpressionTree result = unitTest( "4 + 5 * a " );
+      
+      assertEquals( expected, result );
+   }
+   
+   @Test public void precedenceTest2() throws Exception
+   {
+      ExpressionTree expected = unitTest( "4 * ( 5 ^ a )" );
+      
+      ExpressionTree result = unitTest( "4 * 5 ^ a" );
+      
+      assertEquals( expected, result );
    }
 
    /**
