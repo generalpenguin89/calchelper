@@ -189,7 +189,7 @@ public class TreeFactory
     *
     * Throws ExpressionException if the expression is invalid.
     */
-   private OperatorNode buildOpNode( String op, 
+   private AbstractNode buildOpNode( String op, 
          Stack<AbstractNode> stack ) throws ExpressionException
    {
       AbstractNode leftNode = null;
@@ -211,8 +211,7 @@ public class TreeFactory
          throw new ExpressionException( "Not enough operands.", _infix );
       }
 
-      OperatorNode newNode = NodeFactory.createBinaryOperatorNode( 
-            op, leftNode, rightNode );
+      AbstractNode newNode = NodeFactory.createBinaryOperatorNode( op, leftNode, rightNode );
 
       //System.err.println( "Created opnode: " + newNode );
 
