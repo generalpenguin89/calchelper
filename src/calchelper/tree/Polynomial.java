@@ -21,6 +21,9 @@ class Polynomial extends OperandNode
     */
    HashMap<Double, Double> /* toil and trouble */ map;
    
+   // The variable that this polynomial is over
+   private String _variable;
+   
    // Is this polynomial valid?
    private boolean _isValid;
    
@@ -34,80 +37,85 @@ class Polynomial extends OperandNode
       // TODO: Add proper error-checking
       Monomial mon;
       
-      map = new HashMap<Double, Double>();
-      _isValid = true;
-      
-      if ( node.hasValue() || node instanceof VariableNode )
+      if ( node instanceof Polynomial )
       {
-         mon = new Monomial( node );
-         if ( ! mon.isValid() )
-         {
-            //throw new ExpressionException( "Invalid monomial.", "" );
-            _isValid = false;
-            return;
-         }
-         map.put( mon.power, mon.coefficient );
-      }
-      else if ( node instanceof BinaryOperatorNode.Addition )
-      {
-         BinaryOperatorNode.Addition addNode = 
-            ( BinaryOperatorNode.Addition ) node;
-         for ( int x = 0; x < addNode.nodeCount(); ++x )
-         {
-            merge( new Polynomial( addNode.getNode( x ) ), 1 );
-         }
-      }
-      else if ( node instanceof BinaryOperatorNode.Subtraction )
-      {
-         BinaryOperatorNode.Subtraction sNode = 
-            ( BinaryOperatorNode.Subtraction ) node;
-         merge( new Polynomial( sNode.getLeft()  ),  1 );
-         merge( new Polynomial( sNode.getRight() ), -1 );
-      }
-      else if ( node instanceof BinaryOperatorNode.Multiplication )
-      {
-         mon = new Monomial( node );
-         if ( mon.isValid() )
-         {
-            map.put( mon.power, mon.coefficient );
-         }
-         else
-         {
-            BinaryOperatorNode.Multiplication mNode = 
-               ( BinaryOperatorNode.Multiplication ) node;
-            Monomial leftMon = new Monomial( mNode.getLeft() );
-            Monomial rightMon = new Monomial( mNode.getRight() );
-            
-            // We need to distribute a node over a monomial
-            if ( leftMon.isValid() && ! rightMon.isValid() )
-            {
-               distribute( mNode.getRight(), leftMon );
-            }
-            else if ( ! leftMon.isValid() && rightMon.isValid() )
-            {
-               distribute( mNode.getLeft(),  rightMon );
-            }
-            else // none are valid
-            {
-               distribute( mNode.getLeft(), mNode.getRight() );
-            }
-         }
+         map = ( ( Polynomial ) node ).map;
+         _isValid = ( ( Polynomial ) node )._isValid;
       }
       else
       {
-         mon = new Monomial( node );
-         if ( ! mon.isValid() )
+         map = new HashMap<Double, Double>();
+         _isValid = true;
+         
+         if ( node.hasValue() )
          {
-            //throw new ExpressionException( "Invalid monomial.", "" );
-            _isValid = false;
-            return;
+            // Base case 1
+            map.put( 0.0, node.getValue() );
          }
-         map.put( mon.power, mon.coefficient );
-      }
-      
-      if ( ! _isValid )
-      {
-         System.err.println( "WARNING: Invalid Polynomial." );
+         else if ( node instanceof VariableNode )
+         {
+            // Base case 2
+            map.put( 1.0, 1.0 );
+            _variable = node.toString();
+         }
+         else if ( node instanceof BinaryOperatorNode.Addition )
+         {
+            BinaryOperatorNode.Addition addNode = ( BinaryOperatorNode.Addition ) node;
+            for ( int x = 0; x < addNode.nodeCount(); ++x )
+            {
+               merge( new Polynomial( addNode.getNode( x ) ), 1 );
+            }
+         }
+         else if ( node instanceof BinaryOperatorNode.Subtraction )
+         {
+            BinaryOperatorNode.Subtraction sNode = ( BinaryOperatorNode.Subtraction ) node;
+            merge( new Polynomial( sNode.getLeft() ), 1 );
+            merge( new Polynomial( sNode.getRight() ), -1 );
+         }
+         else if ( node instanceof BinaryOperatorNode.Multiplication )
+         {
+            mon = new Monomial( node );
+            if ( mon.isValid() )
+            {
+               map.put( mon.power, mon.coefficient );
+            }
+            else
+            {
+               BinaryOperatorNode mNode = ( BinaryOperatorNode ) node;
+               Monomial leftMon = new Monomial( mNode.getLeft() );
+               Monomial rightMon = new Monomial( mNode.getRight() );
+               
+               // We need to distribute a node over a monomial
+               if ( leftMon.isValid() && !rightMon.isValid() )
+               {
+                  distribute( mNode.getRight(), leftMon );
+               }
+               else if ( !leftMon.isValid() && rightMon.isValid() )
+               {
+                  distribute( mNode.getLeft(), rightMon );
+               }
+               else // none are valid
+               {
+                  distribute( mNode.getLeft(), mNode.getRight() );
+               }
+            }
+         }
+         else
+         {
+            mon = new Monomial( node );
+            if ( !mon.isValid() )
+            {
+               // throw new ExpressionException( "Invalid monomial.", "" );
+               _isValid = false;
+               return;
+            }
+            map.put( mon.power, mon.coefficient );
+         }
+         
+         if ( ! _isValid )
+         {
+            System.err.println( "WARNING: Invalid Polynomial." );
+         }
       }
    }
    
@@ -116,8 +124,8 @@ class Polynomial extends OperandNode
     */
    public Polynomial( double constant )
    {
-   	map = new HashMap<Double,Double>();
-   	map.put( 0.0, constant );
+      map = new HashMap<Double, Double>();
+      map.put( 0.0, constant );
    }
    
    /**
@@ -125,16 +133,20 @@ class Polynomial extends OperandNode
     */
    public Polynomial( String variable )
    {
-   	map = new HashMap<Double,Double>();
-   	map.put( 1.0, 1.0 );
+      map = new HashMap<Double, Double>();
+      map.put( 1.0, 1.0 );
+      
+      _variable = variable;
    }
    
    /**
     * Merges a polynomial with this one by multiplying coefficients.
-    *
-    * @param poly The polynomial to merge.
-    * @param constant A constant to multiply by.  This is used so that addition
-    * and subtraction can be handled with a single method.
+    * 
+    * @param poly
+    *           The polynomial to merge.
+    * @param constant
+    *           A constant to multiply by. This is used so that addition and
+    *           subtraction can be handled with a single method.
     */
    private void merge( Polynomial poly, double constant )
    {
@@ -142,8 +154,9 @@ class Polynomial extends OperandNode
       {
          if ( map.containsKey( entry.getKey() ) )
          {
-            map.put( entry.getKey(),
-                    ( map.get( entry.getKey() ) + entry.getValue() ) * constant );
+            map.put( entry.getKey(), ( map.get( entry.getKey() ) + entry
+                     .getValue() )
+                     * constant );
          }
          else
          {
@@ -155,7 +168,7 @@ class Polynomial extends OperandNode
    /**
     * Returns the appropriate constant based on whether the node is addition or
     * subtraction.
-    *
+    * 
     * @return 1 for addition, -1 for subtraction, 0 if not an additive node
     */
    private double getMultiplicationConstant( AbstractNode node )
@@ -176,17 +189,20 @@ class Polynomial extends OperandNode
    
    /**
     * Distributes a monomial over an additive node.
-    *
-    * @param node The node to distribute over.  Assumed that this is an
-    * addition node.
-    * @param mon The monomial factor that is multiplied to each argument of the
-    * addition/subtraction node.
+    * 
+    * @param node
+    *           The node to distribute over. Assumed that this is an addition
+    *           node.
+    * @param mon
+    *           The monomial factor that is multiplied to each argument of the
+    *           addition/subtraction node.
     */
    private void distribute( AbstractNode node, Monomial mon )
    {
       double constant = getMultiplicationConstant( node );
       
-      if ( constant == 0 ) return;
+      if ( constant == 0 )
+         return;
       
       BinaryOperatorNode binOpNode = ( BinaryOperatorNode ) node;
       
@@ -200,35 +216,34 @@ class Polynomial extends OperandNode
     */
    private void distribute( AbstractNode left, AbstractNode right )
    {
-      double lC = getMultiplicationConstant( left  );
+      double lC = getMultiplicationConstant( left );
       double rC = getMultiplicationConstant( right );
       
       // if either constant is 0, can't distribute
-      if ( lC * rC == 0 ) return;
+      if ( lC * rC == 0 )
+         return;
       
-      BinaryOperatorNode binLeft  = ( BinaryOperatorNode ) left;
+      BinaryOperatorNode binLeft = ( BinaryOperatorNode ) left;
       BinaryOperatorNode binRight = ( BinaryOperatorNode ) right;
       
-      //First
-      mergeMultiplication( binLeft.getLeft(),  binRight.getLeft(),  1 );
-      //Outer
-      mergeMultiplication( binLeft.getLeft(),  binRight.getRight(), rC );
-      //Inner
-      mergeMultiplication( binLeft.getRight(), binRight.getLeft(),  lC );
-      //Last
+      // First
+      mergeMultiplication( binLeft.getLeft(), binRight.getLeft(), 1 );
+      // Outer
+      mergeMultiplication( binLeft.getLeft(), binRight.getRight(), rC );
+      // Inner
+      mergeMultiplication( binLeft.getRight(), binRight.getLeft(), lC );
+      // Last
       mergeMultiplication( binLeft.getRight(), binRight.getRight(), lC * rC );
    }
    
    /**
     * Merges the result of multiplying the two nodes given as arguments.
     */
-   private void mergeMultiplication( AbstractNode first,
-                                    AbstractNode second,
-                                    double constant )
+   private void mergeMultiplication( AbstractNode first, AbstractNode second,
+            double constant )
    {
       merge( new Polynomial( NodeFactory.createBinaryOperatorNode( "*", first,
-                                                                  second ) ),
-            constant );
+               second ) ), constant );
    }
    
    /**
@@ -244,7 +259,14 @@ class Polynomial extends OperandNode
     */
    public String getStringValue()
    {
-      return map.toString();
+      if ( isValid() )
+      {
+         return map.toString();
+      }
+      else
+      {
+         return "<Invalid Polynomial>";
+      }
    }
    
    /**
@@ -279,60 +301,87 @@ class Polynomial extends OperandNode
       intTest( "( 2 * x )" );
    }
    
-   //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-   /** Integrate - 
-     * By Jake Schwartz
-     */
-   public void integrate( )
+   // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   /**
+    * Integrate - By Jake Schwartz
+    */
+   public void integrate()
    {
-      //Copy the hashtable
-	   HashMap<Double, Double> copy = new HashMap<Double, Double>();
+      // Copy the hashtable
+      HashMap<Double, Double> copy = new HashMap<Double, Double>();
       
-      //For each entry in the copy
-      for( Map.Entry<Double, Double> entry : map.entrySet() )
-      {         
-         //Put a new entry in (this represents each monomial being integrated)
-         copy.put( entry.getKey() + 1d, entry.getValue() * (1d / (entry.getKey() + 1 ) ) );
+      // For each entry in the copy
+      for ( Map.Entry<Double, Double> entry : map.entrySet() )
+      {
+         // Put a new entry in (this represents each monomial being integrated)
+         copy.put( entry.getKey() + 1d, entry.getValue()
+                  * ( 1d / ( entry.getKey() + 1 ) ) );
       }
       
-      //Replace map with copy
+      // Replace map with copy
       map = copy;
    }
-   //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
    
-      public void derive()
+   // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   
+   public void derive()
+   {
+      // copy hash table
+      HashMap<Double, Double> copy = new HashMap<Double, Double>();
+      
+      // For each entry in the copy
+      for ( Map.Entry<Double, Double> entry : map.entrySet() )
       {
-      	// copy hash table
-      	HashMap<Double, Double> copy = new HashMap<Double, Double>();
-      	
-         //For each entry in the copy
-         for( Map.Entry<Double, Double> entry : map.entrySet() )
-         {         
-            //Put a new entry in (this represents each monomial being integrated)
-         	double exp = entry.getKey();
-         	double co = entry.getValue();
-            copy.put( exp - 1d, co * exp );
-         }
-         
-         //Replace map with copy
-         map = copy;
+         // Put a new entry in (this represents each monomial being integrated)
+         double exp = entry.getKey();
+         double co = entry.getValue();
+         copy.put( exp - 1d, co * exp );
       }
       
+      // Replace map with copy
+      map = copy;
+   }
+   
    public boolean equals( Object obj )
    {
-   	if ( ! ( obj instanceof Polynomial ) )
-   	{
-   		return false;
-   	}
-   	else
-   	{
-   		Polynomial poly = ( Polynomial ) obj;
-   		return map.equals( poly.map );
-   	}
+      if ( !( obj instanceof Polynomial ) )
+      {
+         return false;
+      }
+      else
+      {
+         Polynomial poly = ( Polynomial ) obj;
+         return map.equals( poly.map );
+      }
    }
    
    public int hashCode()
    {
-   	return map.hashCode();
+      return map.hashCode();
+   }
+
+   /**
+    * Gets the variable for this polynomial.
+    * 
+    * @return the variable that this polynomial is over
+    */
+   public String getVariable()
+   {
+      return _variable;
+   }
+   
+   /**
+    * Returns the number of terms in this polynomial.
+    */
+   public int termCount()
+   {
+      if ( isValid() )
+      {
+         return map.size();
+      }
+      else
+      {
+         return 0;
+      }
    }
 }
