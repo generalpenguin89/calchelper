@@ -64,6 +64,20 @@ public class NodeFactory
    												createConstantNode( right ) );
    }
    
+   public static AbstractNode createNode( String op, AbstractNode left, AbstractNode right )
+   {
+      BinaryOperatorNode binNode = createBinaryOperatorNode( op, left, right);
+      Polynomial poly = new Polynomial( binNode );
+      if ( poly.isValid() )
+      {
+         return poly;
+      }
+      else
+      {
+         return binNode;
+      }
+   }
+   
    public static AbstractNode createConstantNode( double constant )
    {
    	return new ConstantNode( constant );
