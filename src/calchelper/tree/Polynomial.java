@@ -6,6 +6,7 @@ package calchelper.tree;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Represents a polynomial part of an expression.
@@ -438,5 +439,22 @@ class Polynomial extends OperandNode
      {
         return map.get( 0.0 );
      }
+  }
+  
+  /**
+   * Determines whether or not the polynomial is a simple variable, e.g. no
+   * coefficients or powers.
+   */
+  public boolean isSimpleVariable()
+  {
+     for ( Entry<Double, Double> entry : map.entrySet() )
+     {
+        if ( entry.getKey() != 1.0 || entry.getValue() != 1.0 )
+        {
+           return false;
+        }
+     }
+     
+     return true;
   }
 }
