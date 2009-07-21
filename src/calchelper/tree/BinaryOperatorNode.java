@@ -139,13 +139,15 @@ public abstract class BinaryOperatorNode extends OperatorNode
       /** Integrate - 
         * By Jake Schwartz
         */
-      public void integrate( )
+      public AbstractNode integrate( )
       {
          //Integrate Left side
          this.getLeft().integrate();
          
          //Integreate Right side
          this.getRight().integrate();
+         
+         return this;
       }
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       
@@ -247,7 +249,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
       /** Integrate - 
         * By Jake Schwartz
         */
-      public void integrate( )
+      public AbstractNode integrate( )
       {	
       	/*Case 1: Function in the form INTEGRAL[ a * unary( b ) dx ]
       	 * where a is the derivative of b sans all coefficients
@@ -266,6 +268,8 @@ public abstract class BinaryOperatorNode extends OperatorNode
       	 * 
       	 * Use Integration by parts
       	 */
+         
+         return this;
       }
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       
@@ -312,13 +316,15 @@ public abstract class BinaryOperatorNode extends OperatorNode
       /** Integrate - 
         * By Jake Schwartz
         */
-      public void integrate( )
+      public AbstractNode integrate( )
       {
          //Integrate Left side
          this.getLeft().integrate();
          
          //Integreate Right side
          this.getRight().integrate();
+         
+         return this;
       }
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       
@@ -361,9 +367,11 @@ public abstract class BinaryOperatorNode extends OperatorNode
       /** Integrate - 
         * By Jake Schwartz
         */
-      public void integrate( )
+      public AbstractNode integrate( )
       {
          //TO BE CONTINUED
+         
+         return this;
       }
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       
@@ -403,9 +411,11 @@ public abstract class BinaryOperatorNode extends OperatorNode
       /** Integrate - 
         * By Jake Schwartz
         */
-      public void integrate( )
+      public AbstractNode integrate( )
       {
          //TO BE CONTINUED
+         
+         return this;
       }
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       
@@ -444,7 +454,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
       /** Integrate - 
         * By Jake Schwartz
         */
-      public void integrate( )
+      public AbstractNode integrate( )
       {
          //********CASE 1: Simple exponent x^n**********
          if( getLeft() instanceof VariableNode && getRight() instanceof ConstantNode )
@@ -458,6 +468,8 @@ public abstract class BinaryOperatorNode extends OperatorNode
             this.setLeft( mult );
          }
          //********************************************
+         
+         return this;
       }
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       

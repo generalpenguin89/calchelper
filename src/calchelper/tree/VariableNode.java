@@ -73,7 +73,7 @@ public class VariableNode extends OperandNode
    /** Integrate - Should only be called if there is a Variable alone
      * By Jake Schwartz
      */
-   public void integrate( )
+   public AbstractNode integrate( )
    {
       //Make constant node to represent exponent
       AbstractNode exp = NodeFactory.createConstantNode( 1 );
@@ -85,6 +85,8 @@ public class VariableNode extends OperandNode
       
       //rorateLeft( "*" )
       //rotateRight( "^" )
+      
+      return this;
    }
    //-----------------------------------------
    

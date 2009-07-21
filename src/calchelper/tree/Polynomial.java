@@ -284,7 +284,7 @@ class Polynomial extends OperandNode
    /**
     * Integrate - By Jake Schwartz
     */
-   public void integrate()
+   public AbstractNode integrate()
    {
       // Copy the hashtable
       HashMap<Double, Double> copy = new HashMap<Double, Double>();
@@ -299,6 +299,8 @@ class Polynomial extends OperandNode
       
       // Replace map with copy
       map = copy;
+      
+      return this;
    }
    
    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

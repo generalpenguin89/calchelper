@@ -83,7 +83,7 @@ public class ConstantNode extends OperandNode
    /** Integrate - This should only be called if there is a constant by itself
      * By Jake Schwartz
      */
-   public void integrate( )
+   public AbstractNode integrate( )
    {
       //Make variable node
       AbstractNode var = NodeFactory.createVariableNode( "x" );
@@ -92,6 +92,8 @@ public class ConstantNode extends OperandNode
       BinaryOperatorNode.Multiplication mult = new BinaryOperatorNode.Multiplication( this, var );
       
       //rotateLeft();
+      
+      return this;
    }
    //-----------------------------------------
    

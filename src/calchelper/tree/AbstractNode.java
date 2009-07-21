@@ -132,9 +132,9 @@ abstract class AbstractNode implements Iterable<AbstractNode>
    /**
     * Empty method to be overriden by subclasses
     */
-   public void integrate( )
+   public AbstractNode integrate( )
    {
-      
+      return this;
    }
    
    /**
