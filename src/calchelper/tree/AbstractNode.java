@@ -60,6 +60,15 @@ abstract class AbstractNode implements Iterable<AbstractNode>
    {
       return 0;
    }
+   
+   /**
+    * Determines whether the node is a simple variable (e.g., "x" 
+    * standing alone) or not
+    */
+   public boolean isSimpleVariable()
+   {
+      return false;
+   }
 
    /**
     * An iterator that iterates only over the current node.

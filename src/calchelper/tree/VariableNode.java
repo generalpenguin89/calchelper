@@ -103,4 +103,13 @@ public class VariableNode extends OperandNode
      //might want to return this later
      //return node;
    }
+   
+   /**
+    * Determines whether the node is a simple variable (e.g., "x" 
+    * standing alone) or not
+    */
+   public boolean isSimpleVariable()
+   {
+      return true;
+   }
 }
