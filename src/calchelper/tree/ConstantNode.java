@@ -93,7 +93,7 @@ public class ConstantNode extends OperandNode
       
       //rotateLeft();
       
-      return this;
+      return mult;
    }
    //-----------------------------------------
    
