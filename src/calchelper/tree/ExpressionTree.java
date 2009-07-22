@@ -57,11 +57,24 @@ public class ExpressionTree
     * differentiate()
     *
     * Returns the derivative tree of the tree.
+    * 
+    * @deprecated
     */
+   @Deprecated
    public ExpressionTree differentiate()
    {
+      return derive();
+   }
+   
+   /**
+    * derive()
+    * 
+    * Returns the derivative tree of the tree.
+    */
+   public ExpressionTree derive()
+   {
       //FIXME: this is a stub
-      return null;
+      return null;      
    }
 
    /**
@@ -71,8 +84,14 @@ public class ExpressionTree
     */
    public ExpressionTree integrate()
    {
-      //FIXME: this is a stub
-      return null;
+      if ( _root == null )
+      {
+         return null;         
+      }
+      else
+      {
+         return new ExpressionTree( _root.integrate() );
+      }
    }
    
    /**
