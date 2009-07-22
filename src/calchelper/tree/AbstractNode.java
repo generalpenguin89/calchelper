@@ -151,7 +151,7 @@ abstract class AbstractNode implements Iterable<AbstractNode>
     */
    public void derive( )
    {
-     
+      //FIXME: Should return AbstractNode
    }
 }
 

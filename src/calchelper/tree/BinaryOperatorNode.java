@@ -72,37 +72,6 @@ public abstract class BinaryOperatorNode extends OperatorNode
       return 2;
    }
    
-   /**
-    * Rotates the operation ( c op x ) op y to c op ( x op y )
-    */
-   protected void rotateRight( String op )
-   {
-      BinaryOperatorNode leftChild = ( BinaryOperatorNode ) getLeft();
-      if ( leftChild.getLeft().hasValue() )
-      {
-         setLeft( leftChild.getLeft() );
-         setRight( NodeFactory.createBinaryOperatorNode( op,
-                                                        leftChild.getRight(), getRight() ) );
-         getRight().simplify();
-      }
-   }
-   
-   /**
-    * Rotates the operation x op ( c op y ) to c op ( x op y )
-    */
-   protected void rotateLeft( String op )
-   {
-      BinaryOperatorNode rightChild = ( BinaryOperatorNode ) getRight();
-      if ( rightChild.getLeft().hasValue() )
-      {
-         AbstractNode curLeft = getLeft();
-         setLeft( rightChild.getLeft() );
-         setRight( NodeFactory.createBinaryOperatorNode( op,
-                                                        curLeft, rightChild.getRight() ) );
-         getRight().simplify();
-      }
-   }
-   
    public static class Addition extends BinaryOperatorNode
    {
       /**
@@ -116,23 +85,6 @@ public abstract class BinaryOperatorNode extends OperatorNode
       public double getValue()
       {
          return getLeft().getValue() + getRight().getValue();
-      }
-      
-      public void simplify()
-      {
-         super.simplify();
-         
-         // Deals with ( c * x ) * y
-         if ( getLeft() instanceof Addition )
-         {
-            rotateRight( "+" );
-         }
-         
-         // Deals with x * ( c * y )
-         if ( getRight() instanceof Addition )
-         {
-            rotateLeft( "+" );
-         }
       }
       
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -184,67 +136,6 @@ public abstract class BinaryOperatorNode extends OperatorNode
          return getLeft().getValue() * getRight().getValue();
       }
       
-      
-      public void simplify()
-      {
-         super.simplify();
-         
-         /*
-          * Most of this method is charged with getting the nodes into the
-          * configuration coefficient * ( stuff ).  This should make the tree
-          * easier to deal with.
-          */
-         
-         // XXX: This should be unnecessary now
-         
-         System.out.println( "Simplifying multiplication . . . " );
-         
-         // Deals with ( c * x ) * y
-         if ( getLeft() instanceof Multiplication )
-         {
-            rotateRight( "*" );
-         }
-         
-         // Deals with x * ( c * y )
-         if ( getRight() instanceof Multiplication )
-         {
-            rotateLeft( "*" );
-         }
-         
-         // Deals with x * a, where a is constant
-         if ( getRight().hasValue() && ! getLeft().hasValue() )
-         {
-            // Swap left and right nodes
-            AbstractNode temp = getLeft();
-            setLeft( getRight() );
-            setRight( temp );
-         }
-         
-         // Deals with a * (b * x), where a, b are constant
-         if ( getRight() instanceof Multiplication )
-         {
-            Multiplication rightChild = ( Multiplication ) getRight();
-            if ( getLeft().hasValue() && rightChild.getLeft().hasValue() )
-            {
-               setLeft( 
-                       NodeFactory.createConstantNode(
-                                        getLeft().getValue() * rightChild.getLeft().getValue() ) );
-               setRight( rightChild.getRight() );
-            }
-         }
-         
-         /*if ( getLeft() instanceof VariableNode )
-          {
-          if ( getRight() instanceof VariableNode )
-          {
-          if ( ( ( Variable ) getLeft() ).getStringValue().equals(
-          ( ( Variable ) getRight() ).getStringValue() ) )
-          {
-          }
-          }
-          }*/
-      }
-      
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       /** Integrate - 
         * By Jake Schwartz
@@ -281,6 +172,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
       public void derive()
       {
         //example: 2x^2
+         //FIXME: ConstantNode
         if( getLeft() instanceof ConstantNode && getRight() instanceof 
              BinaryOperatorNode.Power )
         {
@@ -305,11 +197,6 @@ public abstract class BinaryOperatorNode extends OperatorNode
       public double getValue()
       {
          return getLeft().getValue() - getRight().getValue();
-      }
-      
-      public void simplify()
-      {
-         super.simplify();
       }
       
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -358,11 +245,6 @@ public abstract class BinaryOperatorNode extends OperatorNode
          return getLeft().getValue() / getRight().getValue();
       }
       
-      public void simplify()
-      {
-         super.simplify();
-      }
-      
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       /** Integrate - 
         * By Jake Schwartz
@@ -400,11 +282,6 @@ public abstract class BinaryOperatorNode extends OperatorNode
       public double getValue()
       {
          return getLeft().getValue() % getRight().getValue();
-      }
-      
-      public void simplify()
-      {
-         super.simplify();
       }
       
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -445,11 +322,6 @@ public abstract class BinaryOperatorNode extends OperatorNode
          return Math.pow( getLeft().getValue(), getRight().getValue() );
       }
       
-      public void simplify()
-      {
-         super.simplify();
-      }
-        
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       /** Integrate - 
         * By Jake Schwartz
@@ -457,6 +329,8 @@ public abstract class BinaryOperatorNode extends OperatorNode
       public AbstractNode integrate( )
       {
          //********CASE 1: Simple exponent x^n**********
+         //FIXME: ConstantNode
+         //FIXME: VariableNode
          if( getLeft() instanceof VariableNode && getRight() instanceof ConstantNode )
          {
             //Make the exponent one higher
@@ -481,6 +355,8 @@ public abstract class BinaryOperatorNode extends OperatorNode
       public void derive( )
       {
         //case: x^n ==> nx^(n-1)
+         //FIXME: ConstantNode
+         //FIXME: VariableNode
         if( getLeft( ) instanceof VariableNode && getRight( ) instanceof ConstantNode )
         {
           //save the value of the power... minus 1
