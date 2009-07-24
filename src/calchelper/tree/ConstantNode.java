@@ -102,8 +102,9 @@ public class ConstantNode extends AbstractNode
     * sets the value to zero, since that is the rule of derivation for constants
     * by William Rideout
     */
-   public void derive( )
+   public AbstractNode derive( )
    {
-     _value = 0;
+      ConstantNode cons = new ConstantNode(0);
+      return cons;
    }
 }

@@ -108,13 +108,17 @@ public abstract class BinaryOperatorNode extends OperatorNode
        * finds the derivative of this node
        * by William Rideout
        */
-      public void derive( )
+      public AbstractNode derive( )
       {
         //derive left side
-        this.getLeft( ).derive( );
+        AbstractNode left = this.getLeft( ).derive( );
         
         //derive right side
-        this.getRight( ).derive( );
+        AbstractNode right = this.getRight( ).derive( );
+        
+        //make and return a new AbstractNode
+        AbstractNode newAdd = NodeFactory.createNode("+", left, right);
+        return newAdd;
       }
    }
    
@@ -169,18 +173,20 @@ public abstract class BinaryOperatorNode extends OperatorNode
        * finds the derivative of this node
        * by William Rideout
        */
-      public void derive()
+      public AbstractNode derive()
       {
+         AbstractNode right = null;
         //example: 2x^2
-         //FIXME: ConstantNode
-        if( getLeft() instanceof ConstantNode && getRight() instanceof 
-             BinaryOperatorNode.Power )
+        if( getLeft().hasValue() && getRight() instanceof BinaryOperatorNode.Power )
         {
-          getRight( ).derive( );
-          simplify( );
+          right = getRight( ).derive( );
+          right.simplify( );
         }
         
         //product rule will go here
+        
+        //FIXME: unsure if this is correct.
+        return right;
       }
    }
    
@@ -220,13 +226,17 @@ public abstract class BinaryOperatorNode extends OperatorNode
        * finds the derivative of this node
        * by William Rideout
        */
-      public void derive( )
+      public AbstractNode derive( )
       {
         //derive left side
-        this.getLeft( ).derive( );
+        AbstractNode left = this.getLeft( ).derive( );
         
         //derive right side
-        this.getRight( ).derive( );
+        AbstractNode right = this.getRight( ).derive( );
+      
+        //create and return a new AbstractNode
+        AbstractNode newSub = NodeFactory.createNode("-", left, right );
+        return newSub;
       }
    }
    
@@ -262,10 +272,11 @@ public abstract class BinaryOperatorNode extends OperatorNode
        * finds the derivative of this node
        * by William Rideout
        */
-      public void derive( )
+      public AbstractNode derive( )
       {
-        //UNIMPLEMENTED
+        //FIXME:UNIMPLEMENTED
         //quotient rule will go here
+         return null;
       }
    }
    
@@ -301,9 +312,10 @@ public abstract class BinaryOperatorNode extends OperatorNode
        * finds the derivative of this node
        * by William Rideout
        */
-      public void derive( )
+      public AbstractNode derive( )
       {
-        //UNIMPLEMENTED
+        //FIXME:UNIMPLEMENTED
+         return null;
       }
    }
    
@@ -329,9 +341,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
       public AbstractNode integrate( )
       {
          //********CASE 1: Simple exponent x^n**********
-         //FIXME: ConstantNode
-         //FIXME: VariableNode
-         if( getLeft() instanceof VariableNode && getRight() instanceof ConstantNode )
+         if( getLeft().isSimpleVariable() && getRight().hasValue())
          {
             //Make the exponent one higher
             this.setLeft( NodeFactory.createConstantNode( getRight().getValue() + 1 ) );
@@ -352,12 +362,11 @@ public abstract class BinaryOperatorNode extends OperatorNode
        * finds the derivative of this node
        * by William Rideout
        */
-      public void derive( )
+      public AbstractNode derive( )
       {
+         Multiplication times = null;
         //case: x^n ==> nx^(n-1)
-         //FIXME: ConstantNode
-         //FIXME: VariableNode
-        if( getLeft( ) instanceof VariableNode && getRight( ) instanceof ConstantNode )
+        if( getLeft( ).isSimpleVariable() && getRight( ).hasValue() )
         {
           //save the value of the power... minus 1
           AbstractNode pow = NodeFactory.createConstantNode( getRight( ).getValue( ) - 1 );
@@ -366,10 +375,11 @@ public abstract class BinaryOperatorNode extends OperatorNode
           AbstractNode val = NodeFactory.createConstantNode( getRight( ).getValue( ) );
           
           //put the node together
-          Multiplication times = new Multiplication( getLeft( ), val );
+          times = new Multiplication( getLeft( ), val );
           setLeft( times );
           setRight( pow );
         }
+        return times;
       }
    }
 }

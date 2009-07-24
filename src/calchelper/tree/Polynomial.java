@@ -305,7 +305,7 @@ class Polynomial extends AbstractNode
    
    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
    
-   public void derive()
+   public AbstractNode derive()
    {
       // copy hash table
       HashMap<Double, Double> copy = new HashMap<Double, Double>();
@@ -321,6 +321,9 @@ class Polynomial extends AbstractNode
       
       // Replace map with copy
       map = copy;
+      
+      //FIXME: unsure if this is what I want to return.
+      return this;
    }
    
    /**

@@ -153,15 +153,16 @@ abstract class AbstractNode implements Iterable<AbstractNode>
     */
    public AbstractNode integrate( )
    {
+      //FIXME:THIS IS DEBATABLE... WILL BE DISCUSSED
       return this;
    }
    
    /**
     * Another empty method to be overridden
     */
-   public void derive( )
+   public AbstractNode derive( )
    {
-      //FIXME: Should return AbstractNode
+      return null;
    }
 }
 

@@ -96,12 +96,12 @@ public class VariableNode extends AbstractNode
     * for lone variables.
     * by William Rideout
     */
-   public void /*ConstantNode*/ derive( )
+   public ConstantNode derive( )
    {
-     AbstractNode node = NodeFactory.createConstantNode( 1 );
-     
+     //AbstractNode node = NodeFactory.createConstantNode( 1 );
+     ConstantNode node = new ConstantNode(1);
      //might want to return this later
-     //return node;
+     return node;
    }
    
    /**
