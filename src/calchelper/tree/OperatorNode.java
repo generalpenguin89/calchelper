@@ -26,6 +26,14 @@ abstract class OperatorNode extends AbstractNode
    {
       return _type;
    }
+   
+   /**
+    * Returns the string value of this node.  Does not recurse to child nodes.
+    */
+   public String getStringValue()
+   {
+      return _type;
+   }
 
    /**
     * Returns the nth node.
@@ -49,8 +57,6 @@ abstract class OperatorNode extends AbstractNode
    protected String toString( int depth )
    {
       String str = super.toString( depth );
-      str += _type;
-      str += "\n";
 
       for ( AbstractNode child : _children )
       {

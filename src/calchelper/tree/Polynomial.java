@@ -14,7 +14,7 @@ import java.util.Map.Entry;
  * @author Patrick MacArthur
  */
 
-class Polynomial extends OperandNode
+class Polynomial extends AbstractNode
 {
    /* This maps coefficients to powers.
     *

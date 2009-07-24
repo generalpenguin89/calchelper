@@ -11,7 +11,7 @@
 package calchelper.tree;
 
 @Deprecated
-public class ConstantNode extends OperandNode
+public class ConstantNode extends AbstractNode
 {
    double _value;
 

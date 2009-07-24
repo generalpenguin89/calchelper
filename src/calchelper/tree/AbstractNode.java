@@ -34,6 +34,8 @@ abstract class AbstractNode implements Iterable<AbstractNode>
       { 
          str += "   ";
       }
+      str += getStringValue();
+      str += "\n";
 
       return str;
    }
@@ -59,6 +61,14 @@ abstract class AbstractNode implements Iterable<AbstractNode>
    public double getValue()
    {
       return 0;
+   }
+   
+   /**
+    * Returns a string representation of the value.
+    */
+   public String getStringValue()
+   {
+      return "";
    }
    
    /**
