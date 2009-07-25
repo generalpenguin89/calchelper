@@ -36,7 +36,7 @@ public class CalcGUI extends JPanel
 		super( new BorderLayout() );
 		_guiProcessor = new GUIProcessor( this );
 		// for using the jframe for whatever reason
-		_parent = parent;
+		setParentFrame( parent );
 		
 		// create the menu
 		JPanel menuPanel = new JPanel();
@@ -125,7 +125,27 @@ public class CalcGUI extends JPanel
 		return bMenu;
 	}
 	
-	// ButtonListener inner class
+	/**
+	 * Sets the parent frame.
+	 * 
+    * @param parent the parent to set
+    */
+   protected void setParentFrame( Container parent )
+   {
+      _parent = parent;
+   }
+
+   /**
+    * Gets the parent frame.
+    * 
+    * @return the parent
+    */
+   protected Container getParentFrame()
+   {
+      return _parent;
+   }
+
+   // ButtonListener inner class
 	/**
 	 * ButtonListener handles all button events and passes them along to methods
 	 * of the Processor class.
