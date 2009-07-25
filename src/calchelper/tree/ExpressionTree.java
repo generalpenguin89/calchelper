@@ -16,7 +16,7 @@ public class ExpressionTree
    // Constructor
    public ExpressionTree( AbstractNode root )
    {
-      _root = root;
+      setRoot( root );
    }
 
    /**
@@ -24,13 +24,13 @@ public class ExpressionTree
     */
    public void simplify()
    {
-      Polynomial poly = new Polynomial( _root );
+      Polynomial poly = new Polynomial( getRoot() );
       if ( poly.isValid() )
       {
-         _root = poly;
+         setRoot( poly );
       }
       
-      _root.simplify();
+      getRoot().simplify();
    }
    
    /**
@@ -39,6 +39,16 @@ public class ExpressionTree
    AbstractNode getRoot()
    {
    	return _root;
+   }
+   
+   /**
+    * Sets the root node of the tree.
+    * 
+    * @param root The new root of the tree.
+    */
+   protected void setRoot( AbstractNode root )
+   {
+      _root = root;
    }
 
    /**
@@ -50,7 +60,7 @@ public class ExpressionTree
     */
    public String toString()
    {
-      return _root.toString();
+      return getRoot().toString();
    }
 
    /**
@@ -73,13 +83,13 @@ public class ExpressionTree
     */
    public ExpressionTree derive()
    {
-      if ( _root == null )
+      if ( getRoot() == null )
       {
          return null;         
       }
       else
       {
-         return new ExpressionTree( _root.derive() );
+         return new ExpressionTree( getRoot().derive() );
       }     
    }
 
@@ -90,13 +100,13 @@ public class ExpressionTree
     */
    public ExpressionTree integrate()
    {
-      if ( _root == null )
+      if ( getRoot() == null )
       {
          return null;         
       }
       else
       {
-         return new ExpressionTree( _root.integrate() );
+         return new ExpressionTree( getRoot().integrate() );
       }
    }
    
@@ -113,7 +123,7 @@ public class ExpressionTree
    	}
    	ExpressionTree tree = ( ExpressionTree ) obj;
    	
-   	return this._root.equals( tree._root );
+   	return this.getRoot().equals( tree.getRoot() );
    }
    
 }
