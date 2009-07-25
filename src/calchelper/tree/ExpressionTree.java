@@ -73,8 +73,14 @@ public class ExpressionTree
     */
    public ExpressionTree derive()
    {
-      //FIXME: this is a stub
-      return null;      
+      if ( _root == null )
+      {
+         return null;         
+      }
+      else
+      {
+         return new ExpressionTree( _root.derive() );
+      }     
    }
 
    /**
