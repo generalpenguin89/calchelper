@@ -53,7 +53,7 @@ class Polynomial extends AbstractNode
             // Base case 1
             map.put( 0.0, node.getValue() );
          }
-         else if ( node instanceof VariableNode )
+         else if ( node.isSimpleVariable() )
          {
             // Base case 2
             map.put( 1.0, 1.0 );
