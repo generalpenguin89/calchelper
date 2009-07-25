@@ -44,6 +44,6 @@ public class IntegrationTest
    {
       Polynomial result = intTest( "2 * x ^ 1" );
       expected.put( 2.0, 1.0 );
-      assertEquals( expected, result.map );
+      assertEquals( expected, result.getMap() );
    }
 }

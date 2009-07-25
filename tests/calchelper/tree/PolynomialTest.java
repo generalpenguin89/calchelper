@@ -48,42 +48,42 @@ public class PolynomialTest
    {
       Polynomial result = unitTest( "5 * x ^ 2" );
       expected.put( 2.0, 5.0 );
-      assertEquals( expected, result.map );
+      assertEquals( expected, result.getMap() );
    }
 
    @Test public void test1_2() throws ExpressionException
    {
       Polynomial result = unitTest( "( 5 * x ^ 3 ) ^ 2" );
       expected.put( 6.0, 25.0 );
-      assertEquals( expected, result.map );
+      assertEquals( expected, result.getMap() );
    }
 
    @Test public void test1_3() throws ExpressionException
    {
       Polynomial result = unitTest( "x + 2 * x" );
       expected.put( 1.0, 3.0 );
-      assertEquals( expected, result.map );
+      assertEquals( expected, result.getMap() );
    }
 
    @Test public void test1_4() throws ExpressionException
    {
       Polynomial result = unitTest( "3 * x + 2 * x" );
       expected.put( 1.0, 5.0 );
-      assertEquals( expected, result.map );
+      assertEquals( expected, result.getMap() );
    }
 
    @Test public void test1_5() throws ExpressionException
    {
       Polynomial result = unitTest( "x * x" );
       expected.put( 2.0, 1.0 );
-      assertEquals( expected, result.map );
+      assertEquals( expected, result.getMap() );
    }
 
    @Test public void test1_6() throws ExpressionException
    {
       Polynomial result = unitTest( "x * 2 * x" );
       expected.put( 2.0, 2.0 );
-      assertEquals( expected, result.map );
+      assertEquals( expected, result.getMap() );
    }
 
    @Test public void test1_7() throws ExpressionException
@@ -91,7 +91,7 @@ public class PolynomialTest
       Polynomial result = unitTest( "x + 2 * x ^ 2" );
       expected.put( 1.0, 1.0 );
       expected.put( 2.0, 2.0 );
-      assertEquals( expected, result.map );
+      assertEquals( expected, result.getMap() );
    }
 
    @Test public void test2_1() throws ExpressionException
@@ -99,7 +99,7 @@ public class PolynomialTest
       Polynomial result = unitTest( "4 * ( x + 3 )" );
       expected.put( 1.0, 4.0 );
       expected.put( 0.0, 12.0 );
-      assertEquals( expected, result.map );
+      assertEquals( expected, result.getMap() );
    }
 
    @Test public void test2_2() throws ExpressionException
@@ -107,7 +107,7 @@ public class PolynomialTest
       Polynomial result = unitTest( "( x + 3 ) * 4" );
       expected.put( 1.0, 4.0 );
       expected.put( 0.0, 12.0 );
-      assertEquals( expected, result.map );
+      assertEquals( expected, result.getMap() );
    }
 
    @Test public void test2_3() throws ExpressionException
@@ -115,7 +115,7 @@ public class PolynomialTest
       Polynomial result = unitTest( "x * ( x + 3 )" );
       expected.put( 1.0, 3.0 );
       expected.put( 2.0, 1.0 );
-      assertEquals( expected, result.map );
+      assertEquals( expected, result.getMap() );
    }
 
    @Test public void test2_4() throws ExpressionException
@@ -123,7 +123,7 @@ public class PolynomialTest
       Polynomial result = unitTest( "( x + 3 ) * x" );
       expected.put( 1.0, 3.0 );
       expected.put( 2.0, 1.0 );
-      assertEquals( expected, result.map );
+      assertEquals( expected, result.getMap() );
    }
 
    @Test public void test3_1() throws ExpressionException
@@ -131,7 +131,7 @@ public class PolynomialTest
       Polynomial result = unitTest( "4 * ( x - 3 )" );
       expected.put( 1.0, 4.0 );
       expected.put( 0.0, -12.0 );
-      assertEquals( expected, result.map );
+      assertEquals( expected, result.getMap() );
    }
 
    @Test public void test3_2() throws ExpressionException
@@ -139,7 +139,7 @@ public class PolynomialTest
       Polynomial result = unitTest( "x * ( x - 3 )" );
       expected.put( 1.0, -3.0 );
       expected.put( 2.0, 1.0 );
-      assertEquals( expected, result.map );
+      assertEquals( expected, result.getMap() );
    }
 
    @Test public void test4_1() throws ExpressionException
@@ -154,7 +154,7 @@ public class PolynomialTest
       Polynomial result = unitTest( "( 4 + x ^ 2 ) * ( x + 3 )" );
 
       // Assertion
-      assertEquals( expected, result.map );
+      assertEquals( expected, result.getMap() );
    }
 
    @Test public void test4_2() throws ExpressionException
@@ -169,7 +169,7 @@ public class PolynomialTest
       Polynomial result = unitTest( "( 4 - x ^ 2 ) * ( x + 3 )" );
 
       // Assertion
-      assertEquals( expected, result.map );
+      assertEquals( expected, result.getMap() );
    }
 
    @Test public void test4_3() throws ExpressionException
@@ -184,7 +184,7 @@ public class PolynomialTest
       Polynomial result = unitTest( "( x + 3 ) * ( 4 + x ^ 2 )" );
 
       // Assertion
-      assertEquals( expected, result.map );
+      assertEquals( expected, result.getMap() );
    }
 
    @Test public void test4_4() throws ExpressionException
@@ -199,7 +199,7 @@ public class PolynomialTest
       Polynomial result = unitTest( "( x - 3 ) * ( 4 - x ^ 2 )" );
 
       // Assertion
-      assertEquals( expected, result.map );
+      assertEquals( expected, result.getMap() );
    }
 
    @Test public void test4_5() throws ExpressionException
@@ -214,7 +214,7 @@ public class PolynomialTest
       Polynomial result = unitTest( "( 3 - x ) * ( 4 - x ^ 2 )" );
 
       // Assertion
-      assertEquals( expected, result.map );
+      assertEquals( expected, result.getMap() );
    }
    
    @Test public void test5_1() throws ExpressionException
@@ -229,7 +229,7 @@ public class PolynomialTest
       Polynomial result = unitTest( "( x ^ 2 + 3 * x + 7 ) * ( 11 * x + 5 )" );
 
       // Assertion
-      assertEquals( expected, result.map );
+      assertEquals( expected, result.getMap() );
    }
    
    @Test public void copyTest() throws ExpressionException

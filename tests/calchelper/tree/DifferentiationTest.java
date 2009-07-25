@@ -42,6 +42,6 @@ public class DifferentiationTest
    {
       Polynomial result = intTest( "2 * x ^ 1" );
       expected.put( 0.0, 2.0 );
-      assertEquals( expected, result.map );
+      assertEquals( expected, result.getMap() );
    }
 }

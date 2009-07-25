@@ -22,7 +22,7 @@ class Polynomial extends AbstractNode
     *
     * For example, the expression 2x^3 would be represented by the map {3:2}.
     */
-   HashMap<Double, Double> /* toil and trouble */ map;
+   private HashMap<Double, Double> _map;
    
    // The variable that this polynomial is over
    private String _variable;
@@ -41,24 +41,24 @@ class Polynomial extends AbstractNode
       
       if ( node instanceof Polynomial )
       {
-         map = ( ( Polynomial ) node ).map;
+         setMap( ( ( Polynomial ) node ).getMap() );
          _variable = ( ( Polynomial ) node )._variable;
          _isValid = ( ( Polynomial ) node )._isValid;
       }
       else
       {
-         map = new HashMap<Double, Double>();
+         setMap( new HashMap<Double, Double>() );
          _isValid = true;
          
          if ( node.hasValue() )
          {
             // Base case 1
-            map.put( 0.0, node.getValue() );
+            getMap().put( 0.0, node.getValue() );
          }
          else if ( node.isSimpleVariable() )
          {
             // Base case 2
-            map.put( 1.0, 1.0 );
+            getMap().put( 1.0, 1.0 );
             _variable = node.toString();
          }
          else if ( node instanceof BinaryOperatorNode )
@@ -88,10 +88,10 @@ class Polynomial extends AbstractNode
                         this.isSameVariable( left ) &&
                         left.isSameVariable( right ) )
                {
-                  for ( Map.Entry<Double, Double> entry : left.map.entrySet() )
+                  for ( Map.Entry<Double, Double> entry : left.getMap().entrySet() )
                   {
                      for ( Map.Entry<Double, Double> other : 
-                              right.map.entrySet() )
+                              right.getMap().entrySet() )
                      {
                         merge( entry.getKey() + other.getKey(), 
                                  entry.getValue() * other.getValue() );
@@ -115,10 +115,10 @@ class Polynomial extends AbstractNode
                         left.isSameVariable( right ) && 
                         right.termCount() == 1 )
                {
-                  for ( Map.Entry<Double, Double> entry : left.map.entrySet() )
+                  for ( Map.Entry<Double, Double> entry : left.getMap().entrySet() )
                   {
                      for ( Map.Entry<Double, Double> other :
-                              right.map.entrySet() )
+                              right.getMap().entrySet() )
                      {
                         merge( entry.getKey() - other.getKey(), 
                                  entry.getValue() / other.getValue() );
@@ -141,7 +141,7 @@ class Polynomial extends AbstractNode
                {
                   double right = binNode.getRight().getValue();
                   
-                  for ( Map.Entry<Double, Double> entry : left.map.entrySet() )
+                  for ( Map.Entry<Double, Double> entry : left.getMap().entrySet() )
                   {
                       merge( entry.getKey() * right,
                              Math.pow( entry.getValue(), right ) );
@@ -174,8 +174,8 @@ class Polynomial extends AbstractNode
     */
    public Polynomial( double constant )
    {
-      map = new HashMap<Double, Double>();
-      map.put( 0.0, constant );
+      setMap( new HashMap<Double, Double>() );
+      getMap().put( 0.0, constant );
       _isValid = true;
    }
    
@@ -184,8 +184,8 @@ class Polynomial extends AbstractNode
     */
    public Polynomial( String variable )
    {
-      map = new HashMap<Double, Double>();
-      map.put( 1.0, 1.0 );
+      setMap( new HashMap<Double, Double>() );
+      getMap().put( 1.0, 1.0 );
       _isValid = true;
       _variable = variable;
    }
@@ -200,13 +200,13 @@ class Polynomial extends AbstractNode
     */
    private void merge( double power, double coefficient )
    {
-      if ( map.containsKey( power ) )
+      if ( getMap().containsKey( power ) )
       {
-         map.put( power, ( map.get( power ) ) + coefficient );
+         getMap().put( power, ( getMap().get( power ) ) + coefficient );
       }
       else
       {
-         map.put( power, coefficient );
+         getMap().put( power, coefficient );
       }
    }
    
@@ -221,7 +221,7 @@ class Polynomial extends AbstractNode
     */
    private void merge( Polynomial poly, double constant )
    {
-      for ( Map.Entry<Double, Double> entry : poly.map.entrySet() )
+      for ( Map.Entry<Double, Double> entry : poly.getMap().entrySet() )
       {
          merge( entry.getKey(), entry.getValue() * constant );
       }
@@ -266,7 +266,7 @@ class Polynomial extends AbstractNode
       {
          String delimiter = " + ";
          ArrayList<String> strList = new ArrayList<String>();
-         for ( Map.Entry<Double, Double> entry : map.entrySet() )
+         for ( Map.Entry<Double, Double> entry : getMap().entrySet() )
          {
             if ( entry.getKey() == 0.0 )
             {
@@ -310,7 +310,7 @@ class Polynomial extends AbstractNode
       treeRoot = tree.getRoot();
       poly = new Polynomial( treeRoot );
       poly.integrate();
-      System.out.println( "Polynomial map: " + poly.map );
+      System.out.println( "Polynomial map: " + poly.getMap() );
       System.out.println();
    }
    
@@ -331,7 +331,7 @@ class Polynomial extends AbstractNode
       HashMap<Double, Double> copy = new HashMap<Double, Double>();
       
       // For each entry in the copy
-      for ( Map.Entry<Double, Double> entry : map.entrySet() )
+      for ( Map.Entry<Double, Double> entry : getMap().entrySet() )
       {
          // Put a new entry in (this represents each monomial being integrated)
          copy.put( entry.getKey() + 1d, entry.getValue()
@@ -339,7 +339,7 @@ class Polynomial extends AbstractNode
       }
       
       // Replace map with copy
-      map = copy;
+      setMap( copy );
       
       return this;
    }
@@ -352,7 +352,7 @@ class Polynomial extends AbstractNode
       HashMap<Double, Double> copy = new HashMap<Double, Double>();
       
       // For each entry in the copy
-      for ( Map.Entry<Double, Double> entry : map.entrySet() )
+      for ( Map.Entry<Double, Double> entry : getMap().entrySet() )
       {
          // Put a new entry in (this represents each monomial being integrated)
          double exp = entry.getKey();
@@ -361,7 +361,7 @@ class Polynomial extends AbstractNode
       }
       
       // Replace map with copy
-      map = copy;
+      setMap( copy );
       
       //FIXME: unsure if this is what I want to return.
       return this;
@@ -385,7 +385,7 @@ class Polynomial extends AbstractNode
          } 
          else if ( isSameVariable( poly ) )
          {
-            return map.equals( poly.map );
+            return getMap().equals( poly.getMap() );
          }
       }
       
@@ -413,11 +413,11 @@ class Polynomial extends AbstractNode
          // Very crude way of determining the hashCode
          if ( _variable != null )
          {
-            return map.hashCode() * _variable.hashCode();
+            return getMap().hashCode() * _variable.hashCode();
          }
          else
          {
-            return map.hashCode();
+            return getMap().hashCode();
          }
       }
    }
@@ -439,7 +439,7 @@ class Polynomial extends AbstractNode
    {
       if ( isValid() )
       {
-         return map.size();
+         return getMap().size();
       }
       else
       {
@@ -468,7 +468,7 @@ class Polynomial extends AbstractNode
       }
       else
       {
-         return map.containsKey( 0.0 );
+         return getMap().containsKey( 0.0 );
       }
    }
    
@@ -483,7 +483,7 @@ class Polynomial extends AbstractNode
      }
      else
      {
-        return map.get( 0.0 );
+        return getMap().get( 0.0 );
      }
   }
   
@@ -493,7 +493,7 @@ class Polynomial extends AbstractNode
    */
   public boolean isSimpleVariable()
   {
-     for ( Entry<Double, Double> entry : map.entrySet() )
+     for ( Entry<Double, Double> entry : getMap().entrySet() )
      {
         if ( entry.getKey() != 1.0 || entry.getValue() != 1.0 )
         {
@@ -503,4 +503,23 @@ class Polynomial extends AbstractNode
      
      return true;
   }
+
+   /**
+    * Sets the HashMap for this Polynomial.
+    * @param map the map to set
+    */
+   protected void setMap( HashMap<Double, Double> map )
+   {
+      this._map = map;
+   }
+   
+   /**
+    * Gets the HashMap for this Polynomial.
+    *  
+    * @return the map
+    */
+   HashMap<Double, Double> getMap()
+   {
+      return _map;
+   }
 }
