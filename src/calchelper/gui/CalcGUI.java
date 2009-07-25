@@ -176,7 +176,7 @@ public class CalcGUI extends JPanel
 					}
 					try
 					{
-						_tree.differentiate();
+						_tree.derive();
 					}
 					catch ( NullPointerException e )
 					{
