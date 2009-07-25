@@ -4,7 +4,9 @@
 
 package calchelper.tree;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -234,13 +236,52 @@ class Polynomial extends AbstractNode
    }
    
    /**
+    * Joins an ArrayList together to form a String.
+    * 
+    * @param strList A list of strings to join together.
+    * @param delimiter A delimiter to insert between each string.
+    * @return The string created from the ArrayList
+    */
+   protected static String join( ArrayList<String> strList, String delimiter )
+   {
+      StringBuffer buffer = new StringBuffer();
+      Iterator<String> iter = strList.iterator();
+      while ( iter.hasNext() )
+      {
+         buffer.append( iter.next() );
+         if ( iter.hasNext() )
+         {
+            buffer.append( delimiter );
+         }
+      }
+      return buffer.toString();
+   }
+   
+   /**
     * Gets a string representation.
     */
    public String getStringValue()
    {
       if ( isValid() )
       {
-         return map.toString();
+         String delimiter = " + ";
+         ArrayList<String> strList = new ArrayList<String>();
+         for ( Map.Entry<Double, Double> entry : map.entrySet() )
+         {
+            if ( entry.getKey() == 0.0 )
+            {
+               strList.add( String.valueOf( entry.getValue() ) );
+            }
+            else if ( entry.getKey() == 1.0 )
+            {
+               strList.add( entry.getValue() + "x" );
+            }
+            else
+            {
+               strList.add( entry.getValue() + "x^" + entry.getKey() );
+            }
+         }
+         return join( strList, delimiter );
       }
       else
       {
