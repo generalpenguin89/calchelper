@@ -9,7 +9,7 @@
 
 package calchelper.tree;
 
-public class NodeFactory
+class NodeFactory
 {
    /**
     * Creates a binary operator node based on the string given.

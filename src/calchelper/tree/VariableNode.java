@@ -11,7 +11,7 @@
 package calchelper.tree;
 
 @Deprecated
-public class VariableNode extends AbstractNode
+class VariableNode extends AbstractNode
 {
    String _name;
    

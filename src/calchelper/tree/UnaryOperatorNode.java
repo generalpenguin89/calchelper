@@ -14,7 +14,7 @@ package calchelper.tree;
 
 import java.util.ArrayList;
 
-public class UnaryOperatorNode extends OperatorNode
+class UnaryOperatorNode extends OperatorNode
 {
    /*
     * Implementation notes:

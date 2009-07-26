@@ -15,7 +15,7 @@ package calchelper.tree;
 
 import java.util.ArrayList;
 
-public class NaryOperatorNode extends OperatorNode
+class NaryOperatorNode extends OperatorNode
 {
    /**
     * Generates a binary operator node.

@@ -14,7 +14,7 @@ public class ExpressionTree
    private AbstractNode _root;
 
    // Constructor
-   public ExpressionTree( AbstractNode root )
+   ExpressionTree( AbstractNode root )
    {
       setRoot( root );
    }

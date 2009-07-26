@@ -14,7 +14,7 @@ package calchelper.tree;
 
 import java.util.ArrayList;
 
-public abstract class BinaryOperatorNode extends OperatorNode
+abstract class BinaryOperatorNode extends OperatorNode
 {
    /*
     * Implementation notes:
@@ -72,7 +72,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
       return 2;
    }
    
-   public static class Addition extends BinaryOperatorNode
+   static class Addition extends BinaryOperatorNode
    {
       /**
        * Instantiates an addition node.
@@ -122,7 +122,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
       }
    }
    
-   public static class Multiplication extends BinaryOperatorNode
+   static class Multiplication extends BinaryOperatorNode
    {
       /**
        * Instantiates a multiplication node.
@@ -190,7 +190,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
       }
    }
    
-   public static class Subtraction extends BinaryOperatorNode
+   static class Subtraction extends BinaryOperatorNode
    {
       /**
        * Instantiates a subtraction node.
@@ -240,7 +240,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
       }
    }
    
-   public static class Division extends BinaryOperatorNode
+   static class Division extends BinaryOperatorNode
    {
       /**
        * Instantiates a division node.
@@ -280,7 +280,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
       }
    }
    
-   public static class Modulus extends BinaryOperatorNode
+   static class Modulus extends BinaryOperatorNode
    {
       /**
        * Instantiates a modulus node.
@@ -319,7 +319,7 @@ public abstract class BinaryOperatorNode extends OperatorNode
       }
    }
    
-   public static class Power extends BinaryOperatorNode
+   static class Power extends BinaryOperatorNode
    {
       /**
        * Instantiates a power (or exponentiation) node.
