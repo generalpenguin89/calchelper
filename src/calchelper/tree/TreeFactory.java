@@ -15,7 +15,6 @@ package calchelper.tree;
 
 import java.text.NumberFormat;
 import java.text.ParsePosition;
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -61,31 +60,48 @@ public class TreeFactory
          default: return ch;
       }
    }
+   
+   /**
+    * Parses a LaTeX operator from a token.
+    * 
+    * @param token The token to parse.
+    * @throws ExpressionException
+    */
+   private void parseLatexFunction( String token ) throws ExpressionException
+   {
+      String function;
+      
+      if ( token.indexOf( "{" ) != -1 )
+      {
+         ParsePosition pos = new ParsePosition( token.indexOf( "{" ) );
+         function = token.substring( 0, pos.getIndex() );
+         if ( token.indexOf( "}", pos.getIndex() ) < -1 )
+         {
+            throw new ExpressionException( "unterminated {", _infix );
+         }
+         
+         // Parse the argument of the function
+         parseToken( token.substring( pos.getIndex(), 
+                  token.indexOf( "}", pos.getIndex() ) ) );
+      }
+      else if ( token.indexOf( "[" ) != -1 )
+      {
+         throw new UnsupportedOperationException(
+                  "Root function is currently not supported." );
+      }
+      else
+      {
+         function = token;
+      }
+      _randStack.push( buildOpNode( function, _randStack ) );
+   }
 
    private void parseOperator( String token, ParsePosition pos )
       throws ExpressionException
    {
       char ch = token.charAt( pos.getIndex() );
       
-      // We have an operator
-      if ( ch == '\\' )
-      {
-         System.err.println( "Found LaTeX operator.  Not yet implemented." );
-         /*String restOfToken = token.substring( pos.getIndex() + 1 );
-         String function;
-         ArrayList<String> arguments = new ArrayList<String>();
-         
-         if ( restOfToken.indexOf( "{", pos.getIndex() ) != -1 )
-         {
-            function = restOfToken.substring( 0, 
-                     restOfToken.indexOf( "{", pos.getIndex() ) );
-         }
-         else
-         {
-            
-         }*/
-      }
-      else if ( ch == '(' || ch == '{' || ch == '[' )
+      if ( ch == '(' || ch == '{' || ch == '[' )
       {
          _opStack.push( String.valueOf( ch ) );
       }
@@ -161,9 +177,18 @@ public class TreeFactory
          }
          else
          {
-            needsMultiply = false;
-            parseOperator( token, pos );
-            pos.setIndex( pos.getIndex() + 1 );
+         // We have an operator
+            if ( ch == '\\' )
+            {
+               _randStack.push( buildOpNode( "*", _randStack ) );
+               parseLatexFunction( token.substring( pos.getIndex() + 1 ) );
+            }
+            else
+            {
+               needsMultiply = false;
+               parseOperator( token, pos );
+               pos.setIndex( pos.getIndex() + 1 );
+            }
          }
       }
    }
