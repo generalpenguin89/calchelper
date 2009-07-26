@@ -15,6 +15,7 @@ package calchelper.tree;
 
 import java.text.NumberFormat;
 import java.text.ParsePosition;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -70,6 +71,19 @@ public class TreeFactory
       if ( ch == '\\' )
       {
          System.err.println( "Found LaTeX operator.  Not yet implemented." );
+         /*String restOfToken = token.substring( pos.getIndex() + 1 );
+         String function;
+         ArrayList<String> arguments = new ArrayList<String>();
+         
+         if ( restOfToken.indexOf( "{", pos.getIndex() ) != -1 )
+         {
+            function = restOfToken.substring( 0, 
+                     restOfToken.indexOf( "{", pos.getIndex() ) );
+         }
+         else
+         {
+            
+         }*/
       }
       else if ( ch == '(' || ch == '{' || ch == '[' )
       {
@@ -104,6 +118,57 @@ public class TreeFactory
    }
 
    /**
+    * parseToken()
+    * 
+    * Parses a token in the input string.
+    * 
+    * @throws ExpressionException if the expression is invalid.
+    */
+   private void parseToken( String token ) throws ExpressionException
+   {
+      ParsePosition pos = new ParsePosition( 0 );
+
+      boolean needsMultiply = false;
+      while ( pos.getIndex() < token.length() )
+      {
+         // First try to find a number
+         Number num = NumberFormat.getNumberInstance().parse( token, pos );
+         if ( num != null )
+         {
+            //System.err.println( "Next index: " + pos.getIndex() );
+            //System.err.println( "Token len: " + token.length() );
+            pushDouble( num.doubleValue() );
+            needsMultiply = true;
+            continue;
+         }
+
+         // Subtoken
+         char ch = token.charAt( pos.getIndex() );
+         String st = String.valueOf( ch );
+
+         if ( ! OPERATORS.contains( st ) )
+         {
+            pushVariable( st );
+            if ( needsMultiply )
+            {
+               _randStack.push( buildOpNode( "*", _randStack ) );
+            }
+            else
+            {
+               needsMultiply = true;
+            }
+            pos.setIndex( pos.getIndex() + 1 );
+         }
+         else
+         {
+            needsMultiply = false;
+            parseOperator( token, pos );
+            pos.setIndex( pos.getIndex() + 1 );
+         }
+      }
+   }
+   
+   /**
     * buildTree()
     *
     * Builds the tree for the expression contained in the TreeFactory object.
@@ -119,47 +184,7 @@ public class TreeFactory
       while ( scanner.hasNext() )
       {
          String token = scanner.next();
-
-         ParsePosition pos = new ParsePosition( 0 );
-
-         boolean needsMultiply = false;
-         while ( pos.getIndex() < token.length() )
-         {
-            // First try to find a number
-            Number num = NumberFormat.getNumberInstance().parse( token, pos );
-            if ( num != null )
-            {
-               //System.err.println( "Next index: " + pos.getIndex() );
-               //System.err.println( "Token len: " + token.length() );
-               pushDouble( num.doubleValue() );
-               needsMultiply = true;
-               continue;
-            }
-
-            // Subtoken
-            char ch = token.charAt( pos.getIndex() );
-            String st = String.valueOf( ch );
-
-            if ( ! OPERATORS.contains( st ) )
-            {
-               pushVariable( st );
-               if ( needsMultiply )
-               {
-                  _randStack.push( buildOpNode( "*", _randStack ) );
-               }
-               else
-               {
-                  needsMultiply = true;
-               }
-               pos.setIndex( pos.getIndex() + 1 );
-            }
-            else
-            {
-               needsMultiply = false;
-               parseOperator( token, pos );
-               pos.setIndex( pos.getIndex() + 1 );
-            }
-         }
+         parseToken( token );
       }
 
       while ( ! _opStack.isEmpty() )
