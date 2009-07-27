@@ -354,29 +354,26 @@ class Polynomial extends AbstractNode implements Cloneable
     */
    public AbstractNode integrate()
    {
-      // Copy the hashtable
-      HashMap<Double, Double> copy = new HashMap<Double, Double>();
+      // Make a new polynomial
+      Polynomial integral = new Polynomial();
       
-      // For each entry in the copy
+      // For each entry in the map
       for ( Map.Entry<Double, Double> entry : getMap().entrySet() )
       {
          // Put a new entry in (this represents each monomial being integrated)
-         copy.put( entry.getKey() + 1d, entry.getValue()
+         integral.getMap().put( entry.getKey() + 1d, entry.getValue()
                   * ( 1d / ( entry.getKey() + 1 ) ) );
       }
       
-      // Replace map with copy
-      setMap( copy );
-      
-      return this;
+      return integral;
    }
    
    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
    
    public AbstractNode derive()
    {
-      // copy hash table
-      HashMap<Double, Double> copy = new HashMap<Double, Double>();
+      // Make a new polynomial
+      Polynomial derivative = new Polynomial();
       
       // For each entry in the copy
       for ( Map.Entry<Double, Double> entry : getMap().entrySet() )
@@ -384,14 +381,10 @@ class Polynomial extends AbstractNode implements Cloneable
          // Put a new entry in (this represents each monomial being integrated)
          double exp = entry.getKey();
          double co = entry.getValue();
-         copy.put( exp - 1d, co * exp );
+         derivative.getMap().put( exp - 1d, co * exp );
       }
       
-      // Replace map with copy
-      setMap( copy );
-      
-      //FIXME: unsure if this is what I want to return.
-      return this;
+      return derivative;
    }
    
    /**
