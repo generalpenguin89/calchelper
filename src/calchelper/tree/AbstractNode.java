@@ -153,8 +153,7 @@ abstract class AbstractNode implements Iterable<AbstractNode>, Cloneable
     */
    public AbstractNode integrate( )
    {
-      //FIXME:THIS IS DEBATABLE... WILL BE DISCUSSED
-      return this;
+      return null;
    }
    
    /**
