@@ -176,6 +176,7 @@ public class CalcGUI extends JPanel
 					}
 					try
 					{
+	                //FIXME: throws away return value
 						_tree.derive();
 					}
 					catch ( NullPointerException e )
@@ -199,6 +200,7 @@ public class CalcGUI extends JPanel
 					}
 					try
 					{
+					   //FIXME: throws away return value
 						_tree.integrate();
 					}
 					catch ( NullPointerException e )
