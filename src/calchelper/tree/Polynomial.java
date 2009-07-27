@@ -31,6 +31,16 @@ class Polynomial extends AbstractNode implements Cloneable
    private boolean _isValid;
    
    /**
+    * Generates an empty Polynomial.
+    */
+   protected Polynomial()
+   {
+      setMap( new HashMap<Double, Double>() );
+      _variable = null;
+      _isValid = true;
+   }
+   
+   /**
     * Constructs a polynomial from the given node.
     *
     * @param node The node to convert to a polynomial.

@@ -259,4 +259,11 @@ public class PolynomialTest
       assertTrue( copy.getMap() != original.getMap() );
       assertEquals( original, copy );
    }
+   
+   @Test public void defaultConstructorTest() throws ExpressionException
+   {
+      Polynomial poly = new Polynomial();
+      
+      assertEquals( 0, poly.getMap().size() );
+   }
 }
