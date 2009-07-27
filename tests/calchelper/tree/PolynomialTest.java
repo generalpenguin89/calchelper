@@ -243,4 +243,20 @@ public class PolynomialTest
       // Assertion
       assertEquals( original, copy );
    }
+   
+   @Test public void cloneTest() throws ExpressionException,
+      CloneNotSupportedException
+   {
+      // Declare expected results
+      Polynomial original = new Polynomial( "x" );
+      
+      // Get results
+      Polynomial copy = ( Polynomial ) original.clone();
+      
+      // Assertion
+      assertTrue( copy != original );
+      assertTrue( copy.getClass() == original.getClass() );
+      assertTrue( copy.getMap() != original.getMap() );
+      assertEquals( original, copy );
+   }
 }

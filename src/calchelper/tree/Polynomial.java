@@ -16,7 +16,7 @@ import java.util.Map.Entry;
  * @author Patrick MacArthur
  */
 
-class Polynomial extends AbstractNode
+class Polynomial extends AbstractNode implements Cloneable
 {
    /* This maps coefficients to powers.
     *
@@ -190,6 +190,23 @@ class Polynomial extends AbstractNode
       _variable = variable;
    }
    
+   /**
+    * Clones a Polynomial object.
+    * 
+    * @return A clone of this object.
+    */
+   public Object clone() throws CloneNotSupportedException
+   {
+      Polynomial clone = ( Polynomial ) super.clone();
+
+      // Copy map
+      clone.setMap( new HashMap<Double, Double>() );
+      clone.getMap().putAll( getMap() );
+      
+      // Variable name is fine since String is immutable
+      // boolean is a primitive type so it's fine
+      return clone;
+   }
    
    /**
     * Merges specified term into the existing polynomial.

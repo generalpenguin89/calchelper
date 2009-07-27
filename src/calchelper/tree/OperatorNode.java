@@ -13,7 +13,7 @@ package calchelper.tree;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-abstract class OperatorNode extends AbstractNode
+abstract class OperatorNode extends AbstractNode implements Cloneable
 {
    protected String _type;
 
@@ -231,5 +231,16 @@ abstract class OperatorNode extends AbstractNode
    	// Must be equal
    	return true;
    }
+   
+   /**
+    * Clones the object.
+    * 
+    */
+   public Object clone() throws CloneNotSupportedException
+   {
+      OperatorNode clone = ( OperatorNode ) super.clone();
+      clone._children = new ArrayList<AbstractNode>();
+      clone._children.addAll( this._children );
+      return clone;
+   }
 }
-

@@ -10,7 +10,7 @@ package calchelper.tree;
 
 import java.util.Iterator;
 
-abstract class AbstractNode implements Iterable<AbstractNode>
+abstract class AbstractNode implements Iterable<AbstractNode>, Cloneable
 {
    /**
     * Returns a string representing the node of the tree.  Assumes 0 depth.
@@ -163,6 +163,15 @@ abstract class AbstractNode implements Iterable<AbstractNode>
    public AbstractNode derive( )
    {
       return null;
+   }
+   
+   /**
+    * Clones the object.
+    * 
+    */
+   public Object clone() throws CloneNotSupportedException
+   {
+      return super.clone();
    }
 }
 
