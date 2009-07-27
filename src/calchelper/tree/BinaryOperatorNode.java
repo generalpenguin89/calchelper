@@ -175,18 +175,25 @@ abstract class BinaryOperatorNode extends OperatorNode
        */
       public AbstractNode derive()
       {
-         AbstractNode right = null;
-        //example: 2x^2
-        if( getLeft().hasValue() && getRight() instanceof BinaryOperatorNode.Power )
-        {
-          right = getRight( ).derive( );
-          right.simplify( );
-        }
-        
-        //product rule will go here
-        
+         AbstractNode node = null;
+         
+         //we need to remember the left and right nodes...
+         AbstractNode left = getLeft();
+         AbstractNode right = getRight();
+           
+         //and their derivatives
+         AbstractNode leftP = left.derive();
+         AbstractNode rightP = right.derive();
+           
+         //the two multiplication parts of the new node
+         AbstractNode multLeft = NodeFactory.createNode("*", leftP, right);
+         AbstractNode multRight = NodeFactory.createNode("*", left, rightP);
+           
+         //the new node, an addition node
+         node = NodeFactory.createNode("+", multLeft, multRight);
+                
         //FIXME: unsure if this is correct.
-        return right;
+        return node;
       }
    }
    
