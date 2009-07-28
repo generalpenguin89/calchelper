@@ -39,10 +39,43 @@ public class IntegrationTest
       expected = new HashMap<Double,Double>();
    }
    
+   //Polynomial test
    @Test public void test1() throws ExpressionException
    {
       AbstractNode result = intTest( "2 * x ^ 1" );
       AbstractNode expected = new TreeFactory( "x^2" ).buildTree().getRoot();
-      assertEquals( expected, result );
+      assertEquals( expected, result );  
    }
+   
+   //Polynomial with x^-1
+   /*@Test public void test2() throws ExpressionException
+   {
+      AbstractNode result = intTest( "2 * x ^ 1" );
+      AbstractNode expected = new TreeFactory( "x^2" ).buildTree().getRoot();
+      assertEquals( expected, result );  
+   }
+   
+   //sine
+   @Test public void test3() throws ExpressionException
+   {
+      AbstractNode result = intTest( "2 * x ^ 1" );
+      AbstractNode expected = new TreeFactory( "x^2" ).buildTree().getRoot();
+      assertEquals( expected, result );  
+   }
+   
+   //cos
+   @Test public void test4() throws ExpressionException
+   {
+      AbstractNode result = intTest( "2 * x ^ 1" );
+      AbstractNode expected = new TreeFactory( "x^2" ).buildTree().getRoot();
+      assertEquals( expected, result );  
+   }
+   
+   //ln
+   @Test public void test5() throws ExpressionException
+   {
+      AbstractNode result = intTest( "2 * x ^ 1" );
+      AbstractNode expected = new TreeFactory( "x^2" ).buildTree().getRoot();
+      assertEquals( expected, result );  
+   }*/
 }

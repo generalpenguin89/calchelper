@@ -97,7 +97,15 @@ abstract class TrigOperatorNode extends OperatorNode
 
       public AbstractNode integrate()
       {
-         // FIXME stub
+         // FIXME Unfinished
+         if( isDerivative() )
+         {
+            // Make a node to represent the new coefficient
+            //AbstractNode coef = NodeFactory.createConstantNode(  )
+            //AbstractNode cos = NodeFactory.createNode( "cos", coef, getArgument() );
+            //AbstractNode invCos = cos.inverse();
+            return null;
+         }
          return null;
       }
    }
@@ -134,7 +142,14 @@ abstract class TrigOperatorNode extends OperatorNode
 
       public AbstractNode integrate()
       {
-         // FIXME stub
+         // FIXME Unfinished
+         if( isDerivative() )
+         {
+            // Make a node to represent the new coefficient
+            //AbstractNode coef = NodeFactory.createConstantNode(  )
+            //AbstractNode sin = NodeFactory.createNode( "sin", coef, getArgument() );
+            return null;
+         }
          return null;
       }
    }
@@ -198,5 +213,18 @@ abstract class TrigOperatorNode extends OperatorNode
    public int nodeCount()
    {
       return 2;
+   }
+   
+   /**
+    * Check to see if coefficient is the derivative of the argument
+    */
+   public boolean isDerivative()
+   {
+      // Get the derivative of the argument
+      //AbstractNode argDeriv = getArgument().derive();
+      
+      //FIXME: Finish this method
+      
+      return false;
    }
 }
