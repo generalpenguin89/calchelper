@@ -167,7 +167,7 @@ public class TreeFactory
             pushVariable( st );
             if ( needsMultiply )
             {
-               _randStack.push( buildOpNode( "*", _randStack ) );
+               _opStack.push( "*" );
             }
             else
             {
@@ -180,7 +180,7 @@ public class TreeFactory
          // We have an operator
             if ( ch == '\\' )
             {
-               _randStack.push( buildOpNode( "*", _randStack ) );
+               _opStack.push( "*" );
                parseLatexFunction( token.substring( pos.getIndex() + 1 ) );
             }
             else

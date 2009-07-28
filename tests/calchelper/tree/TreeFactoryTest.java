@@ -129,6 +129,29 @@ public class TreeFactoryTest {
       
       assertEquals( expected, result );
    }
+   
+   @Test public void coefficientPowerTest1() throws Exception
+   {
+      // Declare expected results
+      ExpressionTree expected = unitTest( "3 * x ^ 2" );
+      
+      // get actual results
+      ExpressionTree actual = unitTest( "3x^2" );
+      
+      assertEquals( expected, actual );
+   }
+   
+   
+   @Test public void coefficientPowerTest2() throws Exception
+   {
+      // Declare expected results
+      ExpressionTree expected = unitTest( "( 3 * x ) ^ 2" );
+      
+      // get actual results
+      ExpressionTree actual = unitTest( "(3x)^2" );
+      
+      assertEquals( expected, actual );
+   }
 
    /**
     * Helper method for tests.
@@ -137,6 +160,7 @@ public class TreeFactoryTest {
    {
       TreeFactory builder = new TreeFactory ( expr );
       ExpressionTree tree = builder.buildTree();
+      System.err.println( tree );
       return tree;
    }
 }
