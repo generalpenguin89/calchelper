@@ -186,7 +186,7 @@ abstract class BinaryOperatorNode extends OperatorNode
        */
       public AbstractNode derive()
       {
-        AbstractNode node = null;
+        AbstractNode mul = null;
          
         //we need to remember the left and right nodes...
         AbstractNode left = getLeft();
@@ -201,10 +201,10 @@ abstract class BinaryOperatorNode extends OperatorNode
         AbstractNode multRight = NodeFactory.createNode("*", left, rightP);
            
         //the new node, an addition node
-        node = NodeFactory.createNode("+", multLeft, multRight);
+        mul = NodeFactory.createNode("+", multLeft, multRight);
                 
-        node.simplify();
-        return node;
+        mul.simplify();
+        return mul;
       }
    }
    
@@ -293,7 +293,7 @@ abstract class BinaryOperatorNode extends OperatorNode
       public AbstractNode derive( )
       {
         //quotient rule
-         AbstractNode node = null;
+         AbstractNode quo = null;
          
          //we need to save the left and right nodes of this node...
          AbstractNode left = getLeft();
@@ -314,10 +314,10 @@ abstract class BinaryOperatorNode extends OperatorNode
          AbstractNode sq = NodeFactory.createNode("*", right, right);
          
          //the actual division node
-         node = NodeFactory.createNode("/", sub, sq);
+         quo = NodeFactory.createNode("/", sub, sq);
          
-         node.simplify();
-         return node;
+         quo.simplify();
+         return quo;
       }
    }
    

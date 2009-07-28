@@ -80,8 +80,19 @@ abstract class TrigOperatorNode extends OperatorNode
       
       public AbstractNode derive()
       {
-         // FIXME stub
-         return null;
+         AbstractNode cos = null;
+         
+         AbstractNode coef = getCoefficientTerm();
+         AbstractNode arg = getArgument();
+         
+         //multiplication segment
+         AbstractNode mult = NodeFactory.createNode("*", coef, arg.derive());
+         
+         //the cosine node... derivative of sine
+         cos = NodeFactory.createNode("cos", mult, arg);
+         
+         cos.simplify();
+         return cos;
       }
 
       public AbstractNode integrate()
