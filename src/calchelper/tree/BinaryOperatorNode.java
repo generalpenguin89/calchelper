@@ -387,7 +387,7 @@ abstract class BinaryOperatorNode extends OperatorNode
             //Make the exponent one higher
             this.setLeft( NodeFactory.createConstantNode( getRight().getValue() + 1 ) );
             
-            //Make coeffiecient nodes
+            //Make coefficient nodes
             AbstractNode coef = NodeFactory.createConstantNode( (double)(1) / getRight().getValue() );
             Multiplication mult = new Multiplication( coef, getLeft() );
             this.setLeft( mult );
