@@ -13,6 +13,8 @@ import java.util.ArrayList;
  *
  */
 abstract class TrigOperatorNode extends OperatorNode
+{  
+   /**
 {
    /*
     * Implementation notes:
@@ -52,9 +54,73 @@ abstract class TrigOperatorNode extends OperatorNode
    }
    
    /**
-    * Sets the left node.
+    * Returns the additive inverse of the node.
     */
-   public void setCoeffiecientTerm( AbstractNode node )
+   public AbstractNode inverse()
+   {
+      TrigOperatorNode copy = ( TrigOperatorNode ) NodeFactory.createNode( 
+               _type, getCoefficientTerm(), getArgument() );
+      copy.setCoefficientTerm( NodeFactory.createNode( "*", 
+               NodeFactory.createConstantNode( -1.0 ), this ) );
+      copy.getCoefficientTerm().simplify();
+      return copy;
+   }
+   
+   /**
+    * Node to represent sine nodes.
+    *    
+    * @author Patrick MacArthur
+    */
+   public static class Sine extends TrigOperatorNode
+   {
+      public Sine( AbstractNode coefficient, AbstractNode argument )
+      {
+         init( "sin", coefficient, argument );
+      }
+      
+      public AbstractNode derive()
+      {
+         // FIXME stub
+         return null;
+      }
+
+      public AbstractNode integrate()
+      {
+         // FIXME stub
+         return null;
+      }
+   }
+   
+   /**
+    * Node to represent cosine function.
+    * 
+    * @author Patrick MacArthur
+    *
+    */
+   public static class Cosine extends TrigOperatorNode
+   {
+      public Cosine( AbstractNode coefficient, AbstractNode argument )
+      {
+         init( "cos", coefficient, argument );
+      }
+      
+      public AbstractNode derive()
+      {
+         // FIXME stub
+         return null;
+      }
+
+      public AbstractNode integrate()
+      {
+         // FIXME stub
+         return null;
+      }
+   }
+   
+   /**
+    * Sets the coefficient node.
+    */
+   public void setCoefficientTerm( AbstractNode node )
    {
       _children.set( 0, node );
    }
