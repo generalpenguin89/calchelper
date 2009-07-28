@@ -581,4 +581,14 @@ class Polynomial extends AbstractNode implements Cloneable
       }
       return copy;
    }
+   
+   /**
+    * Adds a polynomial to this one.
+    */
+   public Polynomial add( Polynomial other )
+   {
+      Polynomial poly = new Polynomial( this );
+      poly.merge( other, 1.0 );
+      return poly;
+   }
 }
