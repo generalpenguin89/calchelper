@@ -222,20 +222,30 @@ class Polynomial extends AbstractNode implements Cloneable
     * Merges specified term into the existing polynomial.
     * 
     * @param power The power of the term to merge into the polynomial.
-    * @param coefficient The coefficient of the term to merge into the polynomial.
+    * @param newCoefficient The coefficient of the term to merge into the polynomial.
     * @param variable The variable of the term to merge into the coefficient.
     */
-   private void merge( double power, double coefficient )
+   private void merge( double power, double newCoefficient )
    {
       if ( getMap().containsKey( power ) )
       {
-         double current = getMap().get( power );
-         getMap().put( power, current + coefficient );
+         getMap().put( power, getCoefficient( power ) + newCoefficient );
       }
       else
       {
-         getMap().put( power, coefficient );
+         getMap().put( power, newCoefficient );
       }
+   }
+   
+   /**
+    * Gets the coefficient for the specified power.
+    * 
+    * @param power The power to find the coefficient for.
+    * @return The power for the specified coefficient.
+    */
+   public double getCoefficient( double power )
+   {
+      return getMap().get( power );
    }
    
    /**
