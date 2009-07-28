@@ -117,8 +117,19 @@ abstract class TrigOperatorNode extends OperatorNode
       
       public AbstractNode derive()
       {
-         // FIXME stub
-         return null;
+         AbstractNode sin = null;
+         
+         //save the coef and arg
+         AbstractNode coef = getCoefficientTerm();
+         AbstractNode arg = getArgument();
+         
+         AbstractNode mult = NodeFactory.createNode("*",coef, arg.derive());
+         
+         //the sine node... we might want this to be labled with an '-'
+         sin = NodeFactory.createNode("sin", mult, arg).inverse();
+         
+         sin.simplify();
+         return sin;
       }
 
       public AbstractNode integrate()
