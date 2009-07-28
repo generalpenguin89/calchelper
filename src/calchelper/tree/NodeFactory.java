@@ -87,6 +87,10 @@ class NodeFactory
          {
             return new TrigOperatorNode.Cosine( left, right );
          }
+         else if ( op.equals( "ln" ) )
+         {
+            return new TrigOperatorNode.NatLog( left, right );
+         }
          else
          {
             throw new UnsupportedOperationException( "Not a supported node type: " + op );
