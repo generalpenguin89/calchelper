@@ -160,7 +160,6 @@ public class TreeFactoryTest {
    {
       TreeFactory builder = new TreeFactory ( expr );
       ExpressionTree tree = builder.buildTree();
-      System.err.println( tree );
       return tree;
    }
 }
