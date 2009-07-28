@@ -64,15 +64,33 @@ class NodeFactory
    
    public static AbstractNode createNode( String op, AbstractNode left, AbstractNode right )
    {
-      BinaryOperatorNode binNode = createBinaryOperatorNode( op, left, right);
-      Polynomial poly = new Polynomial( binNode );
-      if ( poly.isValid() )
+      if ( op.length() == 1 )
       {
-         return poly;
+         BinaryOperatorNode binNode = createBinaryOperatorNode( op, left, right);
+         Polynomial poly = new Polynomial( binNode );
+         if ( poly.isValid() )
+         {
+            return poly;
+         }
+         else
+         {
+            return binNode;
+         }
       }
       else
       {
-         return binNode;
+         if ( op.equals( "sin" ) )
+         {
+            return new TrigOperatorNode.Sine( left, right );
+         }
+         else if ( op.equals( "cos" ) )
+         {
+            return new TrigOperatorNode.Cosine( left, right );
+         }
+         else
+         {
+            throw new UnsupportedOperationException( "Not a supported node type: " + op );
+         }
       }
    }
    
