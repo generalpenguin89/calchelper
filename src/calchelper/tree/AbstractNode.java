@@ -172,5 +172,13 @@ abstract class AbstractNode implements Iterable<AbstractNode>, Cloneable
    {
       return super.clone();
    }
+   
+   /**
+    * Returns the inverse of this node.
+    */
+   public AbstractNode inverse()
+   {
+      return null;
+   }
 }
 

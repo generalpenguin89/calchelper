@@ -568,4 +568,17 @@ class Polynomial extends AbstractNode implements Cloneable
    {
       return _map;
    }
+   
+   /**
+    * Returns the additive inverse.
+    */
+   public AbstractNode inverse()
+   {
+      Polynomial copy = new Polynomial( this );
+      for ( Map.Entry<Double, Double> entry : copy.getMap().entrySet() )
+      {
+         entry.setValue( entry.getValue() * -1.0 );
+      }
+      return copy;
+   }
 }

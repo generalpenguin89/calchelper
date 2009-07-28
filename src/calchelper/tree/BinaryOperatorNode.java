@@ -65,6 +65,17 @@ abstract class BinaryOperatorNode extends OperatorNode
    }
    
    /**
+    * Returns the additive inverse of the node.
+    */
+   public AbstractNode inverse()
+   {
+      AbstractNode node = NodeFactory.createNode( "*", 
+               NodeFactory.createConstantNode( -1.0 ), this );
+      node.simplify();
+      return node;
+   }
+   
+   /**
     * Returns the node count.
     */
    public int nodeCount()
