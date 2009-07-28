@@ -369,9 +369,10 @@ class Polynomial extends AbstractNode implements Cloneable
       Polynomial integral = new Polynomial();
       
       // Test to see if the polynomial has a x^-1
-      if( _map.containsKey( -1d ) )
+      if( _map.containsKey( -1.0 ) )
       {
          // Make a natural log function
+         AbstractNode natural = NodeFactory.createNode( "ln", new Polynomial( getMap().get( -1.0 )), new Polynomial( "x" ) );
          
          // Remove the entry with the key of -1
          _map.remove( -1d );
@@ -385,8 +386,7 @@ class Polynomial extends AbstractNode implements Cloneable
          }
          
          //Make addition node and add its children
-         // TODO:Replace null with the ln function
-         AbstractNode plus = NodeFactory.createNode("+", integral, null);
+         AbstractNode plus = NodeFactory.createNode("+", integral, natural );
 
          //Return the addition node
          return plus;

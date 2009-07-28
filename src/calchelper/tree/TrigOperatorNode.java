@@ -19,8 +19,8 @@ abstract class TrigOperatorNode extends OperatorNode
    /*
     * Implementation notes:
     *
-    * _children.get( 0 ) : left node
-    * _children.get( 1 ) : right node
+    * _children.get( 0 ) : left node / coefficient
+    * _children.get( 1 ) : right node / argument
     */
 
    protected void init( String funct, AbstractNode left, AbstractNode right )
