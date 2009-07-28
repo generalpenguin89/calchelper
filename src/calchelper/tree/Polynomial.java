@@ -357,15 +357,41 @@ class Polynomial extends AbstractNode implements Cloneable
       // Make a new polynomial
       Polynomial integral = new Polynomial();
       
-      // For each entry in the map
-      for ( Map.Entry<Double, Double> entry : getMap().entrySet() )
+      // Test to see if the polynomial has a x^-1
+      if( _map.containsKey( -1d ) )
       {
-         // Put a new entry in (this represents each monomial being integrated)
-         integral.getMap().put( entry.getKey() + 1d, entry.getValue()
-                  * ( 1d / ( entry.getKey() + 1 ) ) );
+         // Make a natural log function
+         
+         // Remove the entry with the key of -1
+         _map.remove( -1d );
+         
+         // For each entry in the map integrate that piece
+         for ( Map.Entry<Double, Double> entry : getMap().entrySet() )
+         {
+            // Put a new entry in (this represents each monomial being integrated)
+            integral.getMap().put( entry.getKey() + 1d, entry.getValue()
+                     * ( 1d / ( entry.getKey() + 1 ) ) );
+         }
+         
+         //Make addition node and add its children
+         // TODO:Replace null with the ln function
+         AbstractNode plus = NodeFactory.createNode("+", integral, null);
+
+         //Return the addition node
+         return plus;
       }
+      else
+      {
+         // For each entry in the map integrate that piece
+         for ( Map.Entry<Double, Double> entry : getMap().entrySet() )
+         {
+            // Put a new entry in (this represents each monomial being integrated)
+            integral.getMap().put( entry.getKey() + 1d, entry.getValue()
+                  * ( 1d / ( entry.getKey() + 1 ) ) );
+         }
       
-      return integral;
+         return integral;
+      }
    }
    
    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
