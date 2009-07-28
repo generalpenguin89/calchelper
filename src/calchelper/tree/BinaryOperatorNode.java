@@ -305,6 +305,7 @@ abstract class BinaryOperatorNode extends OperatorNode
          //the actual division node
          node = NodeFactory.createNode("/", sub, sq);
          
+         node.simplify();
          return node;
       }
    }
