@@ -18,7 +18,7 @@ public class DifferentiationTest
    HashMap<Double,Double> expected;
 
    // This exercises the Polynomial class
-   public static Polynomial intTest( String infix ) throws ExpressionException
+   public static AbstractNode intTest( String infix ) throws ExpressionException
    {
       TreeFactory factory;
       ExpressionTree tree;
@@ -29,8 +29,7 @@ public class DifferentiationTest
       tree = factory.buildTree();
       treeRoot = tree.getRoot();
       poly = new Polynomial( treeRoot );
-      poly.derive();
-      return poly;
+      return poly.derive();
    }
 
    @Before public void setUp()
@@ -40,8 +39,8 @@ public class DifferentiationTest
    
    @Test public void test1() throws ExpressionException
    {
-      Polynomial result = intTest( "2 * x ^ 1" );
-      expected.put( 0.0, 2.0 );
-      assertEquals( expected, result.getMap() );
+      AbstractNode result = intTest( "2 * x ^ 1" );
+      AbstractNode expected = new TreeFactory( "2" ).buildTree().getRoot();
+      assertEquals( expected, result );
    }
 }
