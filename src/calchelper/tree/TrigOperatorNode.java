@@ -118,6 +118,43 @@ abstract class TrigOperatorNode extends OperatorNode
    }
    
    /**
+    * Node to represent natural log function because my OCD wants me to finish Polynomial
+    * 
+    * @author Jake Schwartz
+    *
+    */
+   public static class NatLog extends TrigOperatorNode
+   {
+      public NatLog( AbstractNode coefficient, AbstractNode argument )
+      {
+         init( "ln", coefficient, argument );
+      }
+      
+      public AbstractNode derive()
+      {
+         // FIXME not finished
+         
+         //Create blank polynomial
+         Polynomial poly = new Polynomial();
+         
+         //Check to see if argument is simple variable
+         if( getArgument().isSimpleVariable() && getCoefficientTerm().hasValue() )
+         {            
+            // Add the entry to the polynomial
+            poly.getMap().put( -1.0, getCoefficientTerm().getValue() );
+         }
+         
+         return poly;
+      }
+
+      public AbstractNode integrate()
+      {
+         // FIXME stub
+         return null;
+      }
+   }
+   
+   /**
     * Sets the coefficient node.
     */
    public void setCoefficientTerm( AbstractNode node )
