@@ -266,4 +266,27 @@ public class PolynomialTest
       
       assertEquals( 0, poly.getMap().size() );
    }
+   
+   @Test public void addTestDifferent() throws ExpressionException
+   {
+      expected.put( 1.0, 5.0 );
+      expected.put( 2.0, 3.0 );
+      
+      Polynomial poly1 = unitTest( "5x" );
+      Polynomial poly2 = unitTest( "3 * x^2" );
+      Polynomial result = poly1.add( poly2 );
+      
+      assertEquals( expected, result.getMap() );
+   }
+   
+   @Test public void addTestSame() throws ExpressionException
+   {
+      expected.put( 1.0, 12.0 );
+      
+      Polynomial poly1 = unitTest( "5x" );
+      Polynomial poly2 = unitTest( "7x" );
+      Polynomial result = poly1.add( poly2 );
+      
+      assertEquals( expected, result.getMap() );
+   }
 }

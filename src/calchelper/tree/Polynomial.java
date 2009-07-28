@@ -229,7 +229,8 @@ class Polynomial extends AbstractNode implements Cloneable
    {
       if ( getMap().containsKey( power ) )
       {
-         getMap().put( power, ( getMap().get( power ) ) + coefficient );
+         double current = getMap().get( power );
+         getMap().put( power, current + coefficient );
       }
       else
       {
