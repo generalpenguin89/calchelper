@@ -175,24 +175,24 @@ abstract class BinaryOperatorNode extends OperatorNode
        */
       public AbstractNode derive()
       {
-         AbstractNode node = null;
+        AbstractNode node = null;
          
-         //we need to remember the left and right nodes...
-         AbstractNode left = getLeft();
-         AbstractNode right = getRight();
+        //we need to remember the left and right nodes...
+        AbstractNode left = getLeft();
+        AbstractNode right = getRight();
            
-         //and their derivatives
-         AbstractNode leftP = left.derive();
-         AbstractNode rightP = right.derive();
+        //and their derivatives
+        AbstractNode leftP = left.derive();
+        AbstractNode rightP = right.derive();
            
-         //the two multiplication parts of the new node
-         AbstractNode multLeft = NodeFactory.createNode("*", leftP, right);
-         AbstractNode multRight = NodeFactory.createNode("*", left, rightP);
+        //the two multiplication parts of the new node
+        AbstractNode multLeft = NodeFactory.createNode("*", leftP, right);
+        AbstractNode multRight = NodeFactory.createNode("*", left, rightP);
            
-         //the new node, an addition node
-         node = NodeFactory.createNode("+", multLeft, multRight);
+        //the new node, an addition node
+        node = NodeFactory.createNode("+", multLeft, multRight);
                 
-        //FIXME: unsure if this is correct.
+        node.simplify();
         return node;
       }
    }
@@ -281,9 +281,31 @@ abstract class BinaryOperatorNode extends OperatorNode
        */
       public AbstractNode derive( )
       {
-        //FIXME:UNIMPLEMENTED
-        //quotient rule will go here
-         return null;
+        //quotient rule
+         AbstractNode node = null;
+         
+         //we need to save the left and right nodes of this node...
+         AbstractNode left = getLeft();
+         AbstractNode right = getRight();
+         
+         //as well as the derivatives of them
+         AbstractNode leftP = left.derive();
+         AbstractNode rightP = right.derive();
+              
+         //multiplication nodes of the quotient rule
+         AbstractNode multLeft = NodeFactory.createNode("*", leftP, right);
+         AbstractNode multRight = NodeFactory.createNode("*", left, rightP);
+         
+         //the subtraction node of the quotient rule
+         AbstractNode sub = NodeFactory.createNode("-", multLeft, multRight);
+         
+         //the squared node
+         AbstractNode sq = NodeFactory.createNode("*", right, right);
+         
+         //the actual division node
+         node = NodeFactory.createNode("/", sub, sq);
+         
+         return node;
       }
    }
    
