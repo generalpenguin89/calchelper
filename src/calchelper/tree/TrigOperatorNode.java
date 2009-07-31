@@ -61,7 +61,7 @@ abstract class TrigOperatorNode extends OperatorNode
       TrigOperatorNode copy = ( TrigOperatorNode ) NodeFactory.createNode( 
                _type, getCoefficientTerm(), getArgument() );
       copy.setCoefficientTerm( NodeFactory.createNode( "*", 
-               NodeFactory.createConstantNode( -1.0 ), this ) );
+               NodeFactory.createConstantNode( -1.0 ), copy.getCoefficientTerm() ) );
       copy.getCoefficientTerm().simplify();
       return copy;
    }
