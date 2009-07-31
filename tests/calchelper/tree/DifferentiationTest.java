@@ -9,7 +9,7 @@ import org.junit.Test;
  * JUnit-based test harness for Polynomial.
  *
  * Written by Patrick McArthur
- * Edited by Ben Decato
+ * Edited by Ben Decato and William Rideout 
  */
 
 public class DifferentiationTest
@@ -32,14 +32,58 @@ public class DifferentiationTest
       expected = new HashMap<Double,Double>();
    }
    
-   @Test public void polynomialTest1() throws ExpressionException
+   @Test public void polynomialProTest() throws ExpressionException
    {
+      //Product test
       // Declare expected results
       AbstractNode expected = getTreeRoot( "2" );
       
       // Get actual results 
-      AbstractNode actual = getTreeRoot( "2 * x ^ 1" ).derive();
+      AbstractNode actual = getTreeRoot( "2 * x" ).derive();
       
       assertEquals( expected, actual );
    }
+   
+   @Test public void polynomialQuoTest() throws ExpressionException
+   {
+      //Quotient test
+      // Declare expected results
+      AbstractNode expected = getTreeRoot( "-( 2 / ( x ^ 2 ) )" );
+      
+      // Get actual results 
+      //we need to create a new division node, so that it isn't simplified
+      //this means that we can use a simpler example.
+      AbstractNode left = getTreeRoot( "5 * x" );
+      AbstractNode right = getTreeRoot( "4 + x" );
+      
+      AbstractNode actual = NodeFactory.createNode( "/", left, right ).derive();
+      assertEquals( expected, actual );
+   }
+   
+   //======================== TRIG FUNCTION TESTS =============================
+   
+   @Test public void polynomialSinTest() throws ExpressionException
+   {
+      //TODO: This should be checked for accuracy
+      //Sine test
+      // Declare expected results
+      AbstractNode expected = getTreeRoot( "2 * cos( 2 * x )" );
+      
+      // Get actual results 
+      AbstractNode actual = getTreeRoot( "sin( 2 * x )" );
+      assertEquals( expected, actual );
+   }
+   
+   @Test public void polynomialCosTest() throws ExpressionException
+   {
+      //TODO: This should be checked for accuracy
+      //Cosine test
+      // Declare expected results
+      AbstractNode expected = getTreeRoot( "-( 2 * cos( 2 * x ) )" );
+      
+      // Get actual results 
+      AbstractNode actual = getTreeRoot( "cos( 2 * x )" );
+      assertEquals( expected, actual );
+   }
+
 }
