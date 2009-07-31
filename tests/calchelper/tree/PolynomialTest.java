@@ -289,4 +289,15 @@ public class PolynomialTest
       
       assertEquals( expected, result.getMap() );
    }
+   
+   @Test public void squareTest() throws ExpressionException
+   {
+      expected.put( 2.0, 25.0 );
+      expected.put( 1.0, 30.0 );
+      expected.put( 0.0, 9.0 );
+      
+      Polynomial actual = unitTest( "(5x + 3)*(5x + 3)" );
+      
+      assertEquals( expected, actual.getMap() );
+   }
 }

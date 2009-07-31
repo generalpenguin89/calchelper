@@ -152,6 +152,19 @@ public class TreeFactoryTest {
       
       assertEquals( expected, actual );
    }
+   
+   @Test public void sinTest() throws Exception
+   {
+      // Declare expected results
+      ExpressionTree expected = new ExpressionTree( 
+               NodeFactory.createNode( "sin",
+                        NodeFactory.createConstantNode( 1.0 ),
+                        NodeFactory.createVariableNode( "x" ) ) );
+      
+      ExpressionTree actual = unitTest( "\\sin{x}" );
+      
+      assertEquals( expected, actual );
+   }
 
    /**
     * Helper method for tests.
