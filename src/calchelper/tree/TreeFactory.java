@@ -15,12 +15,11 @@ package calchelper.tree;
 
 import java.text.NumberFormat;
 import java.text.ParsePosition;
-import java.util.Scanner;
 import java.util.Stack;
 
 public class TreeFactory
 {
-   private static final String OPERATORS = "()+-*/%^\\";
+   private static final String OPERATORS = "{}[]()+-*/%^\\";
 
    private Stack<String> _opStack;
    private Stack<AbstractNode> _randStack;
@@ -75,14 +74,14 @@ public class TreeFactory
       {
          ParsePosition pos = new ParsePosition( token.indexOf( "{" ) );
          function = token.substring( 0, pos.getIndex() );
-         if ( token.indexOf( "}", pos.getIndex() ) < -1 )
+         if ( token.indexOf( "}", pos.getIndex() ) <= -1 )
          {
-            throw new ExpressionException( "unterminated {", _infix );
+            throw new ExpressionException( "unterminated {", token );
          }
          
          // Parse the argument of the function
          parseToken( token.substring( pos.getIndex(), 
-                  token.indexOf( "}", pos.getIndex() ) ) );
+                  token.indexOf( "}", pos.getIndex() ) + 1 ) );
       }
       else if ( token.indexOf( "[" ) != -1 )
       {
@@ -123,7 +122,7 @@ public class TreeFactory
       else
       {
          String op = String.valueOf( ch );
-         //System.err.println( "operator found in " + token );
+         //System.err.println( "operator " + op + " found in " + token );
          while ( ! _opStack.isEmpty() &&
                precedence( _opStack.peek() ) >= precedence( op ) )
          {
@@ -162,7 +161,11 @@ public class TreeFactory
          char ch = token.charAt( pos.getIndex() );
          String st = String.valueOf( ch );
 
-         if ( ! OPERATORS.contains( st ) )
+         if ( ch == ' ' )
+         {
+            // do nothing
+         }
+         else if ( ! OPERATORS.contains( st ) )
          {
             pushVariable( st );
             if ( needsMultiply )
@@ -173,23 +176,39 @@ public class TreeFactory
             {
                needsMultiply = true;
             }
-            pos.setIndex( pos.getIndex() + 1 );
          }
          else
          {
          // We have an operator
             if ( ch == '\\' )
             {
-               _opStack.push( "*" );
+               if ( needsMultiply )
+               {
+                  needsMultiply = false;
+               }
+               else
+               {
+                  if ( !_opStack.isEmpty() && _opStack.peek().equals( "*" ) )
+                  {
+                     // we don't need this multiplication anymore since we
+                     // are capable of handling the multiplication.
+                     _opStack.pop();
+                  }
+                  else
+                  {
+                     pushDouble( 1.0 );
+                  }
+               }
                parseLatexFunction( token.substring( pos.getIndex() + 1 ) );
+               pos.setIndex( token.indexOf( "}", pos.getIndex() + 1 ) );
             }
             else
             {
                needsMultiply = false;
                parseOperator( token, pos );
-               pos.setIndex( pos.getIndex() + 1 );
             }
          }
+         pos.setIndex( pos.getIndex() + 1 );
       }
    }
    
@@ -205,12 +224,7 @@ public class TreeFactory
       _opStack = new Stack<String>();
       _randStack = new Stack<AbstractNode>();
 
-      Scanner scanner = new Scanner( _infix );
-      while ( scanner.hasNext() )
-      {
-         String token = scanner.next();
-         parseToken( token );
-      }
+      parseToken( _infix );
 
       while ( ! _opStack.isEmpty() )
       {
@@ -245,7 +259,7 @@ public class TreeFactory
       AbstractNode leftNode = null;
       AbstractNode rightNode = null;
 
-      if ( op.equals( "(" ) )
+      if ( op.equals( "(" ) || op.equals( "{" ) || op.equals( "[" ) )
       {
          throw new ExpressionException( "Missing )", _infix );
       }
