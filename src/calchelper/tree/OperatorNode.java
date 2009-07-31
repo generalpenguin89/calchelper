@@ -82,8 +82,6 @@ abstract class OperatorNode extends AbstractNode implements Cloneable
       // There's no real reason for this, but adding it just in case
       super.simplify();
 
-      System.out.println( "Operator: simplify( parent )" );
-
       // Recurse to each child node
       for ( int x = 0; x < _children.size(); ++x )
       {
