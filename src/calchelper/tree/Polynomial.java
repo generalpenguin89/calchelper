@@ -172,7 +172,11 @@ class Polynomial extends AbstractNode implements Cloneable
             _isValid = false;
          }
          
-         if ( ! _isValid )
+         if ( _isValid )
+         {
+            simplify();
+         }
+         else
          {
             System.err.println( "WARNING: Invalid Polynomial." );
          }
@@ -442,6 +446,7 @@ class Polynomial extends AbstractNode implements Cloneable
          } 
          else if ( isSameVariable( poly ) )
          {
+            //FIXME: Equal Polynomials may have different hash codes
             for ( Entry<Double, Double> entry : getMap().entrySet() )
             {
                if ( ! poly.getMap().containsKey( entry.getKey() ) && 
@@ -636,5 +641,21 @@ class Polynomial extends AbstractNode implements Cloneable
       Polynomial poly = new Polynomial( this );
       poly.merge( other, 1.0 );
       return poly;
+   }
+   
+   /**
+    * Simplifies a polynomial.
+    */
+   public void simplify()
+   {
+      HashMap<Double, Double> copy = new HashMap<Double, Double>();
+      for ( Map.Entry<Double, Double> entry : this.getMap().entrySet() )
+      {
+         if ( entry.getValue() != 0.0 )
+         {
+            copy.put( entry.getKey(), entry.getValue() );
+         }
+      }
+      setMap( copy );
    }
 }
