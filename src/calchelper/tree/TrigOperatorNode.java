@@ -4,6 +4,7 @@
 package calchelper.tree;
 
 import java.util.ArrayList;
+//import java.util.Map;
 
 /**
  * A node type to handle trigonometric functions with a coefficient term in 
@@ -220,11 +221,18 @@ abstract class TrigOperatorNode extends OperatorNode
     */
    public boolean isDerivative()
    {
+      //FIXME: This one might be tough with all the different kinds of nodes...
+      
       // Get the derivative of the argument
       //AbstractNode argDeriv = getArgument().derive();
       
-      //FIXME: Finish this method
+      // For each entry in the map
+      /*for ( Map.Entry<Double, Double> entry : argDeriv.getMap().entrySet() )
+      {
+         if( !( getArgument().getMap().containsKey( entry.getKey() ) ) )
+            return false;
+      }*/
       
-      return false;
+      return true;
    }
 }
