@@ -446,43 +446,7 @@ class Polynomial extends AbstractNode implements Cloneable
          } 
          else if ( isSameVariable( poly ) )
          {
-            //FIXME: Equal Polynomials may have different hash codes
-            for ( Entry<Double, Double> entry : getMap().entrySet() )
-            {
-               if ( ! poly.getMap().containsKey( entry.getKey() ) && 
-                        this.getMap().get( entry.getKey() ) != 0.0 )
-               {
-                  return false;
-               }
-               
-               if ( ! poly.getMap().get( entry.getKey() ).equals( 
-                     this.getMap().get( entry.getKey() ) ) &&
-                     poly.getMap().get( entry.getKey() ) != 0.0 )
-               {
-                  System.out.println(poly.getMap().get( entry.getKey() ));
-                  System.out.println(this.getMap().get( entry.getKey() ));
-                  return false;
-               }
-            }
-            
-            for ( Entry<Double, Double> entry : poly.getMap().entrySet() )
-            {
-               if ( ! this.getMap().containsKey( entry.getKey() ) && 
-                        poly.getMap().get( entry.getKey() ) != 0.0 )
-               {
-                  return false;
-               }
-               if ( ! poly.getMap().get( entry.getKey() ).equals( 
-                        this.getMap().get( entry.getKey() ) ) &&
-                        poly.getMap().get( entry.getKey() ) != 0.0 )
-               {
-                  System.out.println(poly.getMap().get( entry.getKey() ));
-                  System.out.println(this.getMap().get( entry.getKey() ));
-                  return false;
-               }
-            }
-            
-            return true;
+            return getMap().equals( poly.getMap() );
          }
       }
       
