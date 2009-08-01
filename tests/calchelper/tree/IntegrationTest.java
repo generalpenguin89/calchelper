@@ -47,34 +47,50 @@ public class IntegrationTest
    }
    
    //Polynomial with x^-1
-   /*@Test public void test2() throws ExpressionException
+   @Test public void natLogTest() throws ExpressionException
    {
-      AbstractNode result = intTest( "2 * x ^ 1" );
-      AbstractNode expected = new TreeFactory( "x^2" ).buildTree().getRoot();
-      assertEquals( expected, result );  
+      // Declare expected results
+      AbstractNode expected = getTreeRoot( "x^2 + \\ln{x}" );
+      
+      // Get actual results 
+      AbstractNode actual = getTreeRoot( "( 2 * x ^ 1 ) + ( x^ ( -1 ) )" ).integrate();
+      
+      assertEquals( expected, actual );
    }
    
    //sine
-   @Test public void test3() throws ExpressionException
+   /*@Test public void test3() throws ExpressionException
    {
-      AbstractNode result = intTest( "2 * x ^ 1" );
-      AbstractNode expected = new TreeFactory( "x^2" ).buildTree().getRoot();
-      assertEquals( expected, result );  
+      // Declare expected results
+      AbstractNode expected = getTreeRoot( "-1 * \\cos{x}" );
+      
+      // Get actual results 
+      AbstractNode actual = getTreeRoot( "\\sin{x}" ).integrate();
+      
+      assertEquals( expected, actual ); 
    }
    
    //cos
    @Test public void test4() throws ExpressionException
    {
-      AbstractNode result = intTest( "2 * x ^ 1" );
-      AbstractNode expected = new TreeFactory( "x^2" ).buildTree().getRoot();
-      assertEquals( expected, result );  
+      // Declare expected results
+      AbstractNode expected = getTreeRoot( "\\sin{x}" );
+      
+      // Get actual results 
+      AbstractNode actual = getTreeRoot( "\\cos{x}" ).integrate();
+      
+      assertEquals( expected, actual );
    }
    
    //ln
    @Test public void test5() throws ExpressionException
    {
-      AbstractNode result = intTest( "2 * x ^ 1" );
-      AbstractNode expected = new TreeFactory( "x^2" ).buildTree().getRoot();
-      assertEquals( expected, result );  
+      // Declare expected results
+      AbstractNode expected = getTreeRoot( "x^2" );
+      
+      // Get actual results 
+      AbstractNode actual = getTreeRoot( "2 * x ^ 1" ).integrate();
+      
+      assertEquals( expected, actual ); 
    }*/
 }
