@@ -300,13 +300,12 @@ class Polynomial extends AbstractNode implements Cloneable
    }
    
    /**
-    * Gets a string representation.
+    * Gets a string representation of the polynomial.
     */
    public String getStringValue()
    {
       if ( isValid() )
       {
-         String delimiter = " + ";
          ArrayList<String> strList = new ArrayList<String>();
          for ( Map.Entry<Double, Double> entry : getMap().entrySet() )
          {
@@ -314,16 +313,22 @@ class Polynomial extends AbstractNode implements Cloneable
             {
                strList.add( String.valueOf( entry.getValue() ) );
             }
-            else if ( entry.getKey() == 1.0 )
-            {
-               strList.add( entry.getValue() + "x" );
-            }
             else
             {
-               strList.add( entry.getValue() + "x^" + entry.getKey() );
+               StringBuilder builder = new StringBuilder();
+               if ( entry.getValue() != 1.0 )
+               {
+                  builder.append( entry.getValue() );
+               }
+               builder.append( getVariable() );
+               if ( entry.getKey() != 1.0 )
+               {
+                  builder.append( "^" + entry.getKey() );
+               }
+               strList.add( builder.toString() );
             }
          }
-         return join( strList, delimiter );
+         return join( strList, " + " );
       }
       else
       {
