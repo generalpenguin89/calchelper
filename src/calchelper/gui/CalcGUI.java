@@ -18,7 +18,11 @@ import calchelper.tree.TreeFactory;
 
 public class CalcGUI extends JPanel
 {
-  //---------------- instance variables ---------------------------
+  /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
+//---------------- instance variables ---------------------------
   private Container       _parent;
   private ExpressionTree   _tree;
   private TreeFactory      _treeFactory;
@@ -34,7 +38,7 @@ public class CalcGUI extends JPanel
     super ( new BorderLayout() );
     _guiProcessor = new GUIProcessor( this );
     // for using the jframe for whatever reason
-    _parent  = parent;
+    set_parent( parent );
     
     //create the menu
     JPanel menuPanel = new JPanel();
@@ -121,6 +125,22 @@ public class CalcGUI extends JPanel
          button.addActionListener( new ButtonListener( i, this ));
       }      
       return bMenu;
+   }
+
+   /**
+    * @param _parent the _parent to set
+    */
+   public void set_parent( Container _parent )
+   {
+      this._parent = _parent;
+   }
+
+   /**
+    * @return the _parent
+    */
+   public Container get_parent()
+   {
+      return _parent;
    }
 
    // ButtonListener inner class
