@@ -16,8 +16,6 @@ import java.util.ArrayList;
 abstract class TrigOperatorNode extends OperatorNode
 {  
    /**
-{
-   /*
     * Implementation notes:
     *
     * _children.get( 0 ) : left node / coefficient
@@ -139,6 +137,50 @@ abstract class TrigOperatorNode extends OperatorNode
          
          sin.simplify();
          return sin;
+      }
+
+      public AbstractNode integrate()
+      {
+         // FIXME Unfinished
+         if( isDerivative() )
+         {
+            // Make a node to represent the new coefficient
+            //AbstractNode coef = NodeFactory.createConstantNode(  )
+            //AbstractNode sin = NodeFactory.createNode( "sin", coef, getArgument() );
+            return null;
+         }
+         return null;
+      }
+   }
+   
+   /**
+    * Node to represent cosine function.
+    * 
+    * @author William Rideout
+    *
+    */
+   public static class Tangent extends TrigOperatorNode
+   {
+      public Tangent( AbstractNode coefficient, AbstractNode argument )
+      {
+         init( "tan", coefficient, argument );
+      }
+      
+      public AbstractNode derive()
+      {
+         AbstractNode tan = null;
+ 
+         //save the coefficient and argument
+         /**AbstractNode coef = getCoefficientTerm();
+         AbstractNode arg = getArgument();
+         
+         AbstractNode mult = NodeFactory.createNode( "*",coef, arg.derive() );
+         
+         //the tangent node
+         tan = NodeFactory.createNode( "sin", mult, arg );
+         
+         tan.simplify();**/
+         return tan;
       }
 
       public AbstractNode integrate()

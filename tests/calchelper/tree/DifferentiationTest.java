@@ -32,9 +32,8 @@ public class DifferentiationTest
       expected = new HashMap<Double,Double>();
    }
    
-   @Test public void polynomialProTest() throws ExpressionException
+   @Test public void productTest() throws ExpressionException
    {
-      //Product test
       // Declare expected results
       AbstractNode expected = getTreeRoot( "2" );
       
@@ -44,9 +43,8 @@ public class DifferentiationTest
       assertEquals( expected, actual );
    }
    
-   @Test public void polynomialQuoTest() throws ExpressionException
+   @Test public void quotientTest() throws ExpressionException
    {
-      //Quotient test
       // Declare expected results
       AbstractNode expected = getTreeRoot( "-( 2 / ( x ^ 2 ) )" );
       
@@ -61,11 +59,8 @@ public class DifferentiationTest
    }
    
    //======================== TRIG FUNCTION TESTS =============================
-   
-   @Test public void polynomialSinTest() throws ExpressionException
+   @Test public void sineTest() throws ExpressionException
    {
-      //TODO: This should be checked for accuracy
-      //Sine test
       // Declare expected results
       AbstractNode expected = getTreeRoot( "2 * cos( 2 * x )" );
       
@@ -74,10 +69,8 @@ public class DifferentiationTest
       assertEquals( expected, actual );
    }
    
-   @Test public void polynomialCosTest() throws ExpressionException
-   {
-      //TODO: This should be checked for accuracy
-      //Cosine test
+   @Test public void cosineTest() throws ExpressionException
+   {  
       // Declare expected results
       AbstractNode expected = getTreeRoot( "-( 2 * cos( 2 * x ) )" );
       
@@ -85,5 +78,4 @@ public class DifferentiationTest
       AbstractNode actual = getTreeRoot( "cos( 2 * x )" );
       assertEquals( expected, actual );
    }
-
 }
