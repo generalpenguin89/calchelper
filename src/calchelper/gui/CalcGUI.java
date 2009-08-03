@@ -190,10 +190,6 @@ public class CalcGUI extends JPanel
                      done.showMessageDialog( _parent, result.toString(),
                      "CalcHelper ALPHA" , 1);
                   }
-                  else
-                  {
-                     done.showMessageDialog( _parent, "Entire tree null", "CalcHelper ALPHA", 2 );
-                  }
                 }
                 catch( NullPointerException e )
                 {
