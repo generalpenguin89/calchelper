@@ -376,12 +376,14 @@ class Polynomial extends AbstractNode implements Cloneable
    {
       // Make a new polynomial
       Polynomial integral = new Polynomial();
+      integral._variable = _variable;
       
       // Test to see if the polynomial has a x^-1
       if( _map.containsKey( -1.0 ) )
       {
          // Make a natural log function
-         AbstractNode natural = NodeFactory.createNode( "ln", new Polynomial( getMap().get( -1.0 )), new Polynomial( "x" ) );
+         AbstractNode natural = NodeFactory.createNode( "ln", new Polynomial( getMap().get( -1.0 )),
+                  new Polynomial( _variable ) );
          
          // Remove the entry with the key of -1
          _map.remove( -1d );
@@ -395,7 +397,7 @@ class Polynomial extends AbstractNode implements Cloneable
          }
          
          //Make addition node and add its children
-         AbstractNode plus = NodeFactory.createNode("+", integral, natural );
+         AbstractNode plus = NodeFactory.createNode( "+", integral, natural );
 
          //Return the addition node
          return plus;
@@ -420,6 +422,7 @@ class Polynomial extends AbstractNode implements Cloneable
    {
       // Make a new polynomial
       Polynomial derivative = new Polynomial();
+      derivative._variable = _variable;
       
       // For each entry in the copy
       for ( Map.Entry<Double, Double> entry : getMap().entrySet() )
