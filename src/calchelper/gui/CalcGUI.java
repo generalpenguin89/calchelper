@@ -155,10 +155,9 @@ public class CalcGUI extends JPanel
                 try
                 {
                   ExpressionTree rezult = _tree.derive();
-                  JOptionPane done = new JOptionPane();
                   if ( rezult != null )
                   {
-                     done.showMessageDialog( _parent, rezult.toString(),
+                     JOptionPane.showMessageDialog( _parent, rezult.toString(),
                      "CalcHelper ALPHA" , 1);
                   }
                 }
@@ -184,10 +183,9 @@ public class CalcGUI extends JPanel
                 try
                 {
                   ExpressionTree result = _tree.integrate();
-                  JOptionPane done = new JOptionPane();
                   if ( result != null )
                   {
-                     done.showMessageDialog( _parent, result.toString(),
+                     JOptionPane.showMessageDialog( _parent, result.toString(),
                      "CalcHelper ALPHA" , 1);
                   }
                 }
@@ -250,8 +248,6 @@ public class CalcGUI extends JPanel
              _guiProcessor.showInfo();
             break;
         }
-       
-       
      }
    }
 }

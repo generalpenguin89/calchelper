@@ -6,12 +6,10 @@
 
 package calchelper.gui;
 
-import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
-import java.lang.Object;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -88,8 +86,7 @@ public class GUIProcessor
 	
 	public void showInfo()
 	{
-	   JOptionPane info = new JOptionPane();
-	   info.showMessageDialog( _theGUI, "Copyrighted under the GNU opensource" +
+	   JOptionPane.showMessageDialog( _theGUI, "Copyrighted under the GNU opensource" +
 	   		" \nlicense agreement. This product may be used or edited by anyone " +
 	   		"\nas long as proper citation and coding conventions are followed." );
 	}
