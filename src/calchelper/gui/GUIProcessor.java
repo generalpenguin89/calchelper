@@ -6,7 +6,14 @@
 
 package calchelper.gui;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
+import java.lang.Object;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 public class GUIProcessor
 {
@@ -28,16 +35,51 @@ public class GUIProcessor
 		}
 	}
 	
-	public void cut()
+	public void cut( JTextField field )
 	{
+	  field.cut();
 	}
 	
-	public void copy()
+	public void copy(JTextField field)
 	{
+	   field.copy();
 	}
 	
-	public void paste()
+	public void paste( JTextField field )
 	{
+	   Clipboard d = field.getToolkit().getSystemClipboard();
+	   String output = "";
+      try
+      {
+        output = ( String ) d.getData( DataFlavor.stringFlavor );
+        if ( output != "" )
+        {
+          if ( field.getSelectedText() != null )
+          {
+            field.setText( field.getText().
+           replace(field.getSelectedText(), output ) );
+          }
+          else
+          {
+             String text = field.getText();
+             String before = text.substring
+             ( 0, field.getCaretPosition() );
+             String after = text.substring
+             ( field.getCaretPosition(), text.length() );
+             field.setText( before + output + after );
+          }
+        }
+      }
+      catch ( UnsupportedFlavorException e )
+      {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      }
+      catch ( IOException e )
+      {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      }
 	}
 	
 	public void showLaTeX()
@@ -46,5 +88,9 @@ public class GUIProcessor
 	
 	public void showInfo()
 	{
+	   JOptionPane info = new JOptionPane();
+	   info.showMessageDialog( _theGUI, "Copyrighted under the GNU opensource" +
+	   		" \nlicense agreement. This product may be used or edited by anyone " +
+	   		"\nas long as proper citation and coding conventions are followed." );
 	}
 }
