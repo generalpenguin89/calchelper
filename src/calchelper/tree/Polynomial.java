@@ -627,4 +627,23 @@ class Polynomial extends AbstractNode implements Cloneable
       }
       setMap( copy );
    }
+
+   /**
+    * Determines the precedence level of the node.
+    */
+   protected int precedence()
+   {
+      if ( this.hasValue() )
+      {
+         return 100;
+      }
+      else if ( this.termCount() == 1 )
+      {
+         return 15;
+      }
+      else
+      {
+         return 10;
+      }
+   }
 }

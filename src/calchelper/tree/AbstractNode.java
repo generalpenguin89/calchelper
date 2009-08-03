@@ -180,5 +180,13 @@ abstract class AbstractNode implements Iterable<AbstractNode>, Cloneable
    {
       return null;
    }
+   
+   /**
+    * Determines the precedence level of the node.
+    */
+   protected int precedence()
+   {
+      return 0;
+   }
 }
 

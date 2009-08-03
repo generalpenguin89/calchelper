@@ -83,6 +83,20 @@ abstract class BinaryOperatorNode extends OperatorNode
       return 2;
    }
    
+   /**
+    * Returns a String representation of the BinaryOperatorNode.
+    */
+   public String getStringValue()
+   {
+      StringBuilder sb = new StringBuilder();
+      sb.append( getChildStringValue( getLeft() ) );
+      sb.append( " " );
+      sb.append( getType() );
+      sb.append( " " );
+      sb.append( getChildStringValue( getRight() ) );
+      return sb.toString();
+   }
+   
    static class Addition extends BinaryOperatorNode
    {
       /**
@@ -131,6 +145,14 @@ abstract class BinaryOperatorNode extends OperatorNode
         AbstractNode newAdd = NodeFactory.createNode("+", left, right);
         return newAdd;
       }
+
+      /**
+       * Determines the precedence level of the node.
+       */
+      protected int precedence()
+      {
+         return 10;
+      }
    }
    
    static class Multiplication extends BinaryOperatorNode
@@ -149,6 +171,14 @@ abstract class BinaryOperatorNode extends OperatorNode
       public double getValue()
       {
          return getLeft().getValue() * getRight().getValue();
+      }
+
+      /**
+       * Determines the precedence level of the node.
+       */
+      protected int precedence()
+      {
+         return 15;
       }
       
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -222,6 +252,14 @@ abstract class BinaryOperatorNode extends OperatorNode
       {
          return getLeft().getValue() - getRight().getValue();
       }
+
+      /**
+       * Determines the precedence level of the node.
+       */
+      protected int precedence()
+      {
+         return 10;
+      }
       
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       /** Integrate - 
@@ -271,6 +309,14 @@ abstract class BinaryOperatorNode extends OperatorNode
       public double getValue()
       {
          return getLeft().getValue() / getRight().getValue();
+      }
+
+      /**
+       * Determines the precedence level of the node.
+       */
+      protected int precedence()
+      {
+         return 15;
       }
       
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -335,6 +381,14 @@ abstract class BinaryOperatorNode extends OperatorNode
       {
          return getLeft().getValue() % getRight().getValue();
       }
+
+      /**
+       * Determines the precedence level of the node.
+       */
+      protected int precedence()
+      {
+         return 15;
+      }
       
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       /** Integrate - 
@@ -373,6 +427,14 @@ abstract class BinaryOperatorNode extends OperatorNode
       public double getValue()
       {
          return Math.pow( getLeft().getValue(), getRight().getValue() );
+      }
+
+      /**
+       * Determines the precedence level of the node.
+       */
+      protected int precedence()
+      {
+         return 20;
       }
       
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

@@ -60,7 +60,7 @@ public class ExpressionTree
     */
    public String toString()
    {
-      return getRoot().toString();
+      return getRoot().getStringValue();
    }
 
    /**

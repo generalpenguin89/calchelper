@@ -241,4 +241,24 @@ abstract class OperatorNode extends AbstractNode implements Cloneable
       clone._children.addAll( this._children );
       return clone;
    }
+   
+   
+   /**
+    * 
+    */
+   protected String getChildStringValue( AbstractNode child )
+   {
+      if ( child.precedence() < this.precedence() )
+      {
+         StringBuilder sb = new StringBuilder();
+         sb.append( "(" );
+         sb.append( child.getStringValue() );
+         sb.append( ")" );
+         return sb.toString();
+      }
+      else
+      {
+         return child.getStringValue();
+      }
+   }
 }

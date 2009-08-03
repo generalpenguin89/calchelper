@@ -235,4 +235,20 @@ abstract class TrigOperatorNode extends OperatorNode
       
       return true;
    }
+   
+   /**
+    * Returns a normal (equation) string representation of the operator node.
+    */
+   public String getStringValue()
+   {
+      StringBuilder sb = new StringBuilder();
+      sb.append( getChildStringValue( getCoefficientTerm() ) );
+      sb.append( " \\" );
+      sb.append( getType() );
+      sb.append( "{" );
+      sb.append( getArgument().getStringValue() ); // already have { ... }
+      sb.append( "}" );
+      return sb.toString();
+   }
+   
 }
