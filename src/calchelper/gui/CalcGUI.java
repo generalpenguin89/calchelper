@@ -53,7 +53,7 @@ public class CalcGUI extends JPanel
     _textField = new JTextField(20);
     centerOfCenter.add( _textField );
     JButton browse = new JButton("Browse .." );
-    browse.addActionListener( new ButtonListener( 3 ) );
+    browse.addActionListener( new ButtonListener( 3, this ) );
     centerOfCenter.add( browse );
     
     // adds everything to the GUI
@@ -118,7 +118,7 @@ public class CalcGUI extends JPanel
          button = new JButton( labels[ i ] );
          button.setFont( getFont().deriveFont( 11.0f ));
          bMenu.add( button );
-         button.addActionListener( new ButtonListener( i ));
+         button.addActionListener( new ButtonListener( i, this ));
       }      
       return bMenu;
    }
@@ -131,8 +131,10 @@ public class CalcGUI extends JPanel
    public class ButtonListener implements ActionListener
    {
       int _buttonId;
-      public ButtonListener( int buttonId )
+      Component _parent;
+      public ButtonListener( int buttonId, Component parent )
       {
+         _parent = parent;
          _buttonId = buttonId;
       }
       public void actionPerformed( ActionEvent ev )
@@ -152,7 +154,13 @@ public class CalcGUI extends JPanel
                 }
                 try
                 {
-                  _tree.differentiate();
+                  ExpressionTree rezult = _tree.derive();
+                  JOptionPane done = new JOptionPane();
+                  if ( rezult != null )
+                  {
+                     done.showMessageDialog( _parent, rezult.toString(),
+                     "CalcHelper ALPHA" , 1);
+                  }
                 }
                 catch( NullPointerException e )
                 {
@@ -175,7 +183,17 @@ public class CalcGUI extends JPanel
                 }
                 try
                 {
-                  _tree.integrate();
+                  ExpressionTree result = _tree.integrate();
+                  JOptionPane done = new JOptionPane();
+                  if ( result != null )
+                  {
+                     done.showMessageDialog( _parent, result.toString(),
+                     "CalcHelper ALPHA" , 1);
+                  }
+                  else
+                  {
+                     done.showMessageDialog( _parent, "Entire tree null", "CalcHelper ALPHA", 2 );
+                  }
                 }
                 catch( NullPointerException e )
                 {
