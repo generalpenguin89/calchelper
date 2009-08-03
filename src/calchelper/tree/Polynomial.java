@@ -95,9 +95,9 @@ class Polynomial extends AbstractNode implements Cloneable
                // Give up if they're not both valid or the variables don't
                // match
                if ( left.isValid() && right.isValid() &&
-                        this.isSameVariable( left ) &&
                         left.isSameVariable( right ) )
                {
+                  this._variable = left.getVariable();
                   for ( Map.Entry<Double, Double> entry : left.getMap().entrySet() )
                   {
                      for ( Map.Entry<Double, Double> other : 
@@ -121,10 +121,10 @@ class Polynomial extends AbstractNode implements Cloneable
                // Give up if they're not both valid or the variables don't
                // match.  Also, denominator must have only 1 term.
                if ( left.isValid() && right.isValid() &&
-                        this.isSameVariable( left ) &&
                         left.isSameVariable( right ) && 
                         right.termCount() == 1 )
                {
+                  this._variable = left.getVariable();
                   for ( Map.Entry<Double, Double> entry : left.getMap().entrySet() )
                   {
                      for ( Map.Entry<Double, Double> other :
@@ -143,11 +143,11 @@ class Polynomial extends AbstractNode implements Cloneable
             else if ( node instanceof BinaryOperatorNode.Power )
             {
                Polynomial left = new Polynomial( binNode.getLeft() );
+               this._variable = left.getVariable();
                               
                // Give up if they're not both valid or the variables don't
                // match.  Also, right side must be a constant.
-               if ( left.isValid() && this.isSameVariable( left ) && 
-                        binNode.getRight().hasValue() )
+               if ( left.isValid() && binNode.getRight().hasValue() )
                {
                   double right = binNode.getRight().getValue();
                   
@@ -263,6 +263,12 @@ class Polynomial extends AbstractNode implements Cloneable
     */
    private void merge( Polynomial poly, double constant )
    {
+      if ( this.getVariable() == null )
+      {
+         this._variable = poly.getVariable();
+      }
+      // TODO: Add error-checking
+      
       for ( Map.Entry<Double, Double> entry : poly.getMap().entrySet() )
       {
          merge( entry.getKey(), entry.getValue() * constant );
