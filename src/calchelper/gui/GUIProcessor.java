@@ -1,7 +1,10 @@
 /**
- * GUIProcessor.java
+ * GUIProcessor.java -- Provides major implementation for
+ * most menu functions including cut/copy/paste, show and
+ * print tree, and help commands/program info.
  * 
- * 
+ * Author: Ben Decato
+ * Last modified: 8/3/2009
  */
 
 package calchelper.gui;
@@ -23,6 +26,7 @@ public class GUIProcessor
 		_theGUI = theGUI;
 	}
 	
+	// quit() -- Simple exit method with "Are you sure?" popup
 	public void quit()
 	{
 		int response = JOptionPane.showConfirmDialog( _theGUI,
@@ -33,16 +37,19 @@ public class GUIProcessor
 		}
 	}
 	
+	// cut( JTextField ) -- Cut method just calls JTextArea's cut().
 	public void cut( JTextField field )
 	{
 	  field.cut();
 	}
 	
+   // copy( JTextField ) -- Cut method just calls JTextArea's copy().
 	public void copy(JTextField field)
 	{
 	   field.copy();
 	}
 	
+	// paste(JTextField) -- Provides paste functionality for the textfield
 	public void paste( JTextField field )
 	{
 	   Clipboard d = field.getToolkit().getSystemClipboard();
@@ -78,10 +85,14 @@ public class GUIProcessor
       }
 	}
 	
+	// showLaTeX() -- Syntax guide for CalcHelper via LaTeX command list
 	public void showLaTeX()
 	{
+	   JOptionPane.showMessageDialog( _theGUI, "Guide text to be written \n" +
+	   "poolside. Tomrrow.", "Syntax Guide", 1);
 	}
 	
+	// showInfo() -- Shows program's licensing and author information.
 	public void showInfo()
 	{
 	   JOptionPane.showMessageDialog( _theGUI, "Copyrighted under the GNU opensource" +

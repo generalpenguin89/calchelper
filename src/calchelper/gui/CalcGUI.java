@@ -74,30 +74,30 @@ public class CalcGUI extends JPanel
 
     JMenu file = new JMenu("File");
       JMenuItem exit = new JMenuItem("Exit");
-      exit.addActionListener( new JMenuItemListener( 'q' ) );
+      exit.addActionListener( new JMenuItemListener( 'q', this ) );
       file.add( exit );
     JMenu edit = new JMenu("Edit");
       JMenuItem cut = new JMenuItem( "Cut" );
-      cut.addActionListener( new JMenuItemListener( 'x' ) );
+      cut.addActionListener( new JMenuItemListener( 'x', this ) );
       JMenuItem copy = new JMenuItem( "Copy" );
-      copy.addActionListener( new JMenuItemListener( 'c' ) );
+      copy.addActionListener( new JMenuItemListener( 'c', this ) );
       JMenuItem paste = new JMenuItem( "Paste" );
-      paste.addActionListener( new JMenuItemListener( 'v' ) );
+      paste.addActionListener( new JMenuItemListener( 'v', this ) );
       edit.add( cut );
       edit.add( copy );
       edit.add( paste );
     JMenu tools = new JMenu("Tools");
       JMenuItem print = new JMenuItem( "Print Tree" );
-      print.addActionListener( new JMenuItemListener( 'p' ) );
+      print.addActionListener( new JMenuItemListener( 'p', this ) );
       JMenuItem show = new JMenuItem( "Show Tree" );
-      show.addActionListener( new JMenuItemListener( 's' ) );
+      show.addActionListener( new JMenuItemListener( 's', this ) );
       tools.add( print );
       tools.add( show );
     JMenu help = new JMenu("Help");
       JMenuItem latex = new JMenuItem( "Show LaTeX commands" );
-      latex.addActionListener( new JMenuItemListener( 'l' ) );
+      latex.addActionListener( new JMenuItemListener( 'l', this ) );
       JMenuItem info = new JMenuItem( "Show Product Info" );
-      info.addActionListener( new JMenuItemListener( 'i' ) );
+      info.addActionListener( new JMenuItemListener( 'i', this ) );
       help.add( latex );
       help.add( info );
     
@@ -108,7 +108,22 @@ public class CalcGUI extends JPanel
 
     return bar;
   }
-  
+   //------------------- printTree -------------------------------------
+   private void printTree()
+   {
+     String eq = _textField.getText();
+     _treeFactory = new TreeFactory( eq );
+     try
+     {
+      _tree = _treeFactory.buildTree();
+      String tree = _tree.toString();
+      System.out.println( tree );
+     }
+     catch ( ExpressionException e )
+     {
+        e.printStackTrace();
+     }
+   }
    //------------------- makeButtonMenu --------------------------------
    private Component makeButtonMenu()
    {
@@ -231,10 +246,12 @@ public class CalcGUI extends JPanel
    {
      //---------instance variables-------------
      char _char;
+     CalcGUI _theGUI;
      
      //---------constructor--------------------
-     public JMenuItemListener( char i )
+     public JMenuItemListener( char i, CalcGUI theGUI )
      {
+        _theGUI = theGUI;
        _char = i;
      }
      
@@ -256,7 +273,7 @@ public class CalcGUI extends JPanel
              _guiProcessor.paste( _textField );
             break;
           case 'p':
-            // expressionTree.printTree();
+             _theGUI.printTree();
             break;
           case 's':
             // expressionTree.showTree();
