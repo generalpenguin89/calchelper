@@ -176,10 +176,6 @@ class Polynomial extends AbstractNode implements Cloneable
          {
             simplify();
          }
-         else
-         {
-            System.err.println( "WARNING: Invalid Polynomial." );
-         }
       }
    }
 
