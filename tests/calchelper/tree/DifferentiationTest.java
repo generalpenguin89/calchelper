@@ -62,20 +62,20 @@ public class DifferentiationTest
    @Test public void sineTest() throws ExpressionException
    {
       // Declare expected results
-      AbstractNode expected = getTreeRoot( "2 * cos( 2 * x )" );
+      AbstractNode expected = getTreeRoot( "2 * //cos{ 2 * x }" );
       
       // Get actual results 
-      AbstractNode actual = getTreeRoot( "sin( 2 * x )" );
+      AbstractNode actual = getTreeRoot( "//sin{ 2 * x }" );
       assertEquals( expected, actual );
    }
    
    @Test public void cosineTest() throws ExpressionException
    {  
       // Declare expected results
-      AbstractNode expected = getTreeRoot( "-( 2 * cos( 2 * x ) )" );
+      AbstractNode expected = getTreeRoot( "-1 * ( 2 * //cos{ 2 * x } )" );
       
       // Get actual results 
-      AbstractNode actual = getTreeRoot( "cos( 2 * x )" );
+      AbstractNode actual = getTreeRoot( "//cos{ 2 * x }" );
       assertEquals( expected, actual );
    }
 }
