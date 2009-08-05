@@ -417,7 +417,10 @@ class Polynomial extends AbstractNode implements Cloneable
          return integral;
       }
    }
-   
+   /**
+    * Derive - 
+    * By Ben Decato
+    */
    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
    
    public AbstractNode derive()

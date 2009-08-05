@@ -166,8 +166,8 @@ public class CalcGUI extends JPanel
    public class ButtonListener implements ActionListener
    {
       int _buttonId;
-      Component _parent;
-      public ButtonListener( int buttonId, Component parent )
+      CalcGUI _parent;
+      public ButtonListener( int buttonId, CalcGUI parent )
       {
          _parent = parent;
          _buttonId = buttonId;
@@ -230,6 +230,7 @@ public class CalcGUI extends JPanel
                 }
                 break;
              case 2:
+                _parent.printTree();
                 break;
              case 3:
                 System.out.println("Browsing");
