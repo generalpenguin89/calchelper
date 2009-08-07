@@ -169,7 +169,7 @@ abstract class TrigOperatorNode extends OperatorNode
       public AbstractNode derive()
       {
          AbstractNode tan = null;
- 
+         //TODO: complete this class
          //save the coefficient and argument
          /**AbstractNode coef = getCoefficientTerm();
          AbstractNode arg = getArgument();
