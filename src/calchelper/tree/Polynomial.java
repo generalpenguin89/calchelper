@@ -98,6 +98,7 @@ class Polynomial extends AbstractNode implements Cloneable
                         left.isSameVariable( right ) )
                {
                   this._variable = left.getVariable();
+                  if ( this._variable == null ) this._variable = right.getVariable();
                   for ( Map.Entry<Double, Double> entry : left.getMap().entrySet() )
                   {
                      for ( Map.Entry<Double, Double> other : 
@@ -125,6 +126,7 @@ class Polynomial extends AbstractNode implements Cloneable
                         right.termCount() == 1 )
                {
                   this._variable = left.getVariable();
+                  if ( this._variable == null ) this._variable = right.getVariable();
                   for ( Map.Entry<Double, Double> entry : left.getMap().entrySet() )
                   {
                      for ( Map.Entry<Double, Double> other :
