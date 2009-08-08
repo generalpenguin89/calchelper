@@ -8,6 +8,7 @@
 
 package calchelper.tree;
 
+import java.util.HashMap;
 import java.util.Iterator;
 
 abstract class AbstractNode implements Iterable<AbstractNode>, Cloneable
@@ -187,6 +188,14 @@ abstract class AbstractNode implements Iterable<AbstractNode>, Cloneable
    protected int precedence()
    {
       return 0;
+   }
+   
+   /**
+    * Gets the HashMap for this Node
+    */
+   protected HashMap<Double, Double> getMap()
+   {
+      return null;
    }
 }
 

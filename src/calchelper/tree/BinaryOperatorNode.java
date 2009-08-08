@@ -325,9 +325,55 @@ abstract class BinaryOperatorNode extends OperatorNode
         */
       public AbstractNode integrate( )
       {
-         //TO BE CONTINUED
+         /* Inverse sin:
+          * 1/sqrt(a^2 - u^2) -> arcsin u/a
+          */
+         //Make sure all the requirement are met
+         /*if( this.getRight() instanceof TrigOperatorNode.SquareRoot )
+         {
+            if( this.getRight().getArgument() instanceof Polynomial )
+            {
+               AbstractNode poly = this.getRight().getArgument();
+               //Check to see if it is a minus...
+               if( right.getMap().containsKey( -2.0 ) && right.getMap().containsKey( 0.0 )
+                        && ( right.getMap().size() == 2 ) )
+               {
+                  //Make arcsin node and return it
+                  return this;
+               }
+               
+               //...or a plus in the square root
+               if( right.getMap().containsKey( 2.0 ) && right.getMap().containsKey( 0.0 )
+                        && ( right.getMap().size() == 2 ) )
+               {
+                  //Make arcsin node and return it
+                  return this;
+               }
+            }
+         }*/
+         
+         /* Inverse tan:
+          * 1/(a^2 + u^2) -> 1/a arctan u/a
+          */
+         //See if the right is a polynomial
+         if( this.getRight() instanceof Polynomial ) //Add ability to test num and denom for derivatives
+         {
+            //Then make sure it has a^2 + u^2 and thats it
+            AbstractNode right = this.getRight();
+            if( right.getMap().containsKey( 2.0 ) && right.getMap().containsKey( 0.0 )
+                     && ( right.getMap().size() == 2 ) )
+            {
+               //Make the arc tan node and return it
+               return this;
+            }
+         }
          
          return this;
+         
+         /*
+          * dx/x-a .> ln abs x-a
+            dx/(x-a)^2 -> -1/(x-a)
+            x * dx / (x^2 + b^2) -> .5ln(x^2 + b^2)*/
       }
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       

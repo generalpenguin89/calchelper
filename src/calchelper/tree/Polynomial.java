@@ -594,7 +594,7 @@ class Polynomial extends AbstractNode implements Cloneable
     *  
     * @return the map
     */
-   HashMap<Double, Double> getMap()
+   protected HashMap<Double, Double> getMap()
    {
       return _map;
    }
