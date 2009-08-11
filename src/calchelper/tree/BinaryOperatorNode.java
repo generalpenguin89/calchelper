@@ -369,11 +369,6 @@ abstract class BinaryOperatorNode extends OperatorNode
          }
          
          return this;
-         
-         /*
-          * dx/x-a .> ln abs x-a
-            dx/(x-a)^2 -> -1/(x-a)
-            x * dx / (x^2 + b^2) -> .5ln(x^2 + b^2)*/
       }
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       
