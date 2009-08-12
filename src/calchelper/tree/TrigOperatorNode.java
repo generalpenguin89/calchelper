@@ -270,50 +270,6 @@ abstract class TrigOperatorNode extends OperatorNode
          tan.simplify();**/
          return sec;
       }
-      
-      /**
-       * Node to represent cosecant function.
-       * 
-       * @author Ben Decato
-       *
-       */
-      public static class Cosecant extends TrigOperatorNode
-      {
-         public Cosecant( AbstractNode coefficient, AbstractNode argument )
-         {
-            init( "csc", coefficient, argument );
-         }
-         
-         public AbstractNode derive()
-         {
-            AbstractNode csc = null;
-            //TODO: complete this class
-            //save the coefficient and argument
-            /**AbstractNode coef = getCoefficientTerm();
-            AbstractNode arg = getArgument();
-            
-            AbstractNode mult = NodeFactory.createNode( "*",coef, arg.derive() );
-            
-            //the tangent node
-            tan = NodeFactory.createNode( "sin", mult, arg );
-            
-            tan.simplify();**/
-            return csc;
-         }
-
-         public AbstractNode integrate()
-         {
-            // FIXME Unfinished
-            if( isDerivative() )
-            {
-               // Make a node to represent the new coefficient
-               //AbstractNode coef = NodeFactory.createConstantNode(  )
-               //AbstractNode sin = NodeFactory.createNode( "sin", coef, getArgument() );
-               return null;
-            }
-            return null;
-         }
-      }
       public AbstractNode integrate()
       {
          // FIXME Unfinished
@@ -322,11 +278,53 @@ abstract class TrigOperatorNode extends OperatorNode
             // Make a node to represent the new coefficient
             //AbstractNode coef = NodeFactory.createConstantNode(  )
             //AbstractNode sin = NodeFactory.createNode( "sin", coef, getArgument() );
-            return null;
          }
          return null;
       }
    }
+   /**
+    * Node to represent cosecant function.
+    * 
+    * @author Ben Decato
+    *
+    */
+   public static class Cosecant extends TrigOperatorNode
+   {
+      public Cosecant( AbstractNode coefficient, AbstractNode argument )
+      {
+         init( "csc", coefficient, argument );
+      }
+            
+      public AbstractNode derive()
+      {
+         AbstractNode csc = null;
+         //TODO: complete this class
+         //save the coefficient and argument
+         /**AbstractNode coef = getCoefficientTerm();
+            AbstractNode arg = getArgument();
+               
+            AbstractNode mult = NodeFactory.createNode( "*",coef, arg.derive() );
+               
+            //the tangent node
+            tan = NodeFactory.createNode( "sin", mult, arg );
+               
+         tan.simplify();**/
+         return csc;
+      }
+   
+      public AbstractNode integrate()
+      {
+         // FIXME Unfinished
+         if( isDerivative() )
+         {
+            //AbstractNode placeholder = getArgument();
+            // Make a node to represent the new coefficient
+            //AbstractNode coef = NodeFactory.createConstantNode(  )
+            //AbstractNode sin = NodeFactory.createNode( "sin", coef, getArgument() );
+         }
+         return null;
+      }
+   }  
    
    /**
     * Node to represent natural log function because my OCD wants me to finish Polynomial

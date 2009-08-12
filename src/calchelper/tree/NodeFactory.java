@@ -95,7 +95,7 @@ class NodeFactory
          {
             return new TrigOperatorNode.Secant( left, right );
          }
-         else if ( op.equals( "csc"))
+         else if ( op.equals( "csc" ))
          {
             return new TrigOperatorNode.Cosecant( left, right );
          }
