@@ -197,5 +197,13 @@ abstract class AbstractNode implements Iterable<AbstractNode>, Cloneable
    {
       return null;
    }
+   
+   /**
+    * Tests if two expressions are equal, ignoring coefficients
+    */
+   public boolean equalsIgnoreCoefficients( Object obj )
+   {
+      return equals( obj );
+   }
 }
 

@@ -469,6 +469,45 @@ class Polynomial extends AbstractNode implements Cloneable
    }
    
    /**
+    * Indicates whether some other object is "equal to" this Polynomial, ignoring coefficients.
+    * 
+    * @return true if this object is the same as the obj argument, false otherwise
+    */
+   public boolean equalsIgnoreCoefficients( Object obj )
+   {
+      if ( obj instanceof Polynomial )
+      {
+         Polynomial poly = new Polynomial( ( AbstractNode ) obj );
+         
+         // If both are invalid, then they're equal as far as I'm concerned
+         if ( ! isValid() && ! poly.isValid() )
+         {
+            return true;
+         } 
+         else if ( isSameVariable( poly ) )
+         {
+            for ( Entry<Double, Double> entry : getMap().entrySet() )
+            {
+               if ( ! poly.getMap().containsKey( entry.getKey() ) )
+               {
+                  return false;
+               }
+            }
+            
+            for ( Entry<Double, Double> entry : poly.getMap().entrySet() )
+            {
+               if ( ! getMap().containsKey( entry.getKey() ) )
+               {
+                  return false;
+               }
+            }
+         }
+      }
+      
+      return false;
+   }
+   
+   /**
     * Returns a hash code value for the polynomial.
     * 
     * The hash code of all invalid polynomials is 0, which ensures that two
