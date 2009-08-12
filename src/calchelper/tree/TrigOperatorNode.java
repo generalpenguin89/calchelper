@@ -22,12 +22,14 @@ abstract class TrigOperatorNode extends OperatorNode
     * _children.get( 1 ) : right node / argument
     */
 
-   protected void init( String funct, AbstractNode left, AbstractNode right )
+   protected void init( String funct, AbstractNode left,
+            AbstractNode right, AbstractNode farRight )
    {
       _type = funct;
       _children = new ArrayList<AbstractNode>();
       _children.add( left );
       _children.add( right );
+      _children.add( farRight );    
    }
    
    /**
@@ -51,6 +53,18 @@ abstract class TrigOperatorNode extends OperatorNode
    {
       return getNode( 1 );
    }
+
+   /**
+    * Returns the number in parenthesis:
+    * 
+    * sin^(2)x
+    * 
+    * @return the exponent of the trigonometric expression
+    */
+   public AbstractNode getPower()
+   {
+      return getNode( 2 );
+   }
    
    /**
     * Returns the additive inverse of the node.
@@ -72,9 +86,10 @@ abstract class TrigOperatorNode extends OperatorNode
     */
    public static class Sine extends TrigOperatorNode
    {
-      public Sine( AbstractNode coefficient, AbstractNode argument )
+      public Sine( AbstractNode coefficient,
+               AbstractNode argument, AbstractNode power )
       {
-         init( "sin", coefficient, argument );
+         init( "sin", coefficient, argument, power );
       }
       
       public AbstractNode derive()
@@ -117,9 +132,10 @@ abstract class TrigOperatorNode extends OperatorNode
     */
    public static class Cosine extends TrigOperatorNode
    {
-      public Cosine( AbstractNode coefficient, AbstractNode argument )
+      public Cosine( AbstractNode coefficient,
+               AbstractNode argument, AbstractNode power )
       {
-         init( "cos", coefficient, argument );
+         init( "cos", coefficient, argument, power );
       }
       
       public AbstractNode derive()
@@ -161,26 +177,27 @@ abstract class TrigOperatorNode extends OperatorNode
     */
    public static class Tangent extends TrigOperatorNode
    {
-      public Tangent( AbstractNode coefficient, AbstractNode argument )
+      public Tangent( AbstractNode coefficient,
+               AbstractNode argument, AbstractNode power )
       {
-         init( "tan", coefficient, argument );
+         init( "tan", coefficient, argument, power );
       }
       
       public AbstractNode derive()
       {
-         AbstractNode tan = null;
+         AbstractNode sec = null;
          //TODO: complete this class
          //save the coefficient and argument
-         /**AbstractNode coef = getCoefficientTerm();
+         AbstractNode coef = getCoefficientTerm();
          AbstractNode arg = getArgument();
          
          AbstractNode mult = NodeFactory.createNode( "*",coef, arg.derive() );
          
          //the tangent node
-         tan = NodeFactory.createNode( "sin", mult, arg );
+         sec = NodeFactory.createNode( "sec", mult, arg );
          
-         tan.simplify();**/
-         return tan;
+         sec.simplify();
+         return sec;
       }
 
       public AbstractNode integrate()
@@ -205,9 +222,10 @@ abstract class TrigOperatorNode extends OperatorNode
     */
    public static class Cotangent extends TrigOperatorNode
    {
-      public Cotangent( AbstractNode coefficient, AbstractNode argument )
+      public Cotangent( AbstractNode coefficient,
+               AbstractNode argument, AbstractNode power )
       {
-         init( "cot", coefficient, argument );
+         init( "cot", coefficient, argument, power );
       }
       
       public AbstractNode derive()
@@ -249,9 +267,10 @@ abstract class TrigOperatorNode extends OperatorNode
     */
    public static class Secant extends TrigOperatorNode
    {
-      public Secant( AbstractNode coefficient, AbstractNode argument )
+      public Secant( AbstractNode coefficient,
+               AbstractNode argument, AbstractNode power )
       {
-         init( "sec", coefficient, argument );
+         init( "sec", coefficient, argument, power );
       }
       
       public AbstractNode derive()
@@ -290,9 +309,9 @@ abstract class TrigOperatorNode extends OperatorNode
     */
    public static class Cosecant extends TrigOperatorNode
    {
-      public Cosecant( AbstractNode coefficient, AbstractNode argument )
+      public Cosecant( AbstractNode coefficient, AbstractNode argument, AbstractNode power )
       {
-         init( "csc", coefficient, argument );
+         init( "csc", coefficient, argument, power );
       }
             
       public AbstractNode derive()
@@ -334,9 +353,10 @@ abstract class TrigOperatorNode extends OperatorNode
     */
    public static class NatLog extends TrigOperatorNode
    {
-      public NatLog( AbstractNode coefficient, AbstractNode argument )
+      public NatLog( AbstractNode coefficient, 
+               AbstractNode argument, AbstractNode power )
       {
-         init( "ln", coefficient, argument );
+         init( "ln", coefficient, argument, power );
       }
       
       public AbstractNode derive()
