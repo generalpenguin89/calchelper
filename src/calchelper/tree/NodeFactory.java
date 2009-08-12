@@ -87,6 +87,18 @@ class NodeFactory
          {
             return new TrigOperatorNode.Cosine( left, right );
          }
+         else if ( op.equals("cot" ) )
+         {
+            return new TrigOperatorNode.Cotangent( left, right  );
+         }
+         else if ( op.equals( "sec" ))
+         {
+            return new TrigOperatorNode.Secant( left, right );
+         }
+         else if ( op.equals( "csc"))
+         {
+            return new TrigOperatorNode.Cosecant( left, right );
+         }
          else if ( op.equals( "ln" ) )
          {
             return new TrigOperatorNode.NatLog( left, right );
