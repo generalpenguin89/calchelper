@@ -74,7 +74,15 @@ public class TreeFactory
       {
          ParsePosition powPos = new ParsePosition( token.indexOf( "^" ) );
          ParsePosition argPos = new ParsePosition( token.indexOf( "{" ) );
-         function = token.substring( 0, argPos.getIndex() );
+         if ( powPos.getIndex() >= 0 )
+         {
+            function = token.substring( 0, 
+                  Math.min( powPos.getIndex(), argPos.getIndex() ) );
+         }
+         else
+         {
+            function = token.substring( 0, argPos.getIndex() );
+         }
          if ( token.indexOf( "}", argPos.getIndex() ) <= -1 )
          {
             throw new ExpressionException( "unterminated {", token );
