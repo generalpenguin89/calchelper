@@ -172,7 +172,7 @@ abstract class TrigOperatorNode extends OperatorNode
    /**
     * Node to represent tangent function.
     * 
-    * @author William Rideout
+    * @author Ben Decato
     *
     */
    public static class Tangent extends TrigOperatorNode
@@ -194,7 +194,8 @@ abstract class TrigOperatorNode extends OperatorNode
          AbstractNode mult = NodeFactory.createNode( "*",coef, arg.derive() );
          
          //the tangent node
-         sec = NodeFactory.createNode( "sec", mult, arg );
+         sec = NodeFactory.createTrigNode( "sec", mult, arg,
+                  NodeFactory.createConstantNode(2.0) );
          
          sec.simplify();
          return sec;
