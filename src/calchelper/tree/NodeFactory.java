@@ -23,7 +23,7 @@ class NodeFactory
 
    public static BinaryOperatorNode createBinaryOperatorNode( String op, 
                                                         AbstractNode left,
-                                                        AbstractNode right )
+                                                        AbstractNode right)
    {
       if ( op.equals( "+" ) )
       {
@@ -55,6 +55,40 @@ class NodeFactory
       }
    }
    
+   public static AbstractNode createTrigNode( String op, AbstractNode left,
+                                              AbstractNode right,
+                                              AbstractNode exponent )
+   {
+      if ( op.equals( "sin" ) )
+      {
+         return new TrigOperatorNode.Sine( left, right, exponent );
+      }
+      else if ( op.equals( "cos" ) )
+      {
+         return new TrigOperatorNode.Cosine( left, right, exponent );
+      }
+      else if ( op.equals( "cot" ) )
+      {
+         return new TrigOperatorNode.Cotangent( left, right, exponent  );
+      }
+      else if ( op.equals( "sec" ))
+      {
+         return new TrigOperatorNode.Secant( left, right, exponent );
+      }
+      else if ( op.equals( "csc" ))
+      {
+         return new TrigOperatorNode.Cosecant( left, right, exponent );
+      }
+      else if ( op.equals( "ln" ) )
+      {
+         return new TrigOperatorNode.NatLog( left, right, exponent );
+      }
+      else
+      {
+         throw new UnsupportedOperationException( "Not a supported node type: " + op );
+      }
+   }
+   
    public static AbstractNode createNode( String op, double left, 
                                           double right )
    {
@@ -79,34 +113,7 @@ class NodeFactory
       }
       else
       {
-         if ( op.equals( "sin" ) )
-         {
-            return new TrigOperatorNode.Sine( left, right );
-         }
-         else if ( op.equals( "cos" ) )
-         {
-            return new TrigOperatorNode.Cosine( left, right );
-         }
-         else if ( op.equals("cot" ) )
-         {
-            return new TrigOperatorNode.Cotangent( left, right  );
-         }
-         else if ( op.equals( "sec" ))
-         {
-            return new TrigOperatorNode.Secant( left, right );
-         }
-         else if ( op.equals( "csc" ))
-         {
-            return new TrigOperatorNode.Cosecant( left, right );
-         }
-         else if ( op.equals( "ln" ) )
-         {
-            return new TrigOperatorNode.NatLog( left, right );
-         }
-         else
-         {
-            throw new UnsupportedOperationException( "Not a supported node type: " + op );
-         }
+        return createTrigNode( op, left, right, createConstantNode( 1.0 ) ); 
       }
    }
    
