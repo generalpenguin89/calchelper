@@ -95,7 +95,7 @@ abstract class TrigOperatorNode extends OperatorNode
       public AbstractNode derive()
       {
          AbstractNode cos = null;
-         
+            
          AbstractNode coef = getCoefficientTerm();
          AbstractNode arg = getArgument();
          
@@ -104,21 +104,21 @@ abstract class TrigOperatorNode extends OperatorNode
          
          //the cosine node... derivative of sine
          cos = NodeFactory.createNode("cos", mult, arg);
-         
+            
          cos.simplify();
          return cos;
       }
 
       public AbstractNode integrate()
       {
-         // FIXME Unfinished
+         // FIXME coef is WRANG
          if( isDerivative() )
          {
             // Make a node to represent the new coefficient
-            //AbstractNode coef = NodeFactory.createConstantNode(  )
-            //AbstractNode cos = NodeFactory.createNode( "cos", coef, getArgument() );
-            //AbstractNode invCos = cos.inverse();
-            return null;
+            AbstractNode coef = NodeFactory.createConstantNode( 1 );
+            AbstractNode cos = NodeFactory.createNode( "cos", coef, getArgument() );
+            AbstractNode invCos = cos.inverse();
+            return invCos;
          }
          return null;
       }
@@ -157,13 +157,13 @@ abstract class TrigOperatorNode extends OperatorNode
 
       public AbstractNode integrate()
       {
-         // FIXME Unfinished
+         // FIXME Chance coef
          if( isDerivative() )
          {
             // Make a node to represent the new coefficient
-            //AbstractNode coef = NodeFactory.createConstantNode(  )
-            //AbstractNode sin = NodeFactory.createNode( "sin", coef, getArgument() );
-            return null;
+            AbstractNode coef = NodeFactory.createConstantNode( 1 );
+            AbstractNode sin = NodeFactory.createNode( "sin", coef, getArgument() );
+            return sin;
          }
          return null;
       }
@@ -336,7 +336,6 @@ abstract class TrigOperatorNode extends OperatorNode
          // FIXME Unfinished
          if( isDerivative() )
          {
-            //AbstractNode placeholder = getArgument();
             // Make a node to represent the new coefficient
             //AbstractNode coef = NodeFactory.createConstantNode(  )
             //AbstractNode sin = NodeFactory.createNode( "sin", coef, getArgument() );
@@ -415,16 +414,13 @@ abstract class TrigOperatorNode extends OperatorNode
       //FIXME: This one might be tough with all the different kinds of nodes...
       
       // Get the derivative of the argument
-      //AbstractNode argDeriv = getArgument().derive();
+      AbstractNode argDeriv = getArgument().derive();
       
-      // For each entry in the map
-      /*for ( Map.Entry<Double, Double> entry : argDeriv.getMap().entrySet() )
-      {
-         if( !( getArgument().getMap().containsKey( entry.getKey() ) ) )
-            return false;
-      }*/
+      //Check to see if the same powers are involved
+      if( argDeriv.equalsIgnoreCoefficients( getCoefficientTerm() ) )
+         return true;
       
-      return true;
+      return false;
    }
    
    /**
