@@ -67,6 +67,10 @@ class NodeFactory
       {
          return new TrigOperatorNode.Cosine( left, right, exponent );
       }
+      else if ( op.equals( "tan" ) )
+      {
+         return new TrigOperatorNode.Tangent( left, right, exponent  );
+      }
       else if ( op.equals( "cot" ) )
       {
          return new TrigOperatorNode.Cotangent( left, right, exponent  );
