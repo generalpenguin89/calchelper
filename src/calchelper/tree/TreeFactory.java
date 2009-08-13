@@ -72,16 +72,27 @@ public class TreeFactory
       
       if ( token.indexOf( "{" ) != -1 )
       {
-         ParsePosition pos = new ParsePosition( token.indexOf( "{" ) );
-         function = token.substring( 0, pos.getIndex() );
-         if ( token.indexOf( "}", pos.getIndex() ) <= -1 )
+         ParsePosition powPos = new ParsePosition( token.indexOf( "^" ) );
+         ParsePosition argPos = new ParsePosition( token.indexOf( "{" ) );
+         function = token.substring( 0, argPos.getIndex() );
+         if ( token.indexOf( "}", argPos.getIndex() ) <= -1 )
          {
             throw new ExpressionException( "unterminated {", token );
          }
          
          // Parse the argument of the function
-         parseToken( token.substring( pos.getIndex(), 
-                  token.indexOf( "}", pos.getIndex() ) + 1 ) );
+         parseToken( token.substring( argPos.getIndex(), 
+                  token.indexOf( "}", argPos.getIndex() ) + 1 ) );
+         
+         if ( powPos.getIndex() != -1 )
+         {
+            parseToken( token.substring( 
+                     powPos.getIndex() + 1, argPos.getIndex() ) );
+         }
+         else
+         {
+            parseToken( "1.0" );
+         }
       }
       else if ( token.indexOf( "[" ) != -1 )
       {
@@ -92,7 +103,8 @@ public class TreeFactory
       {
          function = token;
       }
-      _randStack.push( buildOpNode( function, _randStack ) );
+      System.out.println( _randStack );
+      _randStack.push( buildTrigOpNode( function, _randStack ) );
    }
 
    private void parseOperator( String token, ParsePosition pos )
@@ -275,19 +287,35 @@ public class TreeFactory
          throw new ExpressionException( "Not enough operands.", _infix );
       }
 
-      AbstractNode newNode = NodeFactory.createNode( op, leftNode, rightNode );
-
-      //System.err.println( "Created opnode: " + newNode );
-
-      if ( newNode != null )
-      {
-         return newNode;
-      }
-      else
-      {
-         return null;
-      }
+      return NodeFactory.createNode( op, leftNode, rightNode );
    }
+   
+   private AbstractNode buildTrigOpNode( String op, 
+            Stack<AbstractNode> stack ) throws ExpressionException
+      {
+         AbstractNode leftNode = null;
+         AbstractNode rightNode = null;
+         AbstractNode power = null;
+
+         if ( op.equals( "(" ) || op.equals( "{" ) || op.equals( "[" ) )
+         {
+            throw new ExpressionException( "Missing )", _infix );
+         }
+
+         if ( stack.size() >= 3 )
+         {
+            power = stack.pop();
+            rightNode = stack.pop();
+            leftNode = stack.pop();
+         }
+         else
+         {
+            throw new ExpressionException( "Not enough operands.", _infix );
+         }
+
+         return NodeFactory.createTrigNode( 
+                  op, leftNode, rightNode, power );
+      }
 
    /*
     * precedence()
