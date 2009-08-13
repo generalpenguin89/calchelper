@@ -436,6 +436,8 @@ abstract class TrigOperatorNode extends OperatorNode
       sb.append( getChildStringValue( getCoefficientTerm() ) );
       sb.append( " \\" );
       sb.append( getType() );
+      sb.append( "^" );
+      sb.append( getPower().getStringValue() );
       sb.append( "{" );
       sb.append( getArgument().getStringValue() ); // already have { ... }
       sb.append( "}" );
