@@ -1,14 +1,18 @@
-/**
+/*
  * NodeFactory
- *
- * A class to create nodes irrespective of their concrete type.
- *
- * The class provides static methods to create operator nodes of different
- * types.
  */
 
 package calchelper.tree;
 
+/**
+ * A class to create nodes irrespective of their concrete type.
+ *
+ * The class provides static methods to create operator nodes of different
+ * types.
+ * 
+ * @author Patrick MacArthur
+ * 
+ */
 class NodeFactory
 {
    /**
@@ -18,7 +22,7 @@ class NodeFactory
     * @param left The left operand.
     * @param right The right operand.
     *
-    * @return The AbstractNode, or null if the operator is invalid.
+    * @return The operator node, or null if the operator is invalid.
     */
 
    public static BinaryOperatorNode createBinaryOperatorNode( String op, 
@@ -55,37 +59,46 @@ class NodeFactory
       }
    }
    
-   public static AbstractNode createTrigNode( String op, AbstractNode left,
-                                              AbstractNode right,
+   /**
+    * Creates a trigonometric function node based on the given nodes.
+    * 
+    * @param op The trig function.
+    * @param coefTerm The coefficient term of the trig function.
+    * @param arg The argument of the trig function.
+    * @param exponent The power of the trig function.
+    * @return The resulting trig function node.
+    */
+   public static AbstractNode createTrigNode( String op, AbstractNode coefTerm,
+                                              AbstractNode arg,
                                               AbstractNode exponent )
    {
       if ( op.equals( "sin" ) )
       {
-         return new TrigOperatorNode.Sine( left, right, exponent );
+         return new TrigOperatorNode.Sine( coefTerm, arg, exponent );
       }
       else if ( op.equals( "cos" ) )
       {
-         return new TrigOperatorNode.Cosine( left, right, exponent );
+         return new TrigOperatorNode.Cosine( coefTerm, arg, exponent );
       }
       else if ( op.equals( "tan" ) )
       {
-         return new TrigOperatorNode.Tangent( left, right, exponent  );
+         return new TrigOperatorNode.Tangent( coefTerm, arg, exponent  );
       }
       else if ( op.equals( "cot" ) )
       {
-         return new TrigOperatorNode.Cotangent( left, right, exponent  );
+         return new TrigOperatorNode.Cotangent( coefTerm, arg, exponent  );
       }
       else if ( op.equals( "sec" ))
       {
-         return new TrigOperatorNode.Secant( left, right, exponent );
+         return new TrigOperatorNode.Secant( coefTerm, arg, exponent );
       }
       else if ( op.equals( "csc" ))
       {
-         return new TrigOperatorNode.Cosecant( left, right, exponent );
+         return new TrigOperatorNode.Cosecant( coefTerm, arg, exponent );
       }
       else if ( op.equals( "ln" ) )
       {
-         return new TrigOperatorNode.NatLog( left, right, exponent );
+         return new TrigOperatorNode.NatLog( coefTerm, arg, exponent );
       }
       else
       {
@@ -93,6 +106,14 @@ class NodeFactory
       }
    }
    
+   /**
+    * Convenience method to create a binary node with two constants.
+    * 
+    * @param op The operation being done.
+    * @param left The left constant.
+    * @param right The right constant.
+    * @return The operator node resulting from the operation.
+    */
    public static AbstractNode createNode( String op, double left, 
                                           double right )
    {
@@ -100,6 +121,14 @@ class NodeFactory
    								  createConstantNode( right ) );
    }
    
+   /**
+    * Creates any type of operator node.
+    * 
+    * @param op The operation being done.
+    * @param left The left node.
+    * @param right The right node.
+    * @return The operator node resulting from the operation.
+    */
    public static AbstractNode createNode( String op, AbstractNode left, AbstractNode right )
    {
       if ( op.length() == 1 )
@@ -121,11 +150,23 @@ class NodeFactory
       }
    }
    
+   /**
+    * Creates a constant node with the specified value.
+    * 
+    * @param constant The value of the constant to create.
+    * @return The constant node.
+    */
    public static AbstractNode createConstantNode( double constant )
    {
    	return new Polynomial( constant );
    }
    
+   /**
+    * Creates a variable node with the specified value.
+    * 
+    * @param variable The value of the variable to create.
+    * @return The variable node.
+    */
    public static AbstractNode createVariableNode( String variable )
    {
    	return new Polynomial( variable );
