@@ -1,14 +1,3 @@
-/**
- * TreeFactory.java
- *
- *
- * The TreeFactory is in charge of building a tree given an infix
- * expression.
- *
- * @author Patrick MacArthur
- *
- * Based on code written for CS416 Programming Assignment #9
- */
 
 package calchelper.tree;
 
@@ -17,6 +6,17 @@ import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.Stack;
 
+/**
+ * TreeFactory.java
+ *
+ *
+ * The TreeFactory is in charge of building a tree given an infix
+ * expression.
+ *
+ * @author Patrick MacArthur <pio3@unh.edu>,
+ *
+ * based on code written for UNH CS416 Programming Assignment #9
+ */
 public class TreeFactory
 {
    private static final String OPERATORS = "{}[]()+-*/%^\\";
@@ -34,18 +34,32 @@ public class TreeFactory
       _infix = infix;
    }
 
+   /**
+    * Pushes the specified double onto the operand stack.
+    * 
+    * @param num The double to push onto the operand stack.
+    */
    private void pushDouble( double num )
    {
-      //System.err.println( "Pushed double: " + num );
       _randStack.push( NodeFactory.createConstantNode( num ) );
    }
 
+   /**
+    * Pushes the specified variable onto the operand stack.
+    * 
+    * @param var The variable to push onto the operand stack.
+    */
    private void pushVariable( String var )
    {
-      //System.err.println( "Pushed variable: " + var );
       _randStack.push( NodeFactory.createVariableNode( var ) );
    }
 
+   /**
+    * Returns the opposite symbol for a grouping symbol.
+    * 
+    * @param ch The grouping symbol encountered.
+    * @return The opposite grouping symbol
+    */
    private char opposite( char ch )
    {
       switch ( ch )
@@ -111,10 +125,17 @@ public class TreeFactory
       {
          function = token;
       }
-      System.out.println( _randStack );
-      _randStack.push( buildTrigOpNode( function, _randStack ) );
+
+      pushTrigOpNode( function );
    }
 
+   /**
+    * Parses an operator at the specified position within the string.
+    * 
+    * @param token The entire string being examined.
+    * @param pos The position within the string at which the operator occurred.
+    * @throws ExpressionException
+    */
    private void parseOperator( String token, ParsePosition pos )
       throws ExpressionException
    {
@@ -129,7 +150,7 @@ public class TreeFactory
          while( ! ( _opStack.isEmpty() ||
                _opStack.peek().equals( String.valueOf( opposite( ch ) ) ) ) )
          {
-            _randStack.push( buildOpNode( _opStack.pop(), _randStack ) );
+            pushBinOpNode( _opStack.pop() );
          }
 
          if ( _opStack.isEmpty() )
@@ -142,11 +163,10 @@ public class TreeFactory
       else
       {
          String op = String.valueOf( ch );
-         //System.err.println( "operator " + op + " found in " + token );
          while ( ! _opStack.isEmpty() &&
                precedence( _opStack.peek() ) >= precedence( op ) )
          {
-            _randStack.push( buildOpNode( _opStack.pop(), _randStack ) );
+            pushBinOpNode( _opStack.pop() );
          }
          _opStack.push( op );
       }
@@ -156,6 +176,8 @@ public class TreeFactory
     * parseToken()
     * 
     * Parses a token in the input string.
+    * 
+    * @param token The string to parse. 
     * 
     * @throws ExpressionException if the expression is invalid.
     */
@@ -233,8 +255,6 @@ public class TreeFactory
    }
    
    /**
-    * buildTree()
-    *
     * Builds the tree for the expression contained in the TreeFactory object.
     *
     * @throws ExpressionException if the expression is invalid.
@@ -248,7 +268,7 @@ public class TreeFactory
 
       while ( ! _opStack.isEmpty() )
       {
-         _randStack.push( buildOpNode( _opStack.pop(), _randStack ) );
+         pushBinOpNode( _opStack.pop() );
       }
 
       if ( _randStack.size() != 1 )
@@ -263,66 +283,63 @@ public class TreeFactory
    }
 
    /**
-    * buildOpNode()
-    *
     * Builds the operator node from an operator and the top two items off of
-    * the operand stack.
+    * the operand stack, and pushes it onto the operand stack.
     *
     * @param op The operator.
     * @param stack The operand stack.
     *
     * Throws ExpressionException if the expression is invalid.
     */
-   private AbstractNode buildOpNode( String op, 
-         Stack<AbstractNode> stack ) throws ExpressionException
+   private void pushBinOpNode( String op ) throws ExpressionException
    {
-      AbstractNode leftNode = null;
-      AbstractNode rightNode = null;
+      AbstractNode leftNode, rightNode;
 
       if ( op.equals( "(" ) || op.equals( "{" ) || op.equals( "[" ) )
       {
-         throw new ExpressionException( "Missing )", _infix );
+         throw new ExpressionException( "Unterminated " + op, _infix );
       }
 
-
-      if ( stack.size() >= 2 )
-      {
-         rightNode = stack.pop();
-         leftNode = stack.pop();
-      }
-      else
+      if ( _randStack.size() < 2 )
       {
          throw new ExpressionException( "Not enough operands.", _infix );
       }
+      
+      rightNode = _randStack.pop();
+      leftNode = _randStack.pop();
 
-      return NodeFactory.createNode( op, leftNode, rightNode );
+      _randStack.push( NodeFactory.createNode( op, leftNode, rightNode ) );
    }
    
-   private AbstractNode buildTrigOpNode( String op, 
-            Stack<AbstractNode> stack ) throws ExpressionException
+   /**
+    * Builds the trig operator node from an operator and the top two items off 
+    * of the operand stack, and pushes it onto the operand stack.
+    *
+    * @param op The operator.
+    * @param stack The operand stack.
+    *
+    * Throws ExpressionException if the expression is invalid.
+    */
+   private void pushTrigOpNode( String op ) throws ExpressionException
       {
-         AbstractNode leftNode = null;
-         AbstractNode rightNode = null;
-         AbstractNode power = null;
+         AbstractNode leftNode, rightNode, power;
 
          if ( op.equals( "(" ) || op.equals( "{" ) || op.equals( "[" ) )
          {
-            throw new ExpressionException( "Missing )", _infix );
+            throw new ExpressionException( "Unterminated " + op, _infix );
          }
 
-         if ( stack.size() >= 3 )
-         {
-            power = stack.pop();
-            rightNode = stack.pop();
-            leftNode = stack.pop();
-         }
-         else
+         if ( _randStack.size() < 3 )
          {
             throw new ExpressionException( "Not enough operands.", _infix );
          }
 
-         return NodeFactory.createTrigNode( 
-                  op, leftNode, rightNode, power );
+         power = _randStack.pop();
+         rightNode = _randStack.pop();
+         leftNode = _randStack.pop();
+         
+         _randStack.push( NodeFactory.createTrigNode( 
+                  op, leftNode, rightNode, power ) );
       }
 
    /*
