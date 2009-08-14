@@ -280,19 +280,19 @@ abstract class TrigOperatorNode extends OperatorNode
       
       public AbstractNode derive()
       {
-         AbstractNode sec = null;
-         //TODO: complete this class
+         AbstractNode sectan = null;
          //save the coefficient and argument
-         /**AbstractNode coef = getCoefficientTerm();
+         AbstractNode coef = getCoefficientTerm();
          AbstractNode arg = getArgument();
+         AbstractNode one = NodeFactory.createConstantNode( 1 );
          
          AbstractNode mult = NodeFactory.createNode( "*",coef, arg.derive() );
+         AbstractNode sec = NodeFactory.createNode("sec", mult, arg );
+         AbstractNode tan = NodeFactory.createNode( "tan", one, arg );
+         sectan = NodeFactory.createNode( "*", sec, tan );
          
-         //the tangent node
-         tan = NodeFactory.createNode( "sin", mult, arg );
-         
-         tan.simplify();**/
-         return sec;
+         sectan.simplify();
+         return sectan;
       }
       public AbstractNode integrate()
       {
@@ -321,19 +321,20 @@ abstract class TrigOperatorNode extends OperatorNode
             
       public AbstractNode derive()
       {
-         AbstractNode csc = null;
-         //TODO: complete this class
+         AbstractNode csccot = null;
          //save the coefficient and argument
-         /**AbstractNode coef = getCoefficientTerm();
+         AbstractNode coef = getCoefficientTerm().inverse();
             AbstractNode arg = getArgument();
+            AbstractNode one = NodeFactory.createConstantNode( 1 );
+            
+            AbstractNode mult = NodeFactory.createNode( "*", coef, arg.derive() );
+            AbstractNode csc = NodeFactory.createNode("csc", mult, arg );
+            AbstractNode cot = NodeFactory.createNode( "cot", one, arg );
+            
+            csccot = NodeFactory.createNode( "*", csc, cot );
                
-            AbstractNode mult = NodeFactory.createNode( "*",coef, arg.derive() );
-               
-            //the tangent node
-            tan = NodeFactory.createNode( "sin", mult, arg );
-               
-         tan.simplify();**/
-         return csc;
+         csccot.simplify();
+         return csccot;
       }
    
       public AbstractNode integrate()

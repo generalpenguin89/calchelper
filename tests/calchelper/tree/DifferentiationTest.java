@@ -99,4 +99,24 @@ public class DifferentiationTest
       assertEquals( expected, actual );
    }
    
+   @Test public void secantTest() throws ExpressionException
+   {  
+      // Declare expected results
+      AbstractNode expected = getTreeRoot( "( 2.0 * \\sec{ 2 * x } ) * ( 1.0 * \\tan{ 2 * x } )" );
+      
+      // Get actual results 
+      AbstractNode actual = getTreeRoot( "\\sec{ 2 * x }" ).derive();
+      assertEquals( expected, actual );
+   }
+   
+   @Test public void cosecantTest() throws ExpressionException
+   {  
+      // Declare expected results
+      AbstractNode expected = getTreeRoot( "( -2.0 * \\csc{ 2 * x } ) * ( 1.0 * \\cot{ 2 * x } )" );
+      
+      // Get actual results 
+      AbstractNode actual = getTreeRoot( "\\csc{ 2 * x }" ).derive();
+      assertEquals( expected, actual );
+   }
+   
 }
