@@ -78,4 +78,25 @@ public class DifferentiationTest
       AbstractNode actual = getTreeRoot( "\\cos{ 2 * x }" ).derive();
       assertEquals( expected, actual );
    }
+   
+   @Test public void tangentTest() throws ExpressionException
+   {  
+      // Declare expected results
+      AbstractNode expected = getTreeRoot( "2 * \\sec^2{ 2 * x }" );
+      
+      // Get actual results 
+      AbstractNode actual = getTreeRoot( "\\tan{ 2 * x }" ).derive();
+      assertEquals( expected, actual );
+   }
+   
+   @Test public void cotangentTest() throws ExpressionException
+   {  
+      // Declare expected results
+      AbstractNode expected = getTreeRoot( "-2 * \\csc^2{ 2 * x }" );
+      
+      // Get actual results 
+      AbstractNode actual = getTreeRoot( "\\cot{ 2 * x }" ).derive();
+      assertEquals( expected, actual );
+   }
+   
 }
