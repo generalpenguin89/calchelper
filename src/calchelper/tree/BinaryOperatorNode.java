@@ -1,18 +1,19 @@
-/**
+/*
  * BinaryOperatorNode.java
- *
- * Represents a binary operator in an expression.
- *
- * Currently used for /, %, ^.
- *
- * @author Patrick MacArthur 
- *
- * Based on code used for CS416 Programming Assignment #9
+ * 
+ * Based on code written for UNH CS416 Programming Assignment #9, Spring 2009.
  */
 
 package calchelper.tree;
 
 import java.util.ArrayList;
+
+/**
+ * Represents a binary operator in an expression.  This class has subclasses 
+ * for each type of operator.
+ *
+ * @author Patrick MacArthur
+ */
 
 abstract class BinaryOperatorNode extends OperatorNode
 {
@@ -23,7 +24,15 @@ abstract class BinaryOperatorNode extends OperatorNode
     * _children.get( 1 ) : right node
     */
    
-   
+   /**
+    * Initializes the list of child nodes.  Meant to be called from subclass
+    * constructors.
+    * 
+    * @param op The type of operator being created.
+    * @param left The node to the left of the operator in an infix expression.
+    * @param right The node to the right of the operator in an infix 
+    * expression.
+    */
    protected void init( String op, AbstractNode left, AbstractNode right )
    {
       _type = op;
@@ -34,6 +43,8 @@ abstract class BinaryOperatorNode extends OperatorNode
    
    /**
     * Sets the left node.
+    * 
+    * @param node The node to the left of the operator in an infix expression.
     */
    public void setLeft( AbstractNode node )
    {
@@ -42,6 +53,9 @@ abstract class BinaryOperatorNode extends OperatorNode
    
    /**
     * Sets the right node.
+    * 
+    * @param node The node to the right of the operator in an infix 
+    * expression.
     */
    public void setRight( AbstractNode node )
    {
@@ -50,6 +64,8 @@ abstract class BinaryOperatorNode extends OperatorNode
    
    /**
     * Returns the left node.
+    * 
+    * @return The node to the left of the operator in an infix expression.
     */
    public AbstractNode getLeft()
    {
@@ -58,6 +74,8 @@ abstract class BinaryOperatorNode extends OperatorNode
    
    /**
     * Returns the right node.
+    * 
+    * @return The node to the right of the operator in an infix expression.
     */
    public AbstractNode getRight()
    {
@@ -65,7 +83,10 @@ abstract class BinaryOperatorNode extends OperatorNode
    }
    
    /**
-    * Returns the additive inverse of the node.
+    * Returns the additive inverse of the node.  Essentially -1 * the current
+    * node.
+    * 
+    * @return The additive inverse of the current node.
     */
    public AbstractNode inverse()
    {
@@ -76,7 +97,9 @@ abstract class BinaryOperatorNode extends OperatorNode
    }
    
    /**
-    * Returns the node count.
+    * Returns the number of child nodes.
+    * 
+    * @return The number of child nodes.
     */
    public int nodeCount()
    {
@@ -84,7 +107,10 @@ abstract class BinaryOperatorNode extends OperatorNode
    }
    
    /**
-    * Returns a String representation of the BinaryOperatorNode.
+    * Returns a human-readable String representation of the 
+    * BinaryOperatorNode.
+    * 
+    * @return A human-readable string representation of the node.
     */
    public String getStringValue()
    {
@@ -97,31 +123,50 @@ abstract class BinaryOperatorNode extends OperatorNode
       return sb.toString();
    }
    
+   /**
+    * A node that represents the addition of its two child nodes..
+    * 
+    * @author Patrick MacArthur
+    * @author Jake Schwartz
+    * @author William Rideout
+    */
    static class Addition extends BinaryOperatorNode
    {
       /**
        * Instantiates an addition node.
+       * 
+       * @param left The node to the left of the operator in an infix 
+       * expression.
+       * @param right The node to the right of the operator in an infix 
+       * expression.
        */
       public Addition( AbstractNode left, AbstractNode right )
       {
          init( "+", left, right );
       }
       
+      /**
+       * Returns the result of adding the two child nodes.  Undefined if 
+       * {@link OperatorNode#hasValue() hasValue()} returns false.
+       */
       public double getValue()
       {
          return getLeft().getValue() + getRight().getValue();
       }
       
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-      /** Integrate - 
-        * By Jake Schwartz
-        */
+      /**
+       * Returns the integral of this node.
+       * 
+       * @return The integral of this node.
+       */
       public AbstractNode integrate( )
       {
+         //FIXME: Alters this object.
          //Integrate Left side
          this.getLeft().integrate();
          
-         //Integreate Right side
+         //Integrate Right side
          this.getRight().integrate();
          
          return this;
@@ -147,7 +192,7 @@ abstract class BinaryOperatorNode extends OperatorNode
       }
 
       /**
-       * Determines the precedence level of the node.
+       * Returns the precedence level of the node.
        */
       protected int precedence()
       {
@@ -155,10 +200,22 @@ abstract class BinaryOperatorNode extends OperatorNode
       }
    }
    
+   /**
+    * A node that represents the multiplication of its two child nodes.
+    * 
+    * @author Patrick MacArthur
+    * @author Jake Schwartz
+    * @author William Rideout
+    */   
    static class Multiplication extends BinaryOperatorNode
    {
       /**
        * Instantiates a multiplication node.
+       * 
+       * @param left The node to the left of the operator in an infix 
+       * expression.
+       * @param right The node to the right of the operator in an infix 
+       * expression.
        */
       public Multiplication( AbstractNode left, AbstractNode right )
       {
@@ -166,7 +223,8 @@ abstract class BinaryOperatorNode extends OperatorNode
       }
       
       /**
-       * Returns the value of the node.
+       * Returns the result of multiplying the two child nodes.  Undefined if 
+       * {@link OperatorNode#hasValue() hasValue()} returns false.
        */
       public double getValue()
       {
@@ -174,7 +232,7 @@ abstract class BinaryOperatorNode extends OperatorNode
       }
 
       /**
-       * Determines the precedence level of the node.
+       * Returns the precedence level of the node.
        */
       protected int precedence()
       {
@@ -182,9 +240,11 @@ abstract class BinaryOperatorNode extends OperatorNode
       }
       
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-      /** Integrate - 
-        * By Jake Schwartz
-        */
+      /**
+       * Returns the integral of this node.
+       * 
+       * @return The integral of this node.
+       */
       public AbstractNode integrate( )
       {	
       	/*Case 1: Function in the form INTEGRAL[ a * unary( b ) dx ]
@@ -238,23 +298,41 @@ abstract class BinaryOperatorNode extends OperatorNode
       }
    }
    
+   /**
+    * A node that represents the subtraction of the right child from the left
+    * child.
+    * 
+    * @author Patrick MacArthur
+    * @author Jake Schwartz
+    * @author William Rideout
+    */   
    static class Subtraction extends BinaryOperatorNode
    {
       /**
        * Instantiates a subtraction node.
+       * 
+       * @param left The node to the left of the operator in an infix 
+       * expression.
+       * @param right The node to the right of the operator in an infix 
+       * expression.
        */
       public Subtraction( AbstractNode left, AbstractNode right )
       {
          init( "-", left, right );
       }
       
+      /**
+       * Returns the result of subtracting the right child node from the left
+       * child node.  Undefined if {@link OperatorNode#hasValue() hasValue()}
+       * returns false.
+       */
       public double getValue()
       {
          return getLeft().getValue() - getRight().getValue();
       }
 
       /**
-       * Determines the precedence level of the node.
+       * Returns the precedence level of the node.
        */
       protected int precedence()
       {
@@ -270,7 +348,7 @@ abstract class BinaryOperatorNode extends OperatorNode
          //Integrate Left side
          this.getLeft().integrate();
          
-         //Integreate Right side
+         //Integrate Right side
          this.getRight().integrate();
          
          return this;
@@ -296,23 +374,41 @@ abstract class BinaryOperatorNode extends OperatorNode
       }
    }
    
+   /**
+    * A node that represents the division of the left child by the right 
+    * child.
+    * 
+    * @author Patrick MacArthur
+    * @author Jake Schwartz
+    * @author William Rideout
+    */   
    static class Division extends BinaryOperatorNode
    {
       /**
        * Instantiates a division node.
+       * 
+       * @param left The node to the left of the operator in an infix 
+       * expression.
+       * @param right The node to the right of the operator in an infix 
+       * expression.
        */
       public Division( AbstractNode left, AbstractNode right )
       {
          init( "/", left, right );
       }
       
+      /**
+       * Returns the result of dividing the left child node by the right child
+       * node.  Undefined if {@link OperatorNode#hasValue() hasValue()}
+       * returns false.
+       */
       public double getValue()
       {
          return getLeft().getValue() / getRight().getValue();
       }
 
       /**
-       * Determines the precedence level of the node.
+       * Returns the precedence level of the node.
        */
       protected int precedence()
       {
@@ -368,6 +464,7 @@ abstract class BinaryOperatorNode extends OperatorNode
             }
          }
          
+         //FIXME: Do not return this.
          return this;
       }
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -408,10 +505,15 @@ abstract class BinaryOperatorNode extends OperatorNode
       }
    }
    
+   /**
+    * @author Patrick MacArthur
+    * @deprecated This node has no known derivatives or antiderivatives. 
+    */
    static class Modulus extends BinaryOperatorNode
    {
       /**
        * Instantiates a modulus node.
+       * 
        */
       public Modulus( AbstractNode left, AbstractNode right )
       {
@@ -424,7 +526,7 @@ abstract class BinaryOperatorNode extends OperatorNode
       }
 
       /**
-       * Determines the precedence level of the node.
+       * Returns the precedence level of the node.
        */
       protected int precedence()
       {
@@ -455,23 +557,41 @@ abstract class BinaryOperatorNode extends OperatorNode
       }
    }
    
+   /**
+    * A node that represents the value of the left child node taken to the
+    * power of the right child node.
+    * 
+    * @author Patrick MacArthur
+    * @author Jake Schwartz
+    * @author William Rideout
+    */   
    static class Power extends BinaryOperatorNode
    {
       /**
        * Instantiates a power (or exponentiation) node.
+       * 
+       * @param left The node to the left of the operator in an infix 
+       * expression.
+       * @param right The node to the right of the operator in an infix 
+       * expression.
        */
       public Power( AbstractNode left, AbstractNode right )
       {
          init( "^", left, right );
       }
       
+      /**
+       * Returns the result of taking the value of the left child node to the
+       * power of the value of the right child node.  Undefined if 
+       * {@link OperatorNode#hasValue() hasValue()} returns false.
+       */
       public double getValue()
       {
          return Math.pow( getLeft().getValue(), getRight().getValue() );
       }
 
       /**
-       * Determines the precedence level of the node.
+       * Returns the precedence level of the node.
        */
       protected int precedence()
       {

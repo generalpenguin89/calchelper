@@ -1,19 +1,27 @@
-/**
+/*
  * ExpressionTree.java
  *
- * A tree that represents a mathematical expression.
- *
- * @author Patrick MacArthur, for CS416 Programming Assignment #9
+ * Based on code written for UNH CS416 Programming Assignment #9, Spring 2009.
  */
 
 package calchelper.tree;
 
+/**
+ * A tree that represents a mathematical expression.
+ * 
+ * @author Patrick MacArthur
+ *
+ */
 public class ExpressionTree
 {
    // instance variables
    private AbstractNode _root;
 
-   // Constructor
+   /**
+    * Generates an ExpressionTree rooted at the given AbstractNode.
+    * 
+    * @param root The root of the tree.
+    */
    ExpressionTree( AbstractNode root )
    {
       setRoot( root );
@@ -35,6 +43,8 @@ public class ExpressionTree
    
    /**
     * Returns the root node of the tree.
+    *
+    * @return the root node of the expression tree.
     */
    AbstractNode getRoot()
    {
@@ -77,9 +87,9 @@ public class ExpressionTree
    }
    
    /**
-    * derive()
-    * 
     * Returns the derivative tree of the tree.
+    * 
+    * @return An expression tree containing the derivative of this expression.
     */
    public ExpressionTree derive()
    {
@@ -94,9 +104,9 @@ public class ExpressionTree
    }
 
    /**
-    * integrate()
-    *
     * Returns the integral tree of the tree.
+    * 
+    * @return An expression tree containing the integral of this expression.
     */
    public ExpressionTree integrate()
    {
@@ -111,9 +121,9 @@ public class ExpressionTree
    }
    
    /**
-    * equals()
-    * 
     * Returns true if the object represents the same tree as this one.
+    * 
+    * @return True if the object represents the same tree as this object.
     */
    public boolean equals( Object obj )
    {

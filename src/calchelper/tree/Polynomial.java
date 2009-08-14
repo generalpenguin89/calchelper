@@ -229,6 +229,7 @@ class Polynomial extends AbstractNode implements Cloneable
     */
    private void merge( double power, double newCoefficient )
    {
+      //FIXME: Documentation comment is wrong
       if ( getMap().containsKey( power ) )
       {
          getMap().put( power, getCoefficient( power ) + newCoefficient );

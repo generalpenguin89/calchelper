@@ -1,3 +1,8 @@
+/*
+ * TreeFactory.java
+ * 
+ * Based on code written for UNH CS416 Programming Assignment #9, Spring 2009.
+ */
 
 package calchelper.tree;
 
@@ -7,15 +12,10 @@ import java.text.ParsePosition;
 import java.util.Stack;
 
 /**
- * TreeFactory.java
- *
- *
- * The TreeFactory is in charge of building a tree given an infix
+ *  The TreeFactory is in charge of building a tree given an infix
  * expression.
  *
- * @author Patrick MacArthur <pio3@unh.edu>,
- *
- * based on code written for UNH CS416 Programming Assignment #9
+ * @author Patrick MacArthur
  */
 public class TreeFactory
 {

@@ -1,6 +1,7 @@
-/**
- * 
+/*
+ * TrigOperatorNode.java
  */
+
 package calchelper.tree;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  * front.  For example, it can hold 2x * tan( x^2 ) in one node.
  * 
  * @author Patrick MacArthur
- *
+ * @author Jake Schwartz
  */
 abstract class TrigOperatorNode extends OperatorNode
 {  
@@ -83,6 +84,8 @@ abstract class TrigOperatorNode extends OperatorNode
     * Node to represent sine nodes.
     *    
     * @author Patrick MacArthur
+    * @author Jake Schwartz
+    * @author William Rideout
     */
    public static class Sine extends TrigOperatorNode
    {
@@ -128,7 +131,8 @@ abstract class TrigOperatorNode extends OperatorNode
     * Node to represent cosine function.
     * 
     * @author Patrick MacArthur
-    *
+    * @author Jake Schwartz
+    * @author William Rideout
     */
    public static class Cosine extends TrigOperatorNode
    {

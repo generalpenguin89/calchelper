@@ -1,15 +1,19 @@
-/**
- * AbstractNode
- *
- * A base class for all expression tree node types.
- *
- * @author Patrick MacArthur, for CS416 Programming Assignment #9
+/*
+ * AbstractNode.java
+ * 
+ * Based on code written for UNH CS416 Programming Assignment #9, Spring 2009.
  */
 
 package calchelper.tree;
 
 import java.util.HashMap;
 import java.util.Iterator;
+
+/**
+ * A base class for all expression tree node types.
+ *
+ * @author Patrick MacArthur
+ */
 
 abstract class AbstractNode implements Iterable<AbstractNode>, Cloneable
 {
@@ -50,6 +54,8 @@ abstract class AbstractNode implements Iterable<AbstractNode>, Cloneable
 
    /**
     * Determines if the node has an a value.
+    * 
+    * @return true if this node has a value
     */
    public boolean hasValue()
    {
@@ -58,6 +64,8 @@ abstract class AbstractNode implements Iterable<AbstractNode>, Cloneable
 
    /**
     * Returns the value of the node.
+    * 
+    * @return the variable held by this node
     */
    public double getValue()
    {
@@ -66,6 +74,8 @@ abstract class AbstractNode implements Iterable<AbstractNode>, Cloneable
    
    /**
     * Returns a string representation of the value.
+    * 
+    * @return a string representation of the value
     */
    public String getStringValue()
    {
@@ -74,7 +84,9 @@ abstract class AbstractNode implements Iterable<AbstractNode>, Cloneable
    
    /**
     * Determines whether the node is a simple variable (e.g., "x" 
-    * standing alone) or not
+    * standing alone) or not.
+    * 
+    * @return true if this node is a simple variable
     */
    public boolean isSimpleVariable()
    {
@@ -150,7 +162,9 @@ abstract class AbstractNode implements Iterable<AbstractNode>, Cloneable
    }
    
    /**
-    * Empty method to be overriden by subclasses
+    * Returns the integral of this node.
+    * 
+    * @return The integral of this node.
     */
    public AbstractNode integrate( )
    {
@@ -158,7 +172,9 @@ abstract class AbstractNode implements Iterable<AbstractNode>, Cloneable
    }
    
    /**
-    * Another empty method to be overridden
+    * Returns the derivative of this node.
+    * 
+    * @return the derivative of this node
     */
    public AbstractNode derive( )
    {
@@ -168,6 +184,7 @@ abstract class AbstractNode implements Iterable<AbstractNode>, Cloneable
    /**
     * Clones the object.
     * 
+    * @return a clone of this object
     */
    public Object clone() throws CloneNotSupportedException
    {
@@ -175,7 +192,9 @@ abstract class AbstractNode implements Iterable<AbstractNode>, Cloneable
    }
    
    /**
-    * Returns the inverse of this node.
+    * Returns the additive inverse of this node (e.g., -1 * this)
+    * 
+    * @return the additive inverse of this node
     */
    public AbstractNode inverse()
    {
@@ -184,6 +203,8 @@ abstract class AbstractNode implements Iterable<AbstractNode>, Cloneable
    
    /**
     * Determines the precedence level of the node.
+    * 
+    * @return the precedence level of this node
     */
    protected int precedence()
    {
@@ -192,14 +213,23 @@ abstract class AbstractNode implements Iterable<AbstractNode>, Cloneable
    
    /**
     * Gets the HashMap for this Node
+    * 
+    * @return the HashMap for this node, assuming it has one
     */
+   @Deprecated
    protected HashMap<Double, Double> getMap()
    {
       return null;
    }
    
    /**
-    * Tests if two expressions are equal, ignoring coefficients
+    * Tests if two expressions are equal, ignoring coefficients. Only really 
+    * makes a difference for those nodes that support constant coefficients.
+    * 
+    * @param obj The other node to compare.
+    * 
+    * @return true if the two objects are equal, ignoring any constant 
+    * coefficients
     */
    public boolean equalsIgnoreCoefficients( Object obj )
    {
