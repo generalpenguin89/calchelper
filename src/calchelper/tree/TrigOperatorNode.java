@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * 
  * @author Patrick MacArthur
  * @author Jake Schwartz
+ * @author Ben Decato
  */
 abstract class TrigOperatorNode extends OperatorNode
 {  
@@ -236,17 +237,16 @@ abstract class TrigOperatorNode extends OperatorNode
       public AbstractNode derive()
       {
          AbstractNode cot = null;
-         //TODO: complete this class
          //save the coefficient and argument
-         /**AbstractNode coef = getCoefficientTerm();
+         AbstractNode coef = getCoefficientTerm().inverse();
          AbstractNode arg = getArgument();
          
          AbstractNode mult = NodeFactory.createNode( "*",coef, arg.derive() );
          
          //the tangent node
-         tan = NodeFactory.createNode( "sin", mult, arg );
+         cot = NodeFactory.createTrigNode( "csc", mult, arg, NodeFactory.createConstantNode( 2 ) );
          
-         tan.simplify();**/
+         cot.simplify();
          return cot;
       }
 
