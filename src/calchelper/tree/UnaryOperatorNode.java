@@ -1,19 +1,20 @@
-/**
- * UnaryOperatorNode.java
- *
- * Represents a unary operator in an expression.
- *
- * Currently used for trig functions.
- *
- * @author Patrick MacArthur 
- *
- * Based on code used for CS416 Programming Assignment #9
+/*
+ * UnaryOperatorNode.java 
  */
 
 package calchelper.tree;
 
 import java.util.ArrayList;
 
+/**
+ * Represents a unary operator in an expression.
+ *
+ * @author Patrick MacArthur
+ * 
+ * @deprecated No longer used for trig functions.  They are in their own
+ * subclass of OperatorNode.
+ */
+@Deprecated
 class UnaryOperatorNode extends OperatorNode
 {
    /*

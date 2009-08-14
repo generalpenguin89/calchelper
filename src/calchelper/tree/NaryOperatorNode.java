@@ -1,3 +1,8 @@
+
+
+package calchelper.tree;
+
+import java.util.ArrayList;
 /**
  * BinaryOperatorNode.java
  *
@@ -6,15 +11,12 @@
  * Currently used for + and * since they are commutative and associative--order
  * shouldn't matter at all
  *
- * @author Patrick MacArthur 
- *
- * Based on code used for CS416 Programming Assignment #9
+ * @author Patrick MacArthur
+ * @deprecated This class has not been used at all.  Use Polynomial for things
+ * representing polynomials.  Use many BinaryOperatorNode objects for
+ * everything else. 
  */
-
-package calchelper.tree;
-
-import java.util.ArrayList;
-
+@Deprecated
 class NaryOperatorNode extends OperatorNode
 {
    /**
