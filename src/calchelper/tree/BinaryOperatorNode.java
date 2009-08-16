@@ -448,23 +448,23 @@ abstract class BinaryOperatorNode extends OperatorNode
             }
          }*/
          
+         //FIXME: Error in code
          /* Inverse tan:
           * 1/(a^2 + u^2) -> 1/a arctan u/a
           */
          //See if the right is a polynomial
-         if( this.getRight() instanceof Polynomial ) //Add ability to test num and denom for derivatives
+         /*if( this.getRight() instanceof Polynomial ) //Add ability to test num and denom for derivatives
          {
             //Then make sure it has a^2 + u^2 and thats it
-            AbstractNode right = this.getRight();
+            Polynomial right = this.getRight();
             if( right.getMap().containsKey( 2.0 ) && right.getMap().containsKey( 0.0 )
                      && ( right.getMap().size() == 2 ) )
             {
                //Make the arc tan node and return it
                return this;
             }
-         }
+         }*/
          
-         //FIXME: Do not return this.
          return this;
       }
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

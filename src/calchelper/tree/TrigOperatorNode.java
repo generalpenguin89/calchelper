@@ -6,6 +6,8 @@ package calchelper.tree;
 
 import java.util.ArrayList;
 //import java.util.Map;
+import java.util.Collection;
+import java.util.Set;
 
 /**
  * A node type to handle trigonometric functions with a coefficient term in 
@@ -115,10 +117,12 @@ abstract class TrigOperatorNode extends OperatorNode
 
       public AbstractNode integrate()
       {
-         // FIXME coef is WRANG
          if( isDerivative() )
          {
             // Make a node to represent the new coefficient
+            Polynomial poly = (Polynomial)getArgument();
+            Set<Double> keys = poly.getMap().keySet();
+            Collection<Double> values = poly.getMap().values();
             AbstractNode coef = NodeFactory.createConstantNode( 1 );
             AbstractNode cos = NodeFactory.createNode( "cos", coef, getArgument() );
             AbstractNode invCos = cos.inverse();
@@ -191,7 +195,6 @@ abstract class TrigOperatorNode extends OperatorNode
       public AbstractNode derive()
       {
          AbstractNode sec = null;
-         //TODO: complete this class
          //save the coefficient and argument
          AbstractNode coef = getCoefficientTerm();
          AbstractNode arg = getArgument();
@@ -366,8 +369,6 @@ abstract class TrigOperatorNode extends OperatorNode
       
       public AbstractNode derive()
       {
-         // FIXME not finished
-         
          //Create blank polynomial
          Polynomial poly = new Polynomial();
          
