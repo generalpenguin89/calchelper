@@ -506,58 +506,6 @@ abstract class BinaryOperatorNode extends OperatorNode
    }
    
    /**
-    * @author Patrick MacArthur
-    * @deprecated This node has no known derivatives or antiderivatives. 
-    */
-   static class Modulus extends BinaryOperatorNode
-   {
-      /**
-       * Instantiates a modulus node.
-       * 
-       */
-      public Modulus( AbstractNode left, AbstractNode right )
-      {
-         init( "%", left, right );
-      }
-      
-      public double getValue()
-      {
-         return getLeft().getValue() % getRight().getValue();
-      }
-
-      /**
-       * Returns the precedence level of the node.
-       */
-      protected int precedence()
-      {
-         return 15;
-      }
-      
-      //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-      /** Integrate - 
-        * By Jake Schwartz
-        */
-      public AbstractNode integrate( )
-      {
-         //TO BE CONTINUED
-         
-         return this;
-      }
-      //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-      
-      //---------------------- derive( ) ---------------------------------------
-      /**
-       * finds the derivative of this node
-       * by William Rideout
-       */
-      public AbstractNode derive( )
-      {
-        //FIXME:UNIMPLEMENTED
-         return null;
-      }
-   }
-   
-   /**
     * A node that represents the value of the left child node taken to the
     * power of the right child node.
     * 

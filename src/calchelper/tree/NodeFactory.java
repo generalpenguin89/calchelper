@@ -45,10 +45,6 @@ class NodeFactory
       {
          return new BinaryOperatorNode.Division( left, right );
       }
-      else if ( op.equals( "%" ) )
-      {
-         return new BinaryOperatorNode.Modulus( left, right );
-      }
       else if ( op.equals( "^" ) )
       {
          return new BinaryOperatorNode.Power( left, right );
