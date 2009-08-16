@@ -7,7 +7,6 @@
 package calchelper.tree;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * An abstract class representing an operator in an expression.
@@ -133,81 +132,6 @@ abstract class OperatorNode extends AbstractNode implements Cloneable
       return true;
    }
 
-   /**
-    * An iterator that iterates over a node and its children.
-    */
-   protected class TreeIterator implements Iterator<AbstractNode>
-   {
-      private boolean _hasDoneSelf; // have we returned the current node?
-      private AbstractNode _node;   // the node that we're iterating over
-
-      // iterator over our node's children
-      private Iterator<AbstractNode> _childIt;
-
-      /**
-       * Default constructor.
-       */
-      public TreeIterator( AbstractNode node )
-      {
-         _hasDoneSelf = false;
-         _node = node;
-         _childIt = _children.iterator();
-      }
-
-      /**
-       * Determines whether or not there is a node following the last-selected
-       * node.
-       *
-       * @returns True if we haven't returned ourself yet or there are child
-       * nodes we haven't iterated over; otherwise, false.
-       */
-      public boolean hasNext()
-      {
-         if ( _hasDoneSelf )
-         {
-            return _childIt.hasNext();
-         }
-         else
-         {
-            return _hasDoneSelf; // false
-         }
-      }
-
-      /**
-       * Returns the next node in the sequence.
-       *
-       * @returns The current object if we haven't returned it yet.  Otherwise,
-       * iterates over the child nodes.
-       */
-      public AbstractNode next()
-      {
-         if ( _hasDoneSelf )
-         {
-            return _childIt.next();
-         }
-         else
-         {
-            _hasDoneSelf = true;
-            return _node;
-         }
-      }
-
-      /**
-       * Not supported.
-       */
-      public void remove()
-      {
-      }
-   }
-
-   /**
-    * Returns an empty iterator.
-    */
-   public Iterator<AbstractNode> iterator()
-   {
-      return new TreeIterator( this );
-   }
-   
    /**
     * Returns true if the object represents the same subtree as this object.
     */
