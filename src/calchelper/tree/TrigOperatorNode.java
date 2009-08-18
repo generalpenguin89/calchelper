@@ -121,12 +121,16 @@ abstract class TrigOperatorNode extends OperatorNode
          {
             // Make a node to represent the new coefficient
             Polynomial poly = (Polynomial)getArgument();
-            Set<Double> keys = poly.getMap().keySet();
-            Collection<Double> values = poly.getMap().values();
-            AbstractNode coef = NodeFactory.createConstantNode( 1 );
-            AbstractNode cos = NodeFactory.createNode( "cos", coef, getArgument() );
-            AbstractNode invCos = cos.inverse();
-            return invCos;
+            if( poly.termCount() == 1)
+            {
+               Set<Double> keys = poly.getMap().keySet();
+               Collection<Double> values = poly.getMap().values();
+               AbstractNode coef = NodeFactory.createConstantNode( 1 );//values[1] / keys[1]
+               AbstractNode cos = NodeFactory.createNode( "cos", coef, getArgument() );
+               AbstractNode invCos = cos.inverse();
+               return invCos;
+            }
+            return null;
          }
          return null;
       }
