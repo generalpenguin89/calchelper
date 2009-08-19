@@ -59,10 +59,10 @@ public class IntegrationTest
    }
    
    //sine
-   @Test public void test3() throws ExpressionException
+   @Test public void sinTestOne() throws ExpressionException
    {
       // Declare expected results
-      AbstractNode expected = getTreeRoot( "-1 * \\cos{x}" );
+      AbstractNode expected = getTreeRoot( "\\-cos{x}" );
       
       // Get actual results 
       AbstractNode actual = getTreeRoot( "\\sin{x}" ).integrate();
@@ -71,7 +71,7 @@ public class IntegrationTest
    }
    
    //cos
-   @Test public void test4() throws ExpressionException
+   @Test public void cosTestOne() throws ExpressionException
    {
       // Declare expected results
       AbstractNode expected = getTreeRoot( "\\sin{x}" );

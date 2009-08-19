@@ -123,9 +123,15 @@ abstract class TrigOperatorNode extends OperatorNode
             Polynomial poly = (Polynomial)getArgument();
             if( poly.termCount() == 1)
             {
+               //Get the key
                Set<Double> keys = poly.getMap().keySet();
+               Object keyArray[] = keys.toArray();
+
+               //Get the value
                Collection<Double> values = poly.getMap().values();
-               AbstractNode coef = NodeFactory.createConstantNode( 1 );//values[1] / keys[1]
+               Object valuesArray[] = values.toArray();
+
+               AbstractNode coef = NodeFactory.createConstantNode( (Double)valuesArray[0] / (Double)keyArray[0] );
                AbstractNode cos = NodeFactory.createNode( "cos", coef, getArgument() );
                AbstractNode invCos = cos.inverse();
                return invCos;
@@ -170,13 +176,25 @@ abstract class TrigOperatorNode extends OperatorNode
 
       public AbstractNode integrate()
       {
-         // FIXME Chance coef
          if( isDerivative() )
          {
             // Make a node to represent the new coefficient
-            AbstractNode coef = NodeFactory.createConstantNode( 1 );
-            AbstractNode sin = NodeFactory.createNode( "sin", coef, getArgument() );
-            return sin;
+            Polynomial poly = (Polynomial)getArgument();
+            if( poly.termCount() == 1)
+            {
+               //Get the key
+               Set<Double> keys = poly.getMap().keySet();
+               Object keyArray[] = keys.toArray();
+
+               //Get the value
+               Collection<Double> values = poly.getMap().values();
+               Object valuesArray[] = values.toArray();
+
+               AbstractNode coef = NodeFactory.createConstantNode( (Double)valuesArray[0] / (Double)keyArray[0] );
+               AbstractNode sin = NodeFactory.createNode( "sin", coef, getArgument() );
+               return sin;
+            }
+            return null;
          }
          return null;
       }
