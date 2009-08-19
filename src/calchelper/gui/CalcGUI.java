@@ -23,7 +23,7 @@ public class CalcGUI extends JPanel
     */
    private static final long serialVersionUID = 1L;
 //---------------- instance variables ---------------------------
-  private Container       _parent;
+  private JFrame       _parent;
   private ExpressionTree   _tree;
   private TreeFactory      _treeFactory;
   private JTextField      _textField;
@@ -33,23 +33,21 @@ public class CalcGUI extends JPanel
    * Container parent of the control panel is passed as an argument
    * along with the application object.
    */
-  public CalcGUI( Container parent ) 
+  public CalcGUI( JFrame parent ) 
   {
     super ( new BorderLayout() );
     _guiProcessor = new GUIProcessor( this );
     // for using the jframe for whatever reason
     set_parent( parent );
     
-    //create the menu
-    JPanel menuPanel = new JPanel();
-    menuPanel.add( makeMenu() );
+    makeMenu();
     
     //create Buttons in the North
     JPanel    buttonPanel = new JPanel();
     buttonPanel.add( makeButtonMenu() );
 
     JPanel center = new JPanel( new BorderLayout() );
-    JLabel enter = new JLabel( "                    "
+    JLabel enter = new JLabel( "         "
     + "Enter an equation: " );
     center.add( enter, BorderLayout.NORTH );
     JPanel centerOfCenter = new JPanel( new FlowLayout() );
@@ -58,20 +56,19 @@ public class CalcGUI extends JPanel
     centerOfCenter.add( _textField );
     JButton browse = new JButton("Browse .." );
     browse.addActionListener( new ButtonListener( 3, this ) );
-    centerOfCenter.add( browse );
+    //centerOfCenter.add( browse );
     
     // adds everything to the GUI
     this.add( buttonPanel, BorderLayout.SOUTH );
     this.add( center, BorderLayout.CENTER );
-    this.add( menuPanel, BorderLayout.NORTH );
 
   }
 
   //-------------------- makeMenu() ------------------------------------
-  private Component makeMenu()
+  private Component makeMenu( )
   {
     JMenuBar bar = new JMenuBar();
-
+    
     JMenu file = new JMenu("File");
       JMenuItem exit = new JMenuItem("Exit");
       exit.addActionListener( new JMenuItemListener( 'q', this ) );
@@ -105,7 +102,7 @@ public class CalcGUI extends JPanel
     bar.add(edit);
     bar.add(tools);
     bar.add(help);
-
+    _parent.setJMenuBar( bar );
     return bar;
   }
    //------------------- printTree -------------------------------------
@@ -145,7 +142,7 @@ public class CalcGUI extends JPanel
    /**
     * @param _parent the _parent to set
     */
-   public void set_parent( Container _parent )
+   public void set_parent( JFrame _parent )
    {
       this._parent = _parent;
    }

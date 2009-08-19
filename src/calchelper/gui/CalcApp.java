@@ -15,6 +15,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 
 public class CalcApp extends JFrame
 {
@@ -31,11 +32,9 @@ public class CalcApp extends JFrame
 		JFrame.setDefaultLookAndFeelDecorated( true );
 		this.setBackground( Color.WHITE );
 		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-		
 		_calcGUI = new CalcGUI( this );
 		this.add( _calcGUI );
-		
-		this.setSize( new Dimension( 300, 200 ) );
+		this.setSize( new Dimension( 300, 170 ) );
 		this.setVisible( true );
 	}
 	
