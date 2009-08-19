@@ -373,7 +373,8 @@ abstract class TrigOperatorNode extends OperatorNode
       
       public AbstractNode derive()
       {
-         //Create blank polynomial
+         //FIXME: I did it wrong, being eliminated from this release
+         /*//Create blank polynomial
          Polynomial poly = new Polynomial();
          
          //Check to see if argument is simple variable
@@ -383,7 +384,9 @@ abstract class TrigOperatorNode extends OperatorNode
             poly.getMap().put( -1.0, getCoefficientTerm().getValue() );
          }
          
-         return poly;
+         return poly;*/
+         
+         return null;
       }
 
       public AbstractNode integrate()
