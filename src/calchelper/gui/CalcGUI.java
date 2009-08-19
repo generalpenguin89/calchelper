@@ -49,9 +49,9 @@ public class CalcGUI extends JPanel
     JPanel center = new JPanel( new BorderLayout() );
     JLabel enter = new JLabel( "         "
     + "Enter an equation: " );
-    center.add( enter, BorderLayout.NORTH );
+    center.add( enter, BorderLayout.CENTER );
     JPanel centerOfCenter = new JPanel( new FlowLayout() );
-    center.add( centerOfCenter, BorderLayout.CENTER );
+    center.add( centerOfCenter, BorderLayout.SOUTH );
     _textField = new JTextField(20);
     centerOfCenter.add( _textField );
     JButton browse = new JButton("Browse .." );
@@ -86,10 +86,10 @@ public class CalcGUI extends JPanel
     JMenu tools = new JMenu("Tools");
       JMenuItem print = new JMenuItem( "Print Tree" );
       print.addActionListener( new JMenuItemListener( 'p', this ) );
-      JMenuItem show = new JMenuItem( "Show Tree" );
-      show.addActionListener( new JMenuItemListener( 's', this ) );
+     // JMenuItem show = new JMenuItem( "Show Tree" );
+     // show.addActionListener( new JMenuItemListener( 's', this ) );
       tools.add( print );
-      tools.add( show );
+     // tools.add( show );
     JMenu help = new JMenu("Help");
       JMenuItem latex = new JMenuItem( "Show LaTeX commands" );
       latex.addActionListener( new JMenuItemListener( 'l', this ) );
