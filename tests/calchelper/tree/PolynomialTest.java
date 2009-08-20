@@ -300,4 +300,22 @@ public class PolynomialTest
       
       assertEquals( expected, actual.getMap() );
    }
+   
+   @Test public void equalsIgnoreTest() throws ExpressionException
+   {
+      Polynomial poly1 = unitTest( "x + x^2" );
+      Polynomial poly2 = unitTest( "3x + 5x^2" );
+      
+      assertTrue( poly1.equalsIgnoreCoefficients( poly2 ) );
+      assertTrue( poly2.equalsIgnoreCoefficients( poly1 ) );
+   }
+   
+   @Test public void equalsIgnoreTestFalse() throws ExpressionException
+   {
+      Polynomial poly1 = unitTest( "x + x^2 + 5x^3" );
+      Polynomial poly2 = unitTest( "3x + 5x^2" );
+      
+      assertFalse( poly1.equalsIgnoreCoefficients( poly2 ) );
+      assertFalse( poly2.equalsIgnoreCoefficients( poly1 ) );
+   }
 }
