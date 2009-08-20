@@ -181,7 +181,7 @@ abstract class TrigOperatorNode extends OperatorNode
             // Make a node to represent the new coefficient
             Polynomial poly = (Polynomial)getArgument();
             if( poly.termCount() == 1)
-            {
+            {               
                //Get the key
                Set<Double> keys = poly.getMap().keySet();
                Object keyArray[] = keys.toArray();
@@ -442,12 +442,10 @@ abstract class TrigOperatorNode extends OperatorNode
     * Check to see if coefficient is the derivative of the argument
     */
    public boolean isDerivative()
-   {
-      //FIXME: This one might be tough with all the different kinds of nodes...
-      
+   {      
       // Get the derivative of the argument
       AbstractNode argDeriv = getArgument().derive();
-      
+
       //Check to see if the same powers are involved
       if( argDeriv.equalsIgnoreCoefficients( getCoefficientTerm() ) )
          return true;
