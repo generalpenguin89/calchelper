@@ -62,7 +62,7 @@ public class IntegrationTest
    @Test public void sinTestOne() throws ExpressionException
    {
       // Declare expected results
-      AbstractNode expected = getTreeRoot( "\\-cos{x}" );
+      AbstractNode expected = getTreeRoot( "-1 * \\cos{x}" );
       
       // Get actual results 
       AbstractNode actual = getTreeRoot( "\\sin{x}" ).integrate();
@@ -80,5 +80,17 @@ public class IntegrationTest
       AbstractNode actual = getTreeRoot( "\\cos{x}" ).integrate();
       
       assertEquals( expected, actual );
+   }
+   
+   //sine
+   @Test public void sinTestTwo() throws ExpressionException
+   {
+      // Declare expected results
+      AbstractNode expected = getTreeRoot( "-0.5 * \\cos{x ^ 2}" );
+      
+      // Get actual results 
+      AbstractNode actual = getTreeRoot( "x * \\sin{x ^ 2}" ).integrate();
+      
+      assertEquals( expected, actual ); 
    }
 }
