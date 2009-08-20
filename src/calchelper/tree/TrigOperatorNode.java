@@ -321,12 +321,26 @@ abstract class TrigOperatorNode extends OperatorNode
       }
       public AbstractNode integrate()
       {
-         // FIXME Unfinished
-         if( isDerivative() )
+         if( isDerivative() && getPower().toString().equals( "2.0" ) )
          {
+            Polynomial poly = (Polynomial)getArgument();
             // Make a node to represent the new coefficient
-            //AbstractNode coef = NodeFactory.createConstantNode(  )
-            //AbstractNode sin = NodeFactory.createNode( "sin", coef, getArgument() );
+            if( poly.termCount() == 1)
+            {               
+               //Get the key
+               Set<Double> keys = poly.getMap().keySet();
+               Object keyArray[] = keys.toArray();
+
+               //Get the value
+               Collection<Double> values = poly.getMap().values();
+               Object valuesArray[] = values.toArray();
+               
+               AbstractNode coef = NodeFactory.createConstantNode( (Double)valuesArray[0] /
+                        (Double)keyArray[0] );
+               AbstractNode tan = NodeFactory.createNode( "tan", coef, getArgument() );
+               return tan;
+            }
+            return null;
          }
          return null;
       }
@@ -364,12 +378,26 @@ abstract class TrigOperatorNode extends OperatorNode
    
       public AbstractNode integrate()
       {
-         // FIXME Unfinished
-         if( isDerivative() )
+         if( isDerivative() && getPower().toString().equals( "2.0" ) )
          {
+            Polynomial poly = (Polynomial)getArgument();
             // Make a node to represent the new coefficient
-            //AbstractNode coef = NodeFactory.createConstantNode(  )
-            //AbstractNode sin = NodeFactory.createNode( "sin", coef, getArgument() );
+            if( poly.termCount() == 1)
+            {               
+               //Get the key
+               Set<Double> keys = poly.getMap().keySet();
+               Object keyArray[] = keys.toArray();
+
+               //Get the value
+               Collection<Double> values = poly.getMap().values();
+               Object valuesArray[] = values.toArray();
+               
+               AbstractNode coef = NodeFactory.createConstantNode( (Double)valuesArray[0] /
+                        (Double)keyArray[0] );
+               AbstractNode cot = NodeFactory.createNode( "cot", coef, getArgument() );
+               return cot.inverse();
+            }
+            return null;
          }
          return null;
       }

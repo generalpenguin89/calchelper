@@ -82,7 +82,7 @@ public class IntegrationTest
       assertEquals( expected, actual );
    }
    
-   //sine
+   //sine 2
    @Test public void sinTestTwo() throws ExpressionException
    {
       // Declare expected results
@@ -90,6 +90,30 @@ public class IntegrationTest
       
       // Get actual results 
       AbstractNode actual = getTreeRoot( "x * \\sin{x ^ 2}" ).integrate();
+      
+      assertEquals( expected, actual ); 
+   }
+   
+   //sec^2
+   @Test public void secSqTest() throws ExpressionException
+   {
+      // Declare expected results
+      AbstractNode expected = getTreeRoot( "0.5 * \\tan{x ^ 2}" );
+      
+      // Get actual results 
+      AbstractNode actual = getTreeRoot( "x * \\sec{x ^ 2}" ).integrate();
+      
+      assertEquals( expected, actual ); 
+   }
+   
+   //csc^2
+   @Test public void cscSqTest() throws ExpressionException
+   {
+      // Declare expected results
+      AbstractNode expected = getTreeRoot( "-0.5 * \\cot{x ^ 2}" );
+      
+      // Get actual results 
+      AbstractNode actual = getTreeRoot( "x * \\csc{x ^ 2}" ).integrate();
       
       assertEquals( expected, actual ); 
    }
