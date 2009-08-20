@@ -106,7 +106,7 @@ public class TreeFactory
          parseToken( token.substring( argPos.getIndex(), 
                   token.indexOf( "}", argPos.getIndex() ) + 1 ) );
          
-         if ( powPos.getIndex() != -1 )
+         if ( powPos.getIndex() >= 0 && powPos.getIndex() < argPos.getIndex() )
          {
             parseToken( token.substring( 
                      powPos.getIndex() + 1, argPos.getIndex() ) );
