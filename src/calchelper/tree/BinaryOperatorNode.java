@@ -162,14 +162,15 @@ abstract class BinaryOperatorNode extends OperatorNode
        */
       public AbstractNode integrate( )
       {
-         //FIXME: Alters this object.
          //Integrate Left side
-         this.getLeft().integrate();
+         AbstractNode l = this.getLeft().integrate();
          
          //Integrate Right side
-         this.getRight().integrate();
+         AbstractNode r = this.getRight().integrate();
          
-         return this;
+         //Create and return a new AbstractNode
+         AbstractNode plus = NodeFactory.createNode("+", l, r );
+         return plus;
       }
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       
@@ -265,7 +266,7 @@ abstract class BinaryOperatorNode extends OperatorNode
       	 * Use Integration by parts
       	 */
          
-         return this;
+         throw new UnsupportedOperationException( this.toString() + "cannot be integrated" );
       }
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       
@@ -346,12 +347,14 @@ abstract class BinaryOperatorNode extends OperatorNode
       public AbstractNode integrate( )
       {
          //Integrate Left side
-         this.getLeft().integrate();
+         AbstractNode l = this.getLeft().integrate();
          
          //Integrate Right side
-         this.getRight().integrate();
+         AbstractNode r = this.getRight().integrate();
          
-         return this;
+         //Create and return a new AbstractNode
+         AbstractNode minus = NodeFactory.createNode("-", l, r );
+         return minus;
       }
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       
@@ -465,7 +468,7 @@ abstract class BinaryOperatorNode extends OperatorNode
             }
          }*/
          
-         return this;
+         throw new UnsupportedOperationException( this.toString() + "cannot be integrated" );
       }
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       
@@ -565,7 +568,7 @@ abstract class BinaryOperatorNode extends OperatorNode
          }
          //********************************************
          
-         return this;
+         throw new UnsupportedOperationException( this.toString() + "cannot be integrated" );
       }
       //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       
