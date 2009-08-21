@@ -88,15 +88,18 @@ public class GUIProcessor
 	// showLaTeX() -- Syntax guide for CalcHelper via LaTeX command list
 	public void showLaTeX()
 	{
-	   JOptionPane.showMessageDialog( _theGUI, "Guide text to be written \n" +
-	   "poolside. Tomrrow.", "Syntax Guide", 1);
+	   JOptionPane.showMessageDialog( _theGUI,
+	                                  "Basic operations:  - * / + \n" +
+	                                  "\n Polynomials: PEMDAS priority system using parenthesis" +
+	                                  "\n\n Trigonometric symbols:  \\sec{ polynomial operation }" +
+	                                  "\n\n Example input: ( -2.0 * \\csc{ 2 * x } ) * ( 1.0 * \\cot{ 2 * x } )", "Syntax Guide", 1);
 	}
 	
 	// showInfo() -- Shows program's licensing and author information.
 	public void showInfo()
 	{
-	   JOptionPane.showMessageDialog( _theGUI, "Copyrighted under the GNU opensource" +
-	   		" \nlicense agreement. This product may be used or edited by anyone " +
-	   		"\nas long as proper citation and coding conventions are followed." );
+	   JOptionPane.showMessageDialog( _theGUI, "Visit http://www.gnu.org/licenses/gpl.txt for licensing information." +
+	   		                                  "\n   CalcHelper Developers:\n     Patrick MacArthur\n     Ben Decato\n" +
+	   		                                  "     Jake Schwartz\n     Will Rideout");
 	}
 }

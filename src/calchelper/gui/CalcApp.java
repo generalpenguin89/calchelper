@@ -13,9 +13,7 @@ package calchelper.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
 
 public class CalcApp extends JFrame
 {
@@ -41,6 +39,6 @@ public class CalcApp extends JFrame
 	// ------------------ main ------------------------------------------
 	public static void main( String[] args )
 	{
-		theApp = new CalcApp( "CalcHelper ALPHA", args );
+		theApp = new CalcApp( "CalcHelper v1.0rc1", args );
 	}
 }
