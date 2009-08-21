@@ -101,7 +101,7 @@ public class IntegrationTest
       AbstractNode expected = getTreeRoot( "0.5 * \\tan{x ^ 2}" );
       
       // Get actual results 
-      AbstractNode actual = getTreeRoot( "x * \\sec{x ^ 2}" ).integrate();
+      AbstractNode actual = getTreeRoot( "x * \\sec^2{x ^ 2}" ).integrate();
       
       assertEquals( expected, actual ); 
    }
@@ -113,7 +113,7 @@ public class IntegrationTest
       AbstractNode expected = getTreeRoot( "-0.5 * \\cot{x ^ 2}" );
       
       // Get actual results 
-      AbstractNode actual = getTreeRoot( "x * \\csc{x ^ 2}" ).integrate();
+      AbstractNode actual = getTreeRoot( "x * \\csc^2{x ^ 2}" ).integrate();
       
       assertEquals( expected, actual ); 
    }
