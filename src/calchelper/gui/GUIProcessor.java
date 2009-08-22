@@ -13,6 +13,8 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -98,8 +100,45 @@ public class GUIProcessor
 	// showInfo() -- Shows program's licensing and author information.
 	public void showInfo()
 	{
-	   JOptionPane.showMessageDialog( _theGUI, "Visit http://www.gnu.org/licenses/gpl.txt for licensing information." +
-	   		                                  "\n   CalcHelper Developers:\n     Patrick MacArthur\n     Ben Decato\n" +
-	   		                                  "     Jake Schwartz\n     Will Rideout");
+	   StringBuilder copyleftNotice = new StringBuilder();
+	   copyleftNotice.append( 
+"This program is free software: you can redistribute it and/or modify\n" );
+      copyleftNotice.append(
+"it under the terms of the GNU General Public License as published by\n" );
+      copyleftNotice.append(
+"the Free Software Foundation, either version 3 of the License, or\n" );
+      copyleftNotice.append(
+"(at your option) any later version.\n\n" );
+      copyleftNotice.append(
+"This program is distributed in the hope that it will be useful,\n" );
+      copyleftNotice.append(
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n" );
+      copyleftNotice.append(
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n" );
+      copyleftNotice.append(
+"GNU General Public License for more details.\n\n" );
+      copyleftNotice.append(
+"You should have received a copy of the GNU General Public License\n" );
+      copyleftNotice.append(
+"along with this program.  If not, see <http://www.gnu.org/licenses/>.\n\n" );
+      
+      
+      ArrayList<String> developerList = new ArrayList<String>();
+      developerList.add( "Patrick MacArthur" );
+      developerList.add( "Ben Decato" );
+      developerList.add( "Jake Schwartz" );
+      developerList.add( "Will Rideout" );
+      
+      StringBuilder developers = new StringBuilder();
+      developers.append( "CalcHelper Developers:" );
+      for( String developer : developerList )
+      {
+         developers.append( "\n     " ).append( developer );
+      }
+
+	   JOptionPane.showMessageDialog( _theGUI,                      //parent
+	            copyleftNotice.toString() + developers.toString(),  //message
+	            "About " + CalcApp.APP_NAME + " " + CalcApp.VERSION, //title
+	            JOptionPane.INFORMATION_MESSAGE );                  //type
 	}
 }
