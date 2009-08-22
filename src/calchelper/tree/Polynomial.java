@@ -435,10 +435,14 @@ class Polynomial extends AbstractNode implements Cloneable
       // For each entry in the copy
       for ( Map.Entry<Double, Double> entry : getMap().entrySet() )
       {
-         // Put a new entry in (this represents each monomial being integrated)
-         double exp = entry.getKey();
-         double co = entry.getValue();
-         derivative.getMap().put( exp - 1d, co * exp );
+         if ( entry.getKey() != 0 )
+         {
+            // Put a new entry in (this represents each monomial being
+            // integrated)
+            double exp = entry.getKey();
+            double co = entry.getValue();
+            derivative.getMap().put( exp - 1d, co * exp );
+         }
       }
       
       return derivative;
