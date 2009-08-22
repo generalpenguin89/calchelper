@@ -136,9 +136,9 @@ abstract class TrigOperatorNode extends OperatorNode
                AbstractNode invCos = cos.inverse();
                return invCos;
             }
-            throw new UnsupportedOperationException( this.toString() + "cannot be integrated" );
+            throw new UnsupportedOperationException( this.getStringValue() + "cannot be integrated" );
          }
-         throw new UnsupportedOperationException( this.toString() + "cannot be integrated" );
+         throw new UnsupportedOperationException( this.getStringValue() + "cannot be integrated" );
       }
    }
    
@@ -194,9 +194,9 @@ abstract class TrigOperatorNode extends OperatorNode
                AbstractNode sin = NodeFactory.createNode( "sin", coef, getArgument() );
                return sin;
             }
-            throw new UnsupportedOperationException( this.toString() + "cannot be integrated" );
+            throw new UnsupportedOperationException( this.getStringValue() + "cannot be integrated" );
          }
-         throw new UnsupportedOperationException( this.toString() + "cannot be integrated" );
+         throw new UnsupportedOperationException( this.getStringValue() + "cannot be integrated" );
       }
    }
    
@@ -239,9 +239,9 @@ abstract class TrigOperatorNode extends OperatorNode
             // Make a node to represent the new coefficient
             //AbstractNode coef = NodeFactory.createConstantNode(  )
             //AbstractNode sin = NodeFactory.createNode( "sin", coef, getArgument() );
-            throw new UnsupportedOperationException( this.toString() + "cannot be integrated" );
+            throw new UnsupportedOperationException( this.getStringValue() + "cannot be integrated" );
          }
-         throw new UnsupportedOperationException( this.toString() + "cannot be integrated" );
+         throw new UnsupportedOperationException( this.getStringValue() + "cannot be integrated" );
       }
    }
    
@@ -283,9 +283,9 @@ abstract class TrigOperatorNode extends OperatorNode
             // Make a node to represent the new coefficient
             //AbstractNode coef = NodeFactory.createConstantNode(  )
             //AbstractNode sin = NodeFactory.createNode( "sin", coef, getArgument() );
-            throw new UnsupportedOperationException( this.toString() + "cannot be integrated" );
+            throw new UnsupportedOperationException( this.getStringValue() + "cannot be integrated" );
          }
-         throw new UnsupportedOperationException( this.toString() + "cannot be integrated" );
+         throw new UnsupportedOperationException( this.getStringValue() + "cannot be integrated" );
       }
    }
    
@@ -340,9 +340,9 @@ abstract class TrigOperatorNode extends OperatorNode
                AbstractNode tan = NodeFactory.createNode( "tan", coef, getArgument() );
                return tan;
             }
-            throw new UnsupportedOperationException( this.toString() + "cannot be integrated" );
+            throw new UnsupportedOperationException( this.getStringValue() + "cannot be integrated" );
          }
-         throw new UnsupportedOperationException( this.toString() + "cannot be integrated" );
+         throw new UnsupportedOperationException( this.getStringValue() + "cannot be integrated" );
       }
    }
    /**
@@ -397,9 +397,9 @@ abstract class TrigOperatorNode extends OperatorNode
                AbstractNode cot = NodeFactory.createNode( "cot", coef, getArgument() );
                return cot.inverse();
             }
-            throw new UnsupportedOperationException( this.toString() + "cannot be integrated" );
+            throw new UnsupportedOperationException( this.getStringValue() + "cannot be integrated" );
          }
-         throw new UnsupportedOperationException( this.toString() + "cannot be integrated" );
+         throw new UnsupportedOperationException( this.getStringValue() + "cannot be integrated" );
       }
    }  
    
@@ -432,13 +432,13 @@ abstract class TrigOperatorNode extends OperatorNode
          
          return poly;*/
          
-         throw new UnsupportedOperationException( this.toString() + "cannot be derived" );
+         throw new UnsupportedOperationException( this.getStringValue() + "cannot be derived" );
       }
 
       public AbstractNode integrate()
       {
          // FIXME stub
-         throw new UnsupportedOperationException( this.toString() + "cannot be integrated" );
+         throw new UnsupportedOperationException( this.getStringValue() + "cannot be integrated" );
       }
    }
    
