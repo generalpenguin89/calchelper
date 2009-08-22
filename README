@@ -1,0 +1,35 @@
+CalcHelper v1.0
+
+A tool to calculate the derivative or integral of an algebraic expression.
+
+Development Team:
+Patrick MacArthur <pio3@unh.edu>
+Ben Decato <bec24@unh.edu>
+William Rideout <whd4@unh.edu>
+Jake Schwartz <jakehschwartz@gmail.com>
+
+Please e-mail all CalcHelper development-related questions and bug reports
+to the CalcHelper mailing list at calchelper-devel@lists.sourceforge.net.
+Patches are welcome and encouraged.
+
+
+Supported expressions in this version:
+* All polynomials
+* Natural log -- derivative only
+* sin, cos, sec^2, csc^2 -- both derivative and integral
+* sec, csc, tan, cot -- derivative only
+
+
+Installation:
+This program was written using the Sun Java Development Kit, version 1.6.  In
+order to run this program, you will need to download the Sun Java Runtime
+Environment, version 1.6, or an equivelent Java JRE, if you have not already.
+
+This program is distributed as a jar file that should be self-contained.  Just
+open the jar file and the program should run.  The source code is available on
+SourceForge either as a tarball or via our svn server:
+
+https://calchelper.svn.sourceforge.net/svnroot/calchelper
+
+The latest development version can be found in /trunk, and version 1.0 can be
+found at /tags/1.0.
