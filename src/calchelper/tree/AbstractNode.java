@@ -1,9 +1,28 @@
 /*
  * AbstractNode.java
+ *  
+ * Copyright 2009 Ben Decato, Patrick MacArthur, William Rideout, and
+ * Jake Schwartz
  * 
- * Based on code written for UNH CS416 Programming Assignment #9, Spring 2009.
+ * This class is based on code written for UNH CS416 Programming Assignment #9,
+ * Spring 2009.
+ * 
+ * This file is part of CalcHelper.
+ * 
+ * CalcHelper is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * CalcHelper is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with CalcHelper.  If not, see <http://www.gnu.org/licenses/>.
  */
-
+ 
 package calchelper.tree;
 
 import java.util.HashMap;

@@ -1,8 +1,23 @@
-/**
- * CalcGUI.java -- Graphical User Interface designed for testing and
- * using our derivative/integral solver.
+/*
+ * CalcGUI.java
  * 
- * @author Ben Decato
+ * Copyright 2009 Ben Decato, Patrick MacArthur, William Rideout, and
+ * Jake Schwartz
+ * 
+ * This file is part of CalcHelper.
+ * 
+ * CalcHelper is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * CalcHelper is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with CalcHelper.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package calchelper.gui;
@@ -16,6 +31,13 @@ import calchelper.tree.ExpressionException;
 import calchelper.tree.ExpressionTree;
 import calchelper.tree.TreeFactory;
 
+/**
+ * Graphical User Interface designed for testing and using our 
+ * derivative/integral solver.
+ * 
+ * @author Ben Decato
+ * @author Patrick MacArthur
+ */
 public class CalcGUI extends JPanel
 {
   /**
