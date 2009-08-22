@@ -190,7 +190,7 @@ public class CalcGUI extends JPanel
                   if ( rezult != null )
                   {
                      JOptionPane.showMessageDialog( _parent, rezult.toString(),
-                     "CalcHelper ALPHA" , 1);
+                              CalcApp.APP_NAME + " " + CalcApp.VERSION, 1);
                   }
                 }
                 catch( NullPointerException e )
@@ -218,7 +218,7 @@ public class CalcGUI extends JPanel
                   if ( result != null )
                   {
                      JOptionPane.showMessageDialog( _parent, result.toString(),
-                     "CalcHelper ALPHA" , 1);
+                              CalcApp.APP_NAME + " " + CalcApp.VERSION, 1);
                   }
                 }
                 catch( NullPointerException e )

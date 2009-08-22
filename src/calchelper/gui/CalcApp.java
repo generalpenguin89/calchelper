@@ -23,6 +23,10 @@ public class CalcApp extends JFrame
 	public String _fileName = "";
 	public static CalcApp theApp;
 	
+	//-----------------------version stuff ---------------------------
+   public final static String VERSION = "1.0rc1";
+   public final static String APP_NAME = "CalcHelper";
+	
 	// --------------------------- constructor -----------------------
 	public CalcApp( String title, String[] args )
 	{
@@ -39,6 +43,6 @@ public class CalcApp extends JFrame
 	// ------------------ main ------------------------------------------
 	public static void main( String[] args )
 	{
-		theApp = new CalcApp( "CalcHelper v1.0rc1", args );
+		theApp = new CalcApp( APP_NAME + " " + VERSION, args );
 	}
 }
