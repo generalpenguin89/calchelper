@@ -205,20 +205,22 @@ public class CalcGUI extends JPanel
                 }
                 catch ( ExpressionException e )
                 {
+                   String message = "Invalid equation.";
+                   JOptionPane.showMessageDialog( _parent, message,
+                            CalcApp.APP_NAME + " " + CalcApp.VERSION, 2 );
                 }
-                try
+                catch ( UnsupportedOperationException e )
                 {
+                   String message = "Unsupported operation.";
+                   JOptionPane.showMessageDialog( _parent, message,
+                            CalcApp.APP_NAME + " " + CalcApp.VERSION, 2 );
+                }
                   ExpressionTree rezult = _tree.derive();
                   if ( rezult != null )
                   {
                      JOptionPane.showMessageDialog( _parent, rezult.toString(),
                               CalcApp.APP_NAME + " " + CalcApp.VERSION, 1);
                   }
-                }
-                catch( NullPointerException e )
-                {
-                  System.err.println("Invalid entry.");
-                }
                 break;
              case 1:
                 String toIntegrate = "";
@@ -228,25 +230,24 @@ public class CalcGUI extends JPanel
                   _treeFactory = new TreeFactory( toIntegrate );
                   _tree = _treeFactory.buildTree();
                 }
-                catch (NullPointerException e )
-                {
-                }
                 catch ( ExpressionException e )
                 {
+                   String message = "Invalid equation.";
+                   JOptionPane.showMessageDialog( _parent, message,
+                            CalcApp.APP_NAME + " " + CalcApp.VERSION, 2 );
                 }
-                try
+                catch ( UnsupportedOperationException e )
                 {
+                   String message = "Unsupported operation.";
+                   JOptionPane.showMessageDialog( _parent, message,
+                            CalcApp.APP_NAME + " " + CalcApp.VERSION, 2 );
+                }
                   ExpressionTree result = _tree.integrate();
                   if ( result != null )
                   {
                      JOptionPane.showMessageDialog( _parent, result.toString(),
                               CalcApp.APP_NAME + " " + CalcApp.VERSION, 1);
                   }
-                }
-                catch( NullPointerException e )
-                {
-                  System.err.println("Invalid entry.");
-                }
                 break;
              case 2:
                 _parent.printTree();
