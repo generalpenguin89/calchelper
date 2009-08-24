@@ -45,7 +45,7 @@ public class CalcApp extends JFrame
 	public static CalcApp theApp;
 	
 	//-----------------------version stuff ---------------------------
-   public final static String VERSION = "1.0rc1";
+   public final static String VERSION = "svn-trunk";
    public final static String APP_NAME = "CalcHelper";
 	
 	// --------------------------- constructor -----------------------
