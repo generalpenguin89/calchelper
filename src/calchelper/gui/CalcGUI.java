@@ -140,7 +140,9 @@ public class CalcGUI extends JPanel
      }
      catch ( ExpressionException e )
      {
-        e.printStackTrace();
+        String message = "Invalid equation.";
+        JOptionPane.showMessageDialog( _parent, message,
+                 CalcApp.APP_NAME + " " + CalcApp.VERSION, 2 );
      }
    }
    //------------------- makeButtonMenu --------------------------------
@@ -202,6 +204,12 @@ public class CalcGUI extends JPanel
                   toDerive = _textField.getText();
                   _treeFactory = new TreeFactory( toDerive );
                   _tree = _treeFactory.buildTree();
+                  ExpressionTree rezult = _tree.derive();
+                  if ( rezult != null )
+                  {
+                     JOptionPane.showMessageDialog( _parent, rezult.toString(),
+                              CalcApp.APP_NAME + " " + CalcApp.VERSION, 1);
+                  }
                 }
                 catch ( ExpressionException e )
                 {
@@ -215,12 +223,7 @@ public class CalcGUI extends JPanel
                    JOptionPane.showMessageDialog( _parent, message,
                             CalcApp.APP_NAME + " " + CalcApp.VERSION, 2 );
                 }
-                  ExpressionTree rezult = _tree.derive();
-                  if ( rezult != null )
-                  {
-                     JOptionPane.showMessageDialog( _parent, rezult.toString(),
-                              CalcApp.APP_NAME + " " + CalcApp.VERSION, 1);
-                  }
+                  
                 break;
              case 1:
                 String toIntegrate = "";
@@ -229,6 +232,12 @@ public class CalcGUI extends JPanel
                   toIntegrate = _textField.getText();
                   _treeFactory = new TreeFactory( toIntegrate );
                   _tree = _treeFactory.buildTree();
+                  ExpressionTree result = _tree.integrate();
+                  if ( result != null )
+                  {
+                     JOptionPane.showMessageDialog( _parent, result.toString(),
+                              CalcApp.APP_NAME + " " + CalcApp.VERSION, 1);
+                  }
                 }
                 catch ( ExpressionException e )
                 {
@@ -242,12 +251,7 @@ public class CalcGUI extends JPanel
                    JOptionPane.showMessageDialog( _parent, message,
                             CalcApp.APP_NAME + " " + CalcApp.VERSION, 2 );
                 }
-                  ExpressionTree result = _tree.integrate();
-                  if ( result != null )
-                  {
-                     JOptionPane.showMessageDialog( _parent, result.toString(),
-                              CalcApp.APP_NAME + " " + CalcApp.VERSION, 1);
-                  }
+                  
                 break;
              case 2:
                 _parent.printTree();
