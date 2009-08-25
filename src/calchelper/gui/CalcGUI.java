@@ -105,12 +105,12 @@ public class CalcGUI extends JPanel
       edit.add( cut );
       edit.add( copy );
       edit.add( paste );
-    JMenu tools = new JMenu("Tools");
-      JMenuItem print = new JMenuItem( "Print Tree" );
-      print.addActionListener( new JMenuItemListener( 'p', this ) );
+   // JMenu tools = new JMenu("Tools");
+   //   JMenuItem print = new JMenuItem( "Print Tree" );
+   //   print.addActionListener( new JMenuItemListener( 'p', this ) );
      // JMenuItem show = new JMenuItem( "Show Tree" );
      // show.addActionListener( new JMenuItemListener( 's', this ) );
-      tools.add( print );
+   //   tools.add( print );
      // tools.add( show );
     JMenu help = new JMenu("Help");
       JMenuItem latex = new JMenuItem( "Show LaTeX commands" );
@@ -122,7 +122,7 @@ public class CalcGUI extends JPanel
     
     bar.add(file);
     bar.add(edit);
-    bar.add(tools);
+   // bar.add(tools);
     bar.add(help);
     _parent.setJMenuBar( bar );
     return bar;
@@ -149,7 +149,7 @@ public class CalcGUI extends JPanel
    private Component makeButtonMenu()
    {
       // JPanel defaults to FlowLayout
-      String[] labels = { "Derive", "Integrate", "Print" };
+      String[] labels = { "Derive", "Integrate" };
 
       JPanel bMenu = new JPanel( new FlowLayout( )); 
       JButton button;
