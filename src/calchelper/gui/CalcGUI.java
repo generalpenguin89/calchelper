@@ -213,13 +213,13 @@ public class CalcGUI extends JPanel
                 }
                 catch ( ExpressionException e )
                 {
-                   String message = "Invalid equation.";
+                   String message = "Invalid equation: " + e.getMessage();
                    JOptionPane.showMessageDialog( _parent, message,
                             CalcApp.APP_NAME + " " + CalcApp.VERSION, 2 );
                 }
                 catch ( UnsupportedOperationException e )
                 {
-                   String message = "Unsupported operation.";
+                   String message = "Unsupported operation: " + e.getMessage();
                    JOptionPane.showMessageDialog( _parent, message,
                             CalcApp.APP_NAME + " " + CalcApp.VERSION, 2 );
                 }
@@ -241,13 +241,13 @@ public class CalcGUI extends JPanel
                 }
                 catch ( ExpressionException e )
                 {
-                   String message = "Invalid equation.";
+                   String message = "Invalid equation: " + e.getMessage();
                    JOptionPane.showMessageDialog( _parent, message,
                             CalcApp.APP_NAME + " " + CalcApp.VERSION, 2 );
                 }
                 catch ( UnsupportedOperationException e )
                 {
-                   String message = "Unsupported operation.";
+                   String message = "Unsupported operation: " + e.getMessage();
                    JOptionPane.showMessageDialog( _parent, message,
                             CalcApp.APP_NAME + " " + CalcApp.VERSION, 2 );
                 }
