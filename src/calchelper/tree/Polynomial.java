@@ -336,6 +336,11 @@ class Polynomial extends AbstractNode implements Cloneable
    {
       if ( isValid() )
       {
+         if ( termCount() == 0 )
+         {
+            return "0";
+         }
+         
          ArrayList<String> strList = new ArrayList<String>();
          for ( Map.Entry<Double, Double> entry : getMap().entrySet() )
          {
