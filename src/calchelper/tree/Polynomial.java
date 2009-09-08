@@ -286,9 +286,16 @@ class Polynomial extends AbstractNode implements Cloneable
       }
       // TODO: Add error-checking
       
-      for ( Map.Entry<Double, Double> entry : poly.getMap().entrySet() )
+      if ( poly.isValid() )
       {
-         merge( entry.getKey(), entry.getValue() * constant );
+         for ( Map.Entry<Double, Double> entry : poly.getMap().entrySet() )
+         {
+            merge( entry.getKey(), entry.getValue() * constant );
+         }
+      }
+      else
+      {
+         this._isValid = false;
       }
    }
    
