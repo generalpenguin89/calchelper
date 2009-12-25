@@ -22,7 +22,6 @@
 package calchelper.tree;
 
 import java.util.ArrayList;
-//import java.util.Map;
 import java.util.Collection;
 import java.util.Set;
 
@@ -36,7 +35,7 @@ import java.util.Set;
  */
 abstract class TrigOperatorNode extends OperatorNode
 {  
-   /**
+   /*
     * Implementation notes:
     *
     * _children.get( 0 ) : left node / coefficient
@@ -184,7 +183,7 @@ abstract class TrigOperatorNode extends OperatorNode
          
          AbstractNode mult = NodeFactory.createNode("*",coef, arg.derive());
          
-         //the sine node... we might want this to be labled with an '-'
+         //the sine node... we might want this to be labeled with an '-'
          sin = NodeFactory.createNode("sin", mult, arg).inverse();
          
          sin.simplify();

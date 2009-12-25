@@ -52,9 +52,9 @@ class Polynomial extends AbstractNode implements Cloneable
    }
    
    /**
-    * Constructs a polynomial from the given node.
-    *
-    * @param node The node to convert to a polynomial.
+    * Creates a copy of the given polynomial.
+    * 
+    * @param poly The polynomial to copy
     */
    protected Polynomial( Polynomial poly )
    {

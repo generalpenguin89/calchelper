@@ -33,7 +33,7 @@ class NodeFactory
    /**
     * Creates a binary operator node based on the string given.
     *
-    * @param type The type of operator.
+    * @param op The type of operator.
     * @param left The left operand.
     * @param right The right operand.
     *

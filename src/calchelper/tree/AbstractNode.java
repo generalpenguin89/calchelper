@@ -22,8 +22,6 @@
  
 package calchelper.tree;
 
-import java.util.HashMap;
-
 /**
  * A base class for all expression tree node types.
  *
