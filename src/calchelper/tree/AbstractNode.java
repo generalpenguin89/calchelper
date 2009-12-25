@@ -1,9 +1,6 @@
 /*
  * AbstractNode.java
  *  
- * Copyright 2009 Ben Decato, Patrick MacArthur, William Rideout, and
- * Jake Schwartz
- * 
  * This class is based on code written for UNH CS416 Programming Assignment #9,
  * Spring 2009.
  * 

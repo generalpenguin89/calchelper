@@ -1,9 +1,6 @@
 /*
  * NodeFactory
  * 
- * Copyright 2009 Ben Decato, Patrick MacArthur, William Rideout, and
- * Jake Schwartz
- * 
  * This file is part of CalcHelper.
  * 
  * CalcHelper is free software: you can redistribute it and/or modify

@@ -1,9 +1,6 @@
 /*
  * CalcApp.java
  * 
- * Copyright 2009 Ben Decato, Patrick MacArthur, William Rideout, and
- * Jake Schwartz
- * 
  * This file is part of CalcHelper.
  * 
  * CalcHelper is free software: you can redistribute it and/or modify
@@ -22,48 +19,28 @@
 
 package calchelper.gui;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import javax.swing.JFrame;
 
 /**
- * Main application class for a simple text editor
- * with new, open, save, word count, font, and size options.
  * 
- * Possible future editions will include margin changes, print
- * functionality, and anything else I can come up with.
  * 
  * @author Ben Decato
  * @author Patrick MacArthur
  */
-public class CalcApp extends JFrame
+public class CalcApp
 {
-	private static final long serialVersionUID = 1L;
-	// ---------------------- instance variables ----------------------
-	private CalcGUI _calcGUI;
-	public String _fileName = "";
-	public static CalcApp theApp;
-	
-	//-----------------------version stuff ---------------------------
+   // ----------------------- version stuff ---------------------------
    public final static String VERSION = "svn-trunk";
    public final static String APP_NAME = "CalcHelper";
-	
-	// --------------------------- constructor -----------------------
-	public CalcApp( String title, String[] args )
-	{
-		super( title );
-		JFrame.setDefaultLookAndFeelDecorated( true );
-		this.setBackground( Color.WHITE );
-		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-		_calcGUI = new CalcGUI( this );
-		this.add( _calcGUI );
-		this.setSize( new Dimension( 300, 170 ) );
-		this.setVisible( true );
-	}
-	
-	// ------------------ main ------------------------------------------
-	public static void main( String[] args )
-	{
-		theApp = new CalcApp( APP_NAME + " " + VERSION, args );
-	}
+   
+   // ------------------ main -----------------------------------------
+   public static void main( String[] args )
+   {
+      JFrame frame = new JFrame( APP_NAME + " " + VERSION );
+      frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+      CalcGUI _calcGUI = new CalcGUI( frame );
+      frame.add( _calcGUI );
+      frame.pack();
+      frame.setVisible( true );
+   }
 }

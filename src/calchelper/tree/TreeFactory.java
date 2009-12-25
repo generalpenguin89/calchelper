@@ -1,9 +1,6 @@
 /*
  * TreeFactory.java
  *  
- * Copyright 2009 Ben Decato, Patrick MacArthur, William Rideout, and
- * Jake Schwartz
- * 
  * This file is part of CalcHelper.
  * 
  * This class based on code written for UNH CS416 Programming Assignment #9,
