@@ -14,118 +14,123 @@ public class TreeFactoryTest {
    public void setUp() throws Exception {
    }
    
-   @Test public void test1_1() throws Exception
+   @Test public void testSimpleAddition() throws Exception
    {
    	ExpressionTree expected = new ExpressionTree( 
    			NodeFactory.createNode("+", 4, 5) );
    	
-   	ExpressionTree result = unitTest( "4 + 5 ");
+   	ExpressionTree result = buildTreeFromString( "4 + 5 ");
    	
    	assertEquals( expected, result );
    }
    
-   @Test public void test1_2() throws Exception
+   @Test public void testParenthesizedAddition() throws Exception
    {
    	ExpressionTree expected = new ExpressionTree( 
    			NodeFactory.createNode("+", 4, 5) );
    	
-   	ExpressionTree result = unitTest( "( 4 + 5 )" );
+   	ExpressionTree result = buildTreeFromString( "( 4 + 5 )" );
    	
    	assertEquals( expected, result );
    }
    
-   @Test public void test1_3() throws Exception
+   @Test public void testOrderOfOperations() throws Exception
    {
-   	ExpressionTree expected = unitTest( "2 + ( 4 * 5 )" );
+   	ExpressionTree expected = buildTreeFromString( "2 + ( 4 * 5 )" );
    	
-   	ExpressionTree result = unitTest( "( 2 + 4 * 5 )" );
+   	ExpressionTree result = buildTreeFromString( "( 2 + 4 * 5 )" );
    	
    	assertEquals( expected, result );
    }
    
-   @Test public void test1_4() throws Exception
+   @Test public void testAdditionInsideMultiplication() throws Exception
    {
    	ExpressionTree expected = new ExpressionTree(
    			NodeFactory.createNode("*", 
    					NodeFactory.createNode( "+", 2, 4 ),
    					NodeFactory.createConstantNode( 5 ) ) );
    	
-   	ExpressionTree result = unitTest( "( 2 + 4 ) * 5" );
+   	ExpressionTree result = buildTreeFromString( "( 2 + 4 ) * 5" );
    	
    	assertEquals( expected, result );
    }
    
-   @Test public void test1_5() throws Exception
+   @Test public void testAdditionInsideDivision() throws Exception
    {
    	ExpressionTree expected = new ExpressionTree(
    			NodeFactory.createNode("/",
    					NodeFactory.createConstantNode( 4 ),
    					NodeFactory.createNode( "+", 5, 5 ) ) );
    	
-   	ExpressionTree result = unitTest( "( 4 / ( 5 + 5 ) )" );
+   	ExpressionTree result = buildTreeFromString( "( 4 / ( 5 + 5 ) )" );
    	
    	assertEquals( expected, result );
    }
    
-   @Test public void test2_1() throws Exception
+   @Test public void testConstantAdditionNoWhitespace() throws Exception
    {
-   	ExpressionTree expected = unitTest( "4 + 5" );
+   	ExpressionTree expected = new ExpressionTree(
+   	         NodeFactory.createNode( "+",
+   	                  NodeFactory.createConstantNode( 4 ),
+   	                  NodeFactory.createConstantNode( 5 ) ) );
    	
-   	ExpressionTree result = unitTest( "4+5" );
+   	ExpressionTree result = buildTreeFromString( "4+5" );
    	
    	assertEquals( expected, result );
    }
    
-   @Test public void test2_2() throws Exception
+   @Test public void testVariableAdditionNoWhitespace() throws Exception
    {
-   	ExpressionTree expected = unitTest( "4 + a" );
+      ExpressionTree expected = new ExpressionTree(
+               NodeFactory.createNode( "+",
+                        NodeFactory.createConstantNode( 4 ),
+                        NodeFactory.createVariableNode( "a" ) ) );
    	
-   	ExpressionTree result = unitTest( "4+a" );
+   	ExpressionTree result = buildTreeFromString( "4+a" );
    	
    	assertEquals( expected, result );
    }
    
-   @Test public void test2_3() throws Exception
+   @Test public void testAddCoefficients() throws Exception
    {
-   	ExpressionTree expected = unitTest( "4 * a + 5 * a" );
+      ExpressionTree expected = new ExpressionTree(
+               NodeFactory.createNode( "*",
+                        NodeFactory.createConstantNode( 9 ),
+                        NodeFactory.createVariableNode( "a" ) ) );
    	
-   	ExpressionTree result = unitTest( "4a+5a" );
+   	ExpressionTree result = buildTreeFromString( "4a+5a" );
    	
    	assertEquals( expected, result );
    }
    
-   @Test public void test2_4() throws Exception
+   @Test public void testMultiplyPolynomialTerms() throws Exception
    {
-   	ExpressionTree expected = unitTest( "( 4 * a ) * ( 5 * a )" );
-   	
-   	ExpressionTree result = unitTest( "4a*5a" );
-   	
-   	assertEquals( expected, result );
-   }
-   
-   @Test public void test2_5() throws Exception
-   {
-   	ExpressionTree expected = unitTest( "( 4 * a ) * ( 5 * a )" );
-   	
-   	ExpressionTree result = unitTest( "(4a*5a)" );
+      ExpressionTree expected = new ExpressionTree(
+               NodeFactory.createNode( "*",
+                        NodeFactory.createConstantNode( 20 ),
+                        NodeFactory.createNode( "^",
+                                 NodeFactory.createVariableNode( "a" ),
+                                 NodeFactory.createConstantNode( 2 ) ) ) );
+   	   	
+   	ExpressionTree result = buildTreeFromString( "4a*5a" );
    	
    	assertEquals( expected, result );
    }
    
    @Test public void precedenceTest1() throws Exception
    {
-      ExpressionTree expected = unitTest( "4 + ( 5 * a )" );
+      ExpressionTree expected = buildTreeFromString( "4 + ( 5 * a )" );
       
-      ExpressionTree result = unitTest( "4 + 5 * a " );
+      ExpressionTree result = buildTreeFromString( "4 + 5 * a " );
       
       assertEquals( expected, result );
    }
    
    @Test public void precedenceTest2() throws Exception
    {
-      ExpressionTree expected = unitTest( "4 * ( 5 ^ a )" );
+      ExpressionTree expected = buildTreeFromString( "4 * ( 5 ^ a )" );
       
-      ExpressionTree result = unitTest( "4 * 5 ^ a" );
+      ExpressionTree result = buildTreeFromString( "4 * 5 ^ a" );
       
       assertEquals( expected, result );
    }
@@ -133,10 +138,10 @@ public class TreeFactoryTest {
    @Test public void coefficientPowerTest1() throws Exception
    {
       // Declare expected results
-      ExpressionTree expected = unitTest( "3 * x ^ 2" );
+      ExpressionTree expected = buildTreeFromString( "3 * x ^ 2" );
       
       // get actual results
-      ExpressionTree actual = unitTest( "3x^2" );
+      ExpressionTree actual = buildTreeFromString( "3x^2" );
       
       assertEquals( expected, actual );
    }
@@ -145,10 +150,10 @@ public class TreeFactoryTest {
    @Test public void coefficientPowerTest2() throws Exception
    {
       // Declare expected results
-      ExpressionTree expected = unitTest( "( 3 * x ) ^ 2" );
+      ExpressionTree expected = buildTreeFromString( "( 3 * x ) ^ 2" );
       
       // get actual results
-      ExpressionTree actual = unitTest( "(3x)^2" );
+      ExpressionTree actual = buildTreeFromString( "(3x)^2" );
       
       assertEquals( expected, actual );
    }
@@ -161,7 +166,7 @@ public class TreeFactoryTest {
                         NodeFactory.createConstantNode( 1.0 ),
                         NodeFactory.createVariableNode( "x" ) ) );
       
-      ExpressionTree actual = unitTest( "\\sin{x}" );
+      ExpressionTree actual = buildTreeFromString( "\\sin{x}" );
       
       assertEquals( expected, actual );
    }
@@ -169,7 +174,8 @@ public class TreeFactoryTest {
    /**
     * Helper method for tests.
     */
-   static ExpressionTree unitTest( String expr ) throws ExpressionException
+   static ExpressionTree buildTreeFromString( String expr ) 
+         throws ExpressionException
    {
       TreeFactory builder = new TreeFactory ( expr );
       ExpressionTree tree = builder.buildTree();
