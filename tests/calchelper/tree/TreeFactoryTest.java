@@ -177,8 +177,8 @@ public class TreeFactoryTest {
    static ExpressionTree buildTreeFromString( String expr ) 
          throws ExpressionException
    {
-      TreeFactory builder = new TreeFactory ( expr );
-      ExpressionTree tree = builder.buildTree();
+      TreeFactory builder = new TreeFactory();
+      ExpressionTree tree = builder.buildTree( expr );
       return tree;
    }
 }

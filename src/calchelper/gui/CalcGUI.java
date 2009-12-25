@@ -53,14 +53,17 @@ public class CalcGUI extends JPanel
   public CalcGUI( JFrame parent ) 
   {
     super ( new BorderLayout() );
+    
+    // Initialize components
     _guiProcessor = new GUIProcessor( this );
     _parent = parent;
     
-    // Initialize components
     makeMenu();
     _eqnTextField = new JTextField(20);
     final JLabel enterLabel = new JLabel( "Enter an equation: " );
     JPanel buttonPanel = makeButtonPanel();
+    
+    _treeFactory = new TreeFactory();
     
     // Create layout
     JPanel center = new JPanel( new FlowLayout() );
@@ -135,11 +138,10 @@ public class CalcGUI extends JPanel
    private void printTree()
    {
      String eq = _eqnTextField.getText();
-     _treeFactory = new TreeFactory( eq );
      
      try
      {
-      _tree = _treeFactory.buildTree();
+      _tree = _treeFactory.buildTree( eq );
       String tree = _tree.toString();
       System.out.println( tree );
      }
@@ -191,8 +193,7 @@ public class CalcGUI extends JPanel
                 try
                 {
                   toDerive = _eqnTextField.getText();
-                  _treeFactory = new TreeFactory( toDerive );
-                  _tree = _treeFactory.buildTree();
+                  _tree = _treeFactory.buildTree( toDerive );
                   ExpressionTree rezult = _tree.derive();
                   if ( rezult != null )
                   {
@@ -219,8 +220,7 @@ public class CalcGUI extends JPanel
                 try
                 {
                   toIntegrate = _eqnTextField.getText();
-                  _treeFactory = new TreeFactory( toIntegrate );
-                  _tree = _treeFactory.buildTree();
+                  _tree = _treeFactory.buildTree( toIntegrate );
                   ExpressionTree result = _tree.integrate();
                   if ( result != null )
                   {

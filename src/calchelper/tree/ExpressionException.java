@@ -34,6 +34,16 @@ public class ExpressionException extends java.lang.Exception
 	
 	private String _infix; // the infix expression
 
+	/**
+    * Creates a new exception object.
+    *
+    * @param message A user-readable message describing the reason for the
+    * exception.
+    */
+   public ExpressionException( String message )
+   {
+      super( message );
+   }
    /**
     * Creates a new exception object.
     *
@@ -52,6 +62,13 @@ public class ExpressionException extends java.lang.Exception
     */
    public String toString()
    {
-      return getMessage() + "\nExpression: " + _infix;
+      if ( _infix == null )
+      {
+         return getMessage();
+      }
+      else
+      {
+         return getMessage() + "\nExpression: " + _infix;
+      }
    }
 }

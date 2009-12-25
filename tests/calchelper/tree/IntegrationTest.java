@@ -24,8 +24,8 @@ public class IntegrationTest
       TreeFactory factory;
       ExpressionTree tree;
       
-      factory = new TreeFactory( infix );
-      tree = factory.buildTree();
+      factory = new TreeFactory();
+      tree = factory.buildTree( infix );
       return tree.getRoot();
    }
 

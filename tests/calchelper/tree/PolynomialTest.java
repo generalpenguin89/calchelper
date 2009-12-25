@@ -31,8 +31,8 @@ public class PolynomialTest
       AbstractNode treeRoot;
       Polynomial poly;
 
-      factory = new TreeFactory( infix );
-      tree = factory.buildTree();
+      factory = new TreeFactory();
+      tree = factory.buildTree( infix );
       treeRoot = tree.getRoot();
       poly = Polynomial.createPolynomial( treeRoot );
       assertTrue( poly != null );

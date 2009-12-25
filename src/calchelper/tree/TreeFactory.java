@@ -40,14 +40,11 @@ public class TreeFactory
    private Stack<String> _opStack;
    private Stack<AbstractNode> _randStack;
 
-   private String _infix;
-
    /**
     * Creates a tree builder for the specified infix expression.
     */
-   public TreeFactory( String infix )
+   public TreeFactory()
    {
-      _infix = infix;
    }
 
    /**
@@ -171,7 +168,7 @@ public class TreeFactory
 
          if ( _opStack.isEmpty() )
          {
-            throw new ExpressionException( "Missing operator.", _infix );
+            throw new ExpressionException( "Missing operator." );
          }
 
          _opStack.pop(); // throw away the left parenthesis
@@ -275,12 +272,12 @@ public class TreeFactory
     *
     * @throws ExpressionException if the expression is invalid.
     */
-   public ExpressionTree buildTree() throws ExpressionException
+   public ExpressionTree buildTree( String infix ) throws ExpressionException
    {
       _opStack = new Stack<String>();
       _randStack = new Stack<AbstractNode>();
 
-      parseToken( _infix );
+      parseToken( infix );
 
       while ( ! _opStack.isEmpty() )
       {
@@ -291,7 +288,7 @@ public class TreeFactory
       {
          throw new ExpressionException(
             "Invalid expression; too many operands or too few operators.",
-            _infix );
+            infix );
       }
 
       ExpressionTree tree = new ExpressionTree( _randStack.pop() );
@@ -313,12 +310,12 @@ public class TreeFactory
 
       if ( op.equals( "(" ) || op.equals( "{" ) || op.equals( "[" ) )
       {
-         throw new ExpressionException( "Unterminated " + op, _infix );
+         throw new ExpressionException( "Unterminated " + op );
       }
 
       if ( _randStack.size() < 2 )
       {
-         throw new ExpressionException( "Not enough operands.", _infix );
+         throw new ExpressionException( "Not enough operands." );
       }
       
       rightNode = _randStack.pop();
@@ -342,12 +339,12 @@ public class TreeFactory
 
          if ( op.equals( "(" ) || op.equals( "{" ) || op.equals( "[" ) )
          {
-            throw new ExpressionException( "Unterminated " + op, _infix );
+            throw new ExpressionException( "Unterminated " + op );
          }
 
          if ( _randStack.size() < 3 )
          {
-            throw new ExpressionException( "Not enough operands.", _infix );
+            throw new ExpressionException( "Not enough operands." );
          }
 
          power = _randStack.pop();
