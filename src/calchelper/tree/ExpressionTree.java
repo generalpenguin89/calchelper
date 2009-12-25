@@ -48,8 +48,8 @@ public class ExpressionTree
     */
    public void simplify()
    {
-      Polynomial poly = new Polynomial( getRoot() );
-      if ( poly.isValid() )
+      Polynomial poly = Polynomial.createPolynomial( getRoot() );
+      if ( poly != null )
       {
          setRoot( poly );
       }
@@ -87,19 +87,6 @@ public class ExpressionTree
    public String toString()
    {
       return getRoot().getStringValue();
-   }
-
-   /**
-    * differentiate()
-    *
-    * Returns the derivative tree of the tree.
-    * 
-    * @deprecated
-    */
-   @Deprecated
-   public ExpressionTree differentiate()
-   {
-      return derive();
    }
    
    /**

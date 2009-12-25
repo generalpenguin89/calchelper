@@ -118,8 +118,8 @@ abstract class OperatorNode extends AbstractNode implements Cloneable
          }
          else
          {
-            Polynomial poly = new Polynomial( _children.get( x ) );
-            if ( poly.isValid() )
+            Polynomial poly = Polynomial.createPolynomial( _children.get( x ) );
+            if ( poly != null )
             {
                _children.set( x, poly );
             }

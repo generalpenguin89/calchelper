@@ -145,8 +145,8 @@ class NodeFactory
       if ( op.length() == 1 )
       {
          BinaryOperatorNode binNode = createBinaryOperatorNode( op, left, right);
-         Polynomial poly = new Polynomial( binNode );
-         if ( poly.isValid() )
+         Polynomial poly = Polynomial.createPolynomial( binNode );
+         if ( poly != null )
          {
             return poly;
          }

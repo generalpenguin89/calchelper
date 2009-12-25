@@ -34,8 +34,8 @@ public class PolynomialTest
       factory = new TreeFactory( infix );
       tree = factory.buildTree();
       treeRoot = tree.getRoot();
-      poly = new Polynomial( treeRoot );
-      assertTrue( poly.isValid() );
+      poly = Polynomial.createPolynomial( treeRoot );
+      assertTrue( poly != null );
       return poly;
    }
 
@@ -238,7 +238,7 @@ public class PolynomialTest
       Polynomial original = new Polynomial( "x" );
       
       // Get results
-      Polynomial copy = new Polynomial( original );
+      Polynomial copy = Polynomial.createPolynomial( original );
       
       // Assertion
       assertEquals( original, copy );

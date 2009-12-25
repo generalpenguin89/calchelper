@@ -37,13 +37,10 @@ class Polynomial extends AbstractNode implements Cloneable
     *
     * For example, the expression 2x^3 would be represented by the map {3:2}.
     */
-   private HashMap<Double, Double> _map;
+   private Map<Double, Double> _map;
    
    // The variable that this polynomial is over
    private String _variable;
-   
-   // Is this polynomial valid?
-   private boolean _isValid;
    
    /**
     * Generates an empty Polynomial.
@@ -52,7 +49,6 @@ class Polynomial extends AbstractNode implements Cloneable
    {
       setMap( new HashMap<Double, Double>() );
       _variable = null;
-      _isValid = true;
    }
    
    /**
@@ -60,140 +56,10 @@ class Polynomial extends AbstractNode implements Cloneable
     *
     * @param node The node to convert to a polynomial.
     */
-   public Polynomial( AbstractNode node )
+   protected Polynomial( Polynomial poly )
    {
-      // TODO: Add proper error-checking
-      
-      if ( node instanceof Polynomial )
-      {
-         setMap( ( ( Polynomial ) node ).getMap() );
-         _variable = ( ( Polynomial ) node )._variable;
-         _isValid = ( ( Polynomial ) node )._isValid;
-      }
-      else
-      {
-         setMap( new HashMap<Double, Double>() );
-         _isValid = true;
-         
-         if ( node.hasValue() )
-         {
-            // Base case 1
-            getMap().put( 0.0, node.getValue() );
-         }
-         else if ( node.isSimpleVariable() )
-         {
-            // Base case 2
-            getMap().put( 1.0, 1.0 );
-            _variable = node.toString();
-         }
-         else if ( node instanceof BinaryOperatorNode )
-         {
-            BinaryOperatorNode binNode = ( BinaryOperatorNode ) node;
-            
-            if ( node instanceof BinaryOperatorNode.Addition )
-            {
-               for ( int x = 0; x < binNode.nodeCount(); ++x )
-               {
-                  merge( new Polynomial( binNode.getNode( x ) ), 1 );
-               }
-            }
-            else if ( node instanceof BinaryOperatorNode.Subtraction )
-            {
-               merge( new Polynomial( binNode.getLeft() ), 1 );
-               merge( new Polynomial( binNode.getRight() ), -1 );
-            }
-            else if ( node instanceof BinaryOperatorNode.Multiplication )
-            {
-               Polynomial left = new Polynomial( binNode.getLeft() );
-               Polynomial right = new Polynomial( binNode.getRight() );
-               
-               // Give up if they're not both valid or the variables don't
-               // match
-               if ( left.isValid() && right.isValid() &&
-                        left.isSameVariable( right ) )
-               {
-                  this._variable = left.getVariable();
-                  if ( this._variable == null ) this._variable = right.getVariable();
-                  for ( Map.Entry<Double, Double> entry : left.getMap().entrySet() )
-                  {
-                     for ( Map.Entry<Double, Double> other : 
-                              right.getMap().entrySet() )
-                     {
-                        merge( entry.getKey() + other.getKey(), 
-                                 entry.getValue() * other.getValue() );
-                     }
-                  }
-               }
-               else
-               {
-                  _isValid = false;
-               }
-            }
-            else if ( node instanceof BinaryOperatorNode.Division )
-            {
-               Polynomial left = new Polynomial( binNode.getLeft() );
-               Polynomial right = new Polynomial( binNode.getRight() );
-               
-               // Give up if they're not both valid or the variables don't
-               // match.  Also, denominator must have only 1 term.
-               if ( left.isValid() && right.isValid() &&
-                        left.isSameVariable( right ) && 
-                        right.termCount() == 1 )
-               {
-                  this._variable = left.getVariable();
-                  if ( this._variable == null ) this._variable = right.getVariable();
-                  for ( Map.Entry<Double, Double> entry : left.getMap().entrySet() )
-                  {
-                     for ( Map.Entry<Double, Double> other :
-                              right.getMap().entrySet() )
-                     {
-                        merge( entry.getKey() - other.getKey(), 
-                                 entry.getValue() / other.getValue() );
-                     }
-                  }
-               }
-               else
-               {
-                  _isValid = false;
-               }
-            }
-            else if ( node instanceof BinaryOperatorNode.Power )
-            {
-               Polynomial left = new Polynomial( binNode.getLeft() );
-               this._variable = left.getVariable();
-                              
-               // Give up if they're not both valid or the variables don't
-               // match.  Also, right side must be a constant.
-               if ( left.isValid() && binNode.getRight().hasValue() )
-               {
-                  double right = binNode.getRight().getValue();
-                  
-                  for ( Map.Entry<Double, Double> entry : left.getMap().entrySet() )
-                  {
-                      merge( entry.getKey() * right,
-                             Math.pow( entry.getValue(), right ) );
-                  }
-               }
-               else
-               {
-                  _isValid = false;
-               }
-            }
-            else
-            {
-               _isValid = false;
-            }
-         }
-         else
-         {
-            _isValid = false;
-         }
-         
-         if ( _isValid )
-         {
-            simplify();
-         }
-      }
+      setMap( poly._map );
+      _variable = poly._variable;
    }
 
    /**
@@ -203,7 +69,6 @@ class Polynomial extends AbstractNode implements Cloneable
    {
       setMap( new HashMap<Double, Double>() );
       getMap().put( 0.0, constant );
-      _isValid = true;
    }
    
    /**
@@ -213,8 +78,136 @@ class Polynomial extends AbstractNode implements Cloneable
    {
       setMap( new HashMap<Double, Double>() );
       getMap().put( 1.0, 1.0 );
-      _isValid = true;
       _variable = variable;
+   }
+   
+   public static Polynomial createPolynomial( AbstractNode node )
+   {
+      if ( node instanceof Polynomial )
+      {
+         return new Polynomial( ( Polynomial ) node );
+      }
+      else
+      {
+         Polynomial poly = new Polynomial();
+         
+         if ( node.hasValue() )
+         {
+            // Base case 1
+            poly.getMap().put( 0.0, node.getValue() );
+         }
+         else if ( node.isSimpleVariable() )
+         {
+            // Base case 2
+            poly.getMap().put( 1.0, 1.0 );
+            poly._variable = node.toString();
+         }
+         else if ( node instanceof BinaryOperatorNode )
+         {
+            BinaryOperatorNode binNode = ( BinaryOperatorNode ) node;
+            
+            if ( node instanceof BinaryOperatorNode.Addition )
+            {
+               for ( int x = 0; x < binNode.nodeCount(); ++x )
+               {
+                  poly.merge( createPolynomial( binNode.getNode( x ) ), 1 );
+               }
+            }
+            else if ( node instanceof BinaryOperatorNode.Subtraction )
+            {
+               poly.merge( createPolynomial( binNode.getLeft() ), 1 );
+               poly.merge( createPolynomial( binNode.getRight() ), -1 );
+            }
+            else if ( node instanceof BinaryOperatorNode.Multiplication )
+            {
+               Polynomial left = createPolynomial( binNode.getLeft() );
+               Polynomial right = createPolynomial( binNode.getRight() );
+               
+               // Give up if they're not both valid or the variables don't
+               // match
+               if ( left != null && right != null 
+                        && left.isSameVariable( right ) )
+               {
+                  poly._variable = left.getVariable();
+                  if ( poly._variable == null ) poly._variable = right.getVariable();
+                  for ( Map.Entry<Double, Double> entry : left.getMap().entrySet() )
+                  {
+                     for ( Map.Entry<Double, Double> other : 
+                              right.getMap().entrySet() )
+                     {
+                        poly.merge( entry.getKey() + other.getKey(), 
+                                 entry.getValue() * other.getValue() );
+                     }
+                  }
+               }
+               else
+               {
+                  return null;
+               }
+            }
+            else if ( node instanceof BinaryOperatorNode.Division )
+            {
+               Polynomial left = createPolynomial( binNode.getLeft() );
+               Polynomial right = createPolynomial( binNode.getRight() );
+               
+               // Give up if they're not both valid or the variables don't
+               // match.  Also, denominator must have only 1 term.
+               if ( left != null && right != null &&
+                        left.isSameVariable( right ) && 
+                        right.termCount() == 1 )
+               {
+                  poly._variable = left.getVariable();
+                  if ( poly._variable == null ) poly._variable = right.getVariable();
+                  for ( Map.Entry<Double, Double> entry : left.getMap().entrySet() )
+                  {
+                     for ( Map.Entry<Double, Double> other :
+                              right.getMap().entrySet() )
+                     {
+                        poly.merge( entry.getKey() - other.getKey(), 
+                                 entry.getValue() / other.getValue() );
+                     }
+                  }
+               }
+               else
+               {
+                  return null;
+               }
+            }
+            else if ( node instanceof BinaryOperatorNode.Power )
+            {
+               Polynomial left = createPolynomial( binNode.getLeft() );
+               poly._variable = left.getVariable();
+                              
+               // Give up if they're not both valid or the variables don't
+               // match.  Also, right side must be a constant.
+               if ( left != null && binNode.getRight().hasValue() )
+               {
+                  double right = binNode.getRight().getValue();
+                  
+                  for ( Map.Entry<Double, Double> entry : left.getMap().entrySet() )
+                  {
+                      poly.merge( entry.getKey() * right,
+                             Math.pow( entry.getValue(), right ) );
+                  }
+               }
+               else
+               {
+                  return null;
+               }
+            }
+            else
+            {
+               return null;
+            }
+         }
+         else
+         {
+            return null;
+         }
+         
+         poly.simplify();
+         return poly;
+      }
    }
    
    /**
@@ -283,25 +276,13 @@ class Polynomial extends AbstractNode implements Cloneable
       }
       // TODO: Add error-checking
       
-      if ( poly.isValid() )
+      if ( poly != null )
       {
          for ( Map.Entry<Double, Double> entry : poly.getMap().entrySet() )
          {
             merge( entry.getKey(), entry.getValue() * constant );
          }
       }
-      else
-      {
-         this._isValid = false;
-      }
-   }
-   
-   /**
-    * Returns true if this polynomial is valid.
-    */
-   public boolean isValid()
-   {
-      return _isValid;
    }
    
    /**
@@ -331,8 +312,6 @@ class Polynomial extends AbstractNode implements Cloneable
     */
    public String getStringValue()
    {
-      if ( isValid() )
-      {
          if ( termCount() == 0 )
          {
             return "0";
@@ -361,11 +340,6 @@ class Polynomial extends AbstractNode implements Cloneable
             }
          }
          return join( strList, " + " );
-      }
-      else
-      {
-         return "<Invalid Polynomial>";
-      }
    }
    
    /**
@@ -375,31 +349,7 @@ class Polynomial extends AbstractNode implements Cloneable
    {
       return this.getStringValue();
    }
-   
-   public static void intTest( String infix ) throws ExpressionException
-   {
-      TreeFactory factory;
-      ExpressionTree tree;
-      AbstractNode treeRoot;
-      Polynomial poly;
-      
-      System.out.println( "Int test with expression: " + infix );
-      factory = new TreeFactory( infix );
-      tree = factory.buildTree();
-      treeRoot = tree.getRoot();
-      poly = new Polynomial( treeRoot );
-      poly.integrate();
-      System.out.println( "Polynomial map: " + poly.getMap() );
-      System.out.println();
-   }
-   
-   public static void main( String[] args ) throws ExpressionException
-   {
-      // Integration tests
-      System.out.println( "------ Group 5: Integration tests -----" );
-      intTest( "( 2 * x )" );
-   }
-   
+
    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
    /**
     * Integrate - By Jake Schwartz
@@ -484,14 +434,9 @@ class Polynomial extends AbstractNode implements Cloneable
    {
       if ( obj instanceof Polynomial )
       {
-         Polynomial poly = new Polynomial( ( AbstractNode ) obj );
+         Polynomial poly = createPolynomial( ( AbstractNode ) obj );
          
-         // If both are invalid, then they're equal as far as I'm concerned
-         if ( ! isValid() && ! poly.isValid() )
-         {
-            return true;
-         } 
-         else if ( isSameVariable( poly ) )
+         if ( isSameVariable( poly ) )
          {
             return getMap().equals( poly.getMap() );
          }
@@ -509,14 +454,9 @@ class Polynomial extends AbstractNode implements Cloneable
    {
       if ( obj instanceof Polynomial )
       {
-         Polynomial poly = new Polynomial( ( AbstractNode ) obj );
+         Polynomial poly = createPolynomial( ( AbstractNode ) obj );
          
-         // If both are invalid, then they're equal as far as I'm concerned
-         if ( ! isValid() && ! poly.isValid() )
-         {
-            return true;
-         } 
-         else if ( isSameVariable( poly ) )
+         if ( isSameVariable( poly ) )
          {
             for ( Entry<Double, Double> entry : getMap().entrySet() )
             {
@@ -553,12 +493,6 @@ class Polynomial extends AbstractNode implements Cloneable
     */
    public int hashCode()
    {
-      if ( ! isValid() )
-      {
-         return 0;
-      }
-      else
-      {
          // Very crude way of determining the hashCode
          if ( _variable != null )
          {
@@ -568,7 +502,6 @@ class Polynomial extends AbstractNode implements Cloneable
          {
             return getMap().hashCode();
          }
-      }
    }
 
    /**
@@ -586,14 +519,7 @@ class Polynomial extends AbstractNode implements Cloneable
     */
    public int termCount()
    {
-      if ( isValid() )
-      {
-         return getMap().size();
-      }
-      else
-      {
-         return 0;
-      }
+      return getMap().size();
    }
    
    /**
@@ -657,17 +583,17 @@ class Polynomial extends AbstractNode implements Cloneable
     * Sets the HashMap for this Polynomial.
     * @param map the map to set
     */
-   protected void setMap( HashMap<Double, Double> map )
+   protected void setMap( Map<Double, Double> map )
    {
       this._map = map;
    }
    
    /**
-    * Gets the HashMap for this Polynomial.
+    * Gets the Map for this Polynomial.
     *  
     * @return the map
     */
-   protected HashMap<Double, Double> getMap()
+   protected Map<Double, Double> getMap()
    {
       return _map;
    }
@@ -677,7 +603,7 @@ class Polynomial extends AbstractNode implements Cloneable
     */
    public AbstractNode inverse()
    {
-      Polynomial copy = new Polynomial( this );
+      Polynomial copy = createPolynomial( this );
       for ( Map.Entry<Double, Double> entry : copy.getMap().entrySet() )
       {
          entry.setValue( entry.getValue() * -1.0 );
@@ -690,7 +616,7 @@ class Polynomial extends AbstractNode implements Cloneable
     */
    public Polynomial add( Polynomial other )
    {
-      Polynomial poly = new Polynomial( this );
+      Polynomial poly = createPolynomial( this );
       poly.merge( other, 1.0 );
       return poly;
    }
@@ -700,7 +626,7 @@ class Polynomial extends AbstractNode implements Cloneable
     */
    public void simplify()
    {
-      HashMap<Double, Double> copy = new HashMap<Double, Double>();
+      Map<Double, Double> copy = new HashMap<Double, Double>();
       for ( Map.Entry<Double, Double> entry : this.getMap().entrySet() )
       {
          if ( entry.getValue() != 0.0 )

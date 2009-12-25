@@ -129,16 +129,6 @@ abstract class AbstractNode implements Cloneable
    }
    
    /**
-    * Clones the object.
-    * 
-    * @return a clone of this object
-    */
-   public Object clone() throws CloneNotSupportedException
-   {
-      return super.clone();
-   }
-   
-   /**
     * Returns the additive inverse of this node (e.g., -1 * this)
     * 
     * @return the additive inverse of this node
@@ -157,18 +147,7 @@ abstract class AbstractNode implements Cloneable
    {
       return 0;
    }
-   
-   /**
-    * Gets the HashMap for this Node
-    * 
-    * @return the HashMap for this node, assuming it has one
-    */
-   @Deprecated
-   protected HashMap<Double, Double> getMap()
-   {
-      return null;
-   }
-   
+    
    /**
     * Tests if two expressions are equal, ignoring coefficients. Only really 
     * makes a difference for those nodes that support constant coefficients.
